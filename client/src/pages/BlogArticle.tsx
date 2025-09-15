@@ -219,7 +219,7 @@ export default function BlogArticle() {
   const articleContent = ARTICLE_CONTENT[parseInt(id || "1")] || ARTICLE_CONTENT[1];
 
   return (
-    <main className="relative bg-white overflow-hidden">
+    <main className="relative bg-transparent overflow-hidden">
       {/* Background decoration */}
       <div aria-hidden="true" className="pointer-events-none absolute inset-0 -z-10">
         <div className="absolute -top-24 -left-24 h-72 w-72 rounded-full bg-[rgba(120,72,32,0.10)] blur-3xl animate-[float1_12s_ease-in-out_infinite]" />
@@ -234,7 +234,7 @@ export default function BlogArticle() {
       `}</style>
 
       {/* Article Header */}
-      <Section className="pt-24 pb-8">
+      <Section className="pt-28 pb-8">
         <div className="max-w-4xl mx-auto">
           {/* Breadcrumb */}
           <nav className="mb-6">

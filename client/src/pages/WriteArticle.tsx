@@ -79,7 +79,7 @@ export default function WriteArticle() {
   };
 
   return (
-    <main className="relative bg-white overflow-hidden">
+    <main className="relative bg-transparent overflow-hidden">
       {/* Background decoration */}
       <div aria-hidden="true" className="pointer-events-none absolute inset-0 -z-10">
         <div className="absolute -top-24 -left-24 h-72 w-72 rounded-full bg-[rgba(120,72,32,0.10)] blur-3xl animate-[float1_12s_ease-in-out_infinite]" />
@@ -94,7 +94,7 @@ export default function WriteArticle() {
       `}</style>
 
       {/* Header */}
-      <Section className="pt-24 pb-8">
+      <Section className="pt-28 pb-8">
         <div className="text-center">
           <h1 className={`text-4xl sm:text-5xl font-extrabold mb-4 ${gradHead}`}>
             Write an Article

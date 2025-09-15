@@ -16,7 +16,7 @@ const Section = ({ children, className = "" }: SectionProps) => (
 
 export default function Services() {
   return (
-    <main className="relative bg-white overflow-hidden">
+    <main className="relative bg-transparent overflow-hidden">
       {/* Animated browns + astrology background */}
       <div aria-hidden="true" className="pointer-events-none absolute inset-0 -z-10">
         {/* Soft brown radial blobs */}
@@ -60,7 +60,7 @@ export default function Services() {
       `}</style>
 
       {/* Intro */}
-      <Section className="pt-24 pb-5">
+      <Section className="pt-28 pb-5">
         <div className="grid gap-8 md:grid-cols-2 items-center">
           <div>
             <h1 className={`text-4xl sm:text-5xl font-extrabold mb-4 ${gradHead}`}>Our Services</h1>

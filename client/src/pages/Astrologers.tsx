@@ -1,5 +1,6 @@
 import { useMemo, useState } from "react";
 import { Link } from "react-router-dom";
+import { Gem, ShieldCheck, Stars } from "lucide-react";
 
 import Astrologer from "../assets/astrologer.png"
 
@@ -93,26 +94,26 @@ export default function Astrologers() {
   }, []);
 
   return (
-    <main className="relative bg-white overflow-hidden">
+    <main className="relative bg-transparent overflow-hidden">
 
       {/* Intro Section */}
-      <Section className="pt-24 pb-9">
-        <div className="grid gap-10 md:grid-cols-2 items-center">
-          <div>
-            <h1 className={`text-4xl sm:text-5xl font-extrabold pb-1 mb-6 ${gradHead}`}>Connect with Expert Astrologers</h1>
+      <Section className="pt-28 pb-9">
+        <div className="grid gap-8 md:gap-10 md:grid-cols-2 items-center">
+          <div className="text-center md:text-left">
+            <h1 className={`text-3xl sm:text-4xl md:text-5xl font-extrabold pb-1 mb-6 ${gradHead}`}>Connect with Expert Astrologers</h1>
             <div className="grid gap-6 md:grid-cols-3 pt-6 mb-10">
-              <div className="rounded-2xl bg-white p-6 ">
-                <span className="text-lg">🜃</span>
+              <div className="rounded-2xl bg-white/90 backdrop-blur-sm border-2 border-yellow-300/60 p-6 shadow-lg hover:shadow-xl transition-all duration-300">
+                <span className="text-yellow-700"><Gem className="w-5 h-5"/></span>
                 <p className="font-semibold">What We Offer</p>
                 <p>Premium guidance with certified experts.</p>
               </div>
-              <div className="rounded-2xl bg-white p-6 ">
-                <span className="text-lg">✅</span>
+              <div className="rounded-2xl bg-white/90 backdrop-blur-sm border-2 border-yellow-300/60 p-6 shadow-lg hover:shadow-xl transition-all duration-300">
+                <span className="text-yellow-700"><ShieldCheck className="w-5 h-5"/></span>
                 <p className="font-semibold">Our Assurance</p>
                 <p>24×7 availability anywhere.</p>
               </div>
-              <div className="rounded-2xl bg-white p-6 ">
-                <span className="text-lg">✨</span>
+              <div className="rounded-2xl bg-white/90 backdrop-blur-sm border-2 border-yellow-300/60 p-6 shadow-lg hover:shadow-xl transition-all duration-300">
+                <span className="text-yellow-700"><Stars className="w-5 h-5"/></span>
                 <p className="font-semibold">Our Vision</p>
                 <p>Personalized kundli & reports.</p>
               </div>
@@ -137,17 +138,17 @@ export default function Astrologers() {
             value={q}
             onChange={(e)=>setQ(e.target.value)}
             placeholder="Search by name or skill..."
-            className="flex-1 rounded-md border border-yellow-400 p-3"
+            className="flex-1 rounded-md border-2 border-yellow-300/60 p-3 bg-white/90 backdrop-blur-sm shadow-lg"
           />
-          <div className="flex gap-2">
-            <select value={skill} onChange={(e)=>setSkill(e.target.value)} className="rounded-md border border-yellow-400 p-2">
+          <div className="flex flex-col sm:flex-row gap-2">
+            <select value={skill} onChange={(e)=>setSkill(e.target.value)} className="rounded-md border-2 border-yellow-300/60 p-2 bg-white/90 backdrop-blur-sm shadow-lg">
               <option>All</option>
               <option>Palm Reading</option>
               <option>Numerology</option>
               <option>Tarot Reading</option>
               <option>Vedic Astrology</option>
             </select>
-            <select value={lang} onChange={(e)=>setLang(e.target.value)} className="rounded-md border border-yellow-400 p-2">
+            <select value={lang} onChange={(e)=>setLang(e.target.value)} className="rounded-md border-2 border-yellow-300/60 p-2 bg-white/90 backdrop-blur-sm shadow-lg">
               <option>All</option>
               <option>Hindi</option>
               <option>English</option>
@@ -155,7 +156,7 @@ export default function Astrologers() {
               <option>Tamil</option>
               <option>Gujarati</option>
             </select>
-            <select value={sort} onChange={(e)=>setSort(e.target.value)} className="rounded-md border border-yellow-400 p-2">
+            <select value={sort} onChange={(e)=>setSort(e.target.value)} className="rounded-md border-2 border-yellow-300/60 p-2 bg-white/90 backdrop-blur-sm shadow-lg">
               <option>Default</option>
               <option>Highest rate</option>
               <option>Lowest rate</option>
@@ -183,6 +184,33 @@ export default function Astrologers() {
         <h2 className={`text-2xl sm:text-3xl font-bold mb-6 ${gradHead}`}>Best Rated Astrologers</h2>
         <div className="grid gap-6 md:grid-cols-4">
           {topRated.map((p)=>(<AstroCard key={p.id} a={p} />))}
+        </div>
+      </Section>
+
+      {/* Quick Booking */}
+      <Section className="pb-8">
+        <div className="rounded-2xl border border-yellow-400 p-6 bg-white">
+          <h3 className={`text-xl font-bold mb-4 ${gradHead}`}>Quick Booking</h3>
+          <div className="grid gap-4 md:grid-cols-3">
+            <div className="text-center p-4 bg-yellow-50 rounded-xl">
+              <div className="text-3xl mb-2">💬</div>
+              <h4 className="font-semibold text-brown-900">Instant Chat</h4>
+              <p className="text-sm text-brown-600">Start chatting immediately</p>
+              <p className="text-yellow-600 font-bold">From ₹10/min</p>
+            </div>
+            <div className="text-center p-4 bg-yellow-50 rounded-xl">
+              <div className="text-3xl mb-2">📞</div>
+              <h4 className="font-semibold text-brown-900">Voice Call</h4>
+              <p className="text-sm text-brown-600">Clear audio consultation</p>
+              <p className="text-yellow-600 font-bold">From ₹15/min</p>
+            </div>
+            <div className="text-center p-4 bg-yellow-50 rounded-xl">
+              <div className="text-3xl mb-2">🎥</div>
+              <h4 className="font-semibold text-brown-900">Video Call</h4>
+              <p className="text-sm text-brown-600">Face-to-face consultation</p>
+              <p className="text-yellow-600 font-bold">From ₹25/min</p>
+            </div>
+          </div>
         </div>
       </Section>
 
@@ -239,8 +267,8 @@ function AstroCard({ a }: AstroCardProps) {
         Chat ₹{a.chat}/min • Call ₹{a.call}/min
       </div>
       <div className="mt-3 flex gap-3">
-        <Link to="/chat" className="flex-1 rounded-md bg-yellow-500 py-2 text-center hover:bg-yellow-400">Chat</Link>
-        <Link to="/call" className="flex-1 rounded-md border py-2 text-center hover:bg-gray-50">Call</Link>
+        <Link to="/chat" className="flex-1 rounded-md bg-yellow-500 py-2 text-center text-brown-900 font-semibold hover:bg-yellow-400 transition">Chat ₹{a.chat}/min</Link>
+        <Link to="/call" className="flex-1 rounded-md border border-yellow-400 py-2 text-center text-yellow-600 font-semibold hover:bg-yellow-50 transition">Call ₹{a.call}/min</Link>
       </div>
     </div>
   );

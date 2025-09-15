@@ -1,83 +1,296 @@
-import { Link, NavLink } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import Logo from "../assets/Logo2.png";
 
-const baseLink =
-  "px-3 py-2 transition font-medium text-brown-900 hover:text-yellow-500";
-const activeLink =
-  "text-yellow-500 underline underline-offset-4 decoration-yellow-500";
-
 export default function Navbar() {
-  const [show, setShow] = useState(true);
-  const [lastY, setLastY] = useState(0);
+  const [scrolled, setScrolled] = useState(false);
+  const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
 
   useEffect(() => {
     const onScroll = () => {
       const y = window.scrollY || window.pageYOffset;
-      const goingDown = y > lastY;
-      const threshold = 8; // small threshold to avoid jitter
-
-      if (Math.abs(y - lastY) > threshold) {
-        setShow(!goingDown || y < 80); // hide when scrolling down past 80px, show when scrolling up
-        setLastY(y);
-      }
+      setScrolled(y > 4);
     };
-
+    onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
-  }, [lastY]);
+  }, []);
+
+  const handleDropdownToggle = (dropdown: string) => {
+    setActiveDropdown(activeDropdown === dropdown ? null : dropdown);
+  };
+
+  const handleDropdownClose = () => {
+    setActiveDropdown(null);
+  };
+
+  const handleMenuItemClick = () => {
+    setActiveDropdown(null);
+  };
 
   return (
     <header
       className={[
-        "fixed top-0 inset-x-0 z-50 bg-white transition-transform duration-300",
-        "shadow-md", // persistent subtle shadow under navbar
-        show ? "translate-y-0" : "-translate-y-full",
+        "fixed top-0 inset-x-0 z-50 transition-all duration-300",
+        "bg-white/95 backdrop-blur-md shadow-xl border-b-2 border-yellow-200/50",
       ].join(" ")}
     >
-      <nav className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
-        {/* Logo */}
-        <Link to="/" className="flex items-center gap-2">
-          <img src={Logo} alt="RUDRAGURU" className="h-15 w-auto invert" />
-          <span className="text-yellow-500 font-extrabold tracking-wide">
-            RUDRAGURU
-          </span>
-        </Link>
+      {/* Top Row - AstroTalk Style */}
+      <nav className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div className="h-14 sm:h-16 flex items-center justify-between">
+          {/* Logo */}
+          <Link to="/" className="flex items-center gap-2 sm:gap-3">
+            <img src={Logo} alt="RUDRAGURU" className="h-8 w-auto sm:h-10 invert" />
+            <span className="text-brown-900 font-bold text-lg sm:text-xl tracking-wide">RUDRAGURU</span>
+          </Link>
 
-        {/* Links */}
-        <div className="hidden md:flex items-center gap-1">
-          {[
-            { to: "/", label: "HOME", end: true },
-            { to: "/services", label: "SERVICES" },
-            { to: "/gemstones", label: "GEMSTONES" },
-            
-            { to: "/astrologers", label: "BEST ASTROLOGERS" },
-            { to: "/blog", label: "BLOG & ARTICLES" },
-            { to: "/about", label: "ABOUT US" },
-          ].map(({ to, label, end }) => (
-            <NavLink
-              key={to}
-              to={to}
-              end={end}
-              className={({ isActive }) =>
-                `${baseLink} ${isActive ? activeLink : ""}`
-              }
+          {/* Desktop Navigation and Login */}
+          <div className="hidden lg:flex items-center gap-6">
+            <Link
+              to="/kundli"
+              className="text-brown-800 hover:text-yellow-600 font-medium transition-colors"
             >
-              {label}
-            </NavLink>
-          ))}
+              Free Kundli
+            </Link>
+            <div className="relative">
+              <button
+                onClick={() => handleDropdownToggle('kundli-matching')}
+                className="flex items-center gap-1 text-brown-800 hover:text-yellow-600 font-medium transition-colors"
+              >
+                Kundli Matching
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                </svg>
+              </button>
+              {activeDropdown === 'kundli-matching' && (
+                <div className="absolute top-full left-0 mt-2 w-48 bg-white/95 backdrop-blur-md rounded-xl shadow-2xl border-2 border-yellow-200/50 py-2 z-50">
+                  <Link to="/kundli" onClick={handleMenuItemClick} className="block px-4 py-2 text-brown-700 hover:bg-yellow-50 hover:text-yellow-600">Kundli Matching</Link>
+                  <Link to="/compatibility" onClick={handleMenuItemClick} className="block px-4 py-2 text-brown-700 hover:bg-yellow-50 hover:text-yellow-600">Compatibility Check</Link>
+                  <Link to="/marriage-prediction" onClick={handleMenuItemClick} className="block px-4 py-2 text-brown-700 hover:bg-yellow-50 hover:text-yellow-600">Marriage Prediction</Link>
+                </div>
+              )}
+            </div>
+            <div className="relative">
+              <button
+                onClick={() => handleDropdownToggle('calculators')}
+                className="flex items-center gap-1 text-brown-800 hover:text-yellow-600 font-medium transition-colors"
+              >
+                Calculators
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                </svg>
+              </button>
+              {activeDropdown === 'calculators' && (
+                <div className="absolute top-full left-0 mt-2 w-48 bg-white/95 backdrop-blur-md rounded-xl shadow-2xl border-2 border-yellow-200/50 py-2 z-50">
+                  <Link to="/numerology" onClick={handleMenuItemClick} className="block px-4 py-2 text-brown-700 hover:bg-yellow-50 hover:text-yellow-600">Numerology Calculator</Link>
+                  <Link to="/gemstone-calculator" onClick={handleMenuItemClick} className="block px-4 py-2 text-brown-700 hover:bg-yellow-50 hover:text-yellow-600">Gemstone Calculator</Link>
+                  <Link to="/vastu-calculator" onClick={handleMenuItemClick} className="block px-4 py-2 text-brown-700 hover:bg-yellow-50 hover:text-yellow-600">Vastu Calculator</Link>
+                </div>
+              )}
+            </div>
+            <div className="relative">
+              <button
+                onClick={() => handleDropdownToggle('horoscopes')}
+                className="flex items-center gap-1 text-brown-800 hover:text-yellow-600 font-medium transition-colors"
+              >
+                Horoscopes
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                </svg>
+              </button>
+              {activeDropdown === 'horoscopes' && (
+                <div className="absolute top-full left-0 mt-2 w-48 bg-white/95 backdrop-blur-md rounded-xl shadow-2xl border-2 border-yellow-200/50 py-2 z-50">
+                  <Link to="/horoscope" onClick={handleMenuItemClick} className="block px-4 py-2 text-brown-700 hover:bg-yellow-50 hover:text-yellow-600">Daily Horoscope</Link>
+                  <Link to="/weekly-horoscope" onClick={handleMenuItemClick} className="block px-4 py-2 text-brown-700 hover:bg-yellow-50 hover:text-yellow-600">Weekly Horoscope</Link>
+                  <Link to="/monthly-horoscope" onClick={handleMenuItemClick} className="block px-4 py-2 text-brown-700 hover:bg-yellow-50 hover:text-yellow-600">Monthly Horoscope</Link>
+                  <Link to="/yearly-horoscope" onClick={handleMenuItemClick} className="block px-4 py-2 text-brown-700 hover:bg-yellow-50 hover:text-yellow-600">Yearly Horoscope</Link>
+                </div>
+              )}
+            </div>
+            <div className="relative">
+              <button
+                onClick={() => handleDropdownToggle('language')}
+                className="flex items-center gap-1 text-brown-800 hover:text-yellow-600 font-medium transition-colors"
+              >
+                Eng
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                </svg>
+              </button>
+              {activeDropdown === 'language' && (
+                <div className="absolute top-full left-0 mt-2 w-32 bg-white/95 backdrop-blur-md rounded-xl shadow-2xl border-2 border-yellow-200/50 py-2 z-50">
+                  <button onClick={handleMenuItemClick} className="block w-full text-left px-4 py-2 text-brown-700 hover:bg-yellow-50 hover:text-yellow-600">English</button>
+                  <button onClick={handleMenuItemClick} className="block w-full text-left px-4 py-2 text-brown-700 hover:bg-yellow-50 hover:text-yellow-600">हिंदी</button>
+                </div>
+              )}
+            </div>
+
+            {/* Login Button */}
+            <Link
+              to="/login"
+              className="inline-flex items-center gap-2 rounded-full bg-yellow-500 px-6 py-2 text-brown-900 font-semibold shadow-md hover:bg-yellow-400 transition-all duration-200"
+            >
+              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+              </svg>
+              Login
+            </Link>
+          </div>
+
+          {/* Mobile Menu Button */}
+          <div className="lg:hidden flex items-center gap-3 relative">
+            <Link
+              to="/login"
+              className="inline-flex items-center gap-1 rounded-full bg-yellow-500 px-4 py-2 text-brown-900 font-semibold shadow-md hover:bg-yellow-400 transition-all duration-200 text-sm"
+            >
+              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+              </svg>
+              <span className="hidden sm:inline">Login</span>
+            </Link>
+            <button
+              onClick={() => handleDropdownToggle('mobile')}
+              className="p-2 rounded-md text-brown-800 hover:text-yellow-600 hover:bg-yellow-50 transition-colors"
+            >
+              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+              </svg>
+            </button>
+            
+            {/* Mobile Dropdown Menu */}
+            {activeDropdown === 'mobile' && (
+              <div className="absolute top-full right-0 mt-2 w-72 bg-white/95 backdrop-blur-md rounded-xl shadow-2xl border-2 border-yellow-200/50 py-2 z-50 max-h-96 overflow-y-auto">
+                <div className="px-4 py-2 border-b border-yellow-200/30">
+                  <span className="text-sm font-semibold text-yellow-600">Main Menu</span>
+                </div>
+                <Link to="/kundli" onClick={handleMenuItemClick} className="block px-4 py-3 text-brown-700 hover:bg-yellow-50 hover:text-yellow-600 transition-colors">Free Kundli</Link>
+                <Link to="/horoscope" onClick={handleMenuItemClick} className="block px-4 py-3 text-brown-700 hover:bg-yellow-50 hover:text-yellow-600 transition-colors">Daily Horoscope</Link>
+                <Link to="/astrologers" onClick={handleMenuItemClick} className="block px-4 py-3 text-brown-700 hover:bg-yellow-50 hover:text-yellow-600 transition-colors">Best Astrologers</Link>
+                <Link to="/chat" onClick={handleMenuItemClick} className="block px-4 py-3 text-brown-700 hover:bg-yellow-50 hover:text-yellow-600 transition-colors">Chat with Astrologer</Link>
+                <div className="px-4 py-2 border-b border-yellow-200/30 mt-2">
+                  <span className="text-sm font-semibold text-yellow-600">Products</span>
+                </div>
+                <Link to="/gemstones" onClick={handleMenuItemClick} className="block px-4 py-3 text-brown-700 hover:bg-yellow-50 hover:text-yellow-600 transition-colors">Gemstones</Link>
+                <Link to="/store" onClick={handleMenuItemClick} className="block px-4 py-3 text-brown-700 hover:bg-yellow-50 hover:text-yellow-600 transition-colors">All Products</Link>
+                <Link to="/blog" onClick={handleMenuItemClick} className="block px-4 py-3 text-brown-700 hover:bg-yellow-50 hover:text-yellow-600 transition-colors">Blogs</Link>
+                <div className="px-4 py-2 border-b border-yellow-200/30 mt-2">
+                  <span className="text-sm font-semibold text-yellow-600">Account</span>
+                </div>
+                <Link to="/login" onClick={handleMenuItemClick} className="block px-4 py-3 text-brown-700 hover:bg-yellow-50 hover:text-yellow-600 transition-colors">Login</Link>
+                <Link to="/signup" onClick={handleMenuItemClick} className="block px-4 py-3 text-brown-700 hover:bg-yellow-50 hover:text-yellow-600 transition-colors">Sign Up</Link>
+              </div>
+            )}
+          </div>
         </div>
 
-        {/* Login */}
-        <div className="flex items-center gap-3">
-          <Link
-            to="/login"
-            className="inline-flex items-center rounded-2xl bg-yellow-500 px-4 py-2 text-brown-900 font-semibold shadow hover:bg-white hover:text-brown-900 hover:border hover:border-yellow-500"
-          >
-            Login
-          </Link>
+        {/* Bottom Row - Services */}
+        <div className="h-12 flex items-center justify-center border-t border-gray-100">
+          <div className="hidden lg:flex items-center gap-8">
+            <div className="relative">
+              <button
+                onClick={() => handleDropdownToggle('astrologers')}
+                className="flex items-center gap-1 text-brown-800 hover:text-yellow-600 font-medium transition-colors"
+              >
+                Best Astrologers
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                </svg>
+              </button>
+              {activeDropdown === 'astrologers' && (
+                <div className="absolute top-full left-0 mt-2 w-56 bg-white/95 backdrop-blur-md rounded-xl shadow-2xl border-2 border-yellow-200/50 py-2 z-50">
+                  <Link to="/astrologers" onClick={handleMenuItemClick} className="block px-4 py-2 text-brown-700 hover:bg-yellow-50 hover:text-yellow-600">All Astrologers</Link>
+                  <Link to="/top-astrologers" onClick={handleMenuItemClick} className="block px-4 py-2 text-brown-700 hover:bg-yellow-50 hover:text-yellow-600">Top Rated</Link>
+                  <Link to="/vedic-astrologers" onClick={handleMenuItemClick} className="block px-4 py-2 text-brown-700 hover:bg-yellow-50 hover:text-yellow-600">Vedic Astrologers</Link>
+                  <Link to="/numerology-experts" onClick={handleMenuItemClick} className="block px-4 py-2 text-brown-700 hover:bg-yellow-50 hover:text-yellow-600">Numerology Experts</Link>
+                </div>
+              )}
+            </div>
+            <Link
+              to="/chat"
+              className="text-brown-800 hover:text-yellow-600 font-medium transition-colors"
+            >
+              Chat with Astrologer
+            </Link>
+            <Link
+              to="/call"
+              className="text-brown-800 hover:text-yellow-600 font-medium transition-colors"
+            >
+              Talk to Astrologer
+            </Link>
+            <div className="relative">
+              <button
+                onClick={() => handleDropdownToggle('store')}
+                className="flex items-center gap-1 text-brown-800 hover:text-yellow-600 font-medium transition-colors"
+              >
+                Astromall
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                </svg>
+              </button>
+              {activeDropdown === 'store' && (
+                <div className="absolute top-full left-0 mt-2 w-48 bg-white/95 backdrop-blur-md rounded-xl shadow-2xl border-2 border-yellow-200/50 py-2 z-50">
+                  <Link to="/gemstones" onClick={handleMenuItemClick} className="block px-4 py-2 text-brown-700 hover:bg-yellow-50 hover:text-yellow-600">Gemstones</Link>
+                  <Link to="/store" onClick={handleMenuItemClick} className="block px-4 py-2 text-brown-700 hover:bg-yellow-50 hover:text-yellow-600">All Products</Link>
+                  <Link to="/rudraksha" onClick={handleMenuItemClick} className="block px-4 py-2 text-brown-700 hover:bg-yellow-50 hover:text-yellow-600">Rudraksha</Link>
+                  <Link to="/yantras" onClick={handleMenuItemClick} className="block px-4 py-2 text-brown-700 hover:bg-yellow-50 hover:text-yellow-600">Yantras</Link>
+                  <Link to="/puja-items" onClick={handleMenuItemClick} className="block px-4 py-2 text-brown-700 hover:bg-yellow-50 hover:text-yellow-600">Puja Items</Link>
+                </div>
+              )}
+            </div>
+            <div className="relative">
+              <button
+                onClick={() => handleDropdownToggle('services')}
+                className="flex items-center gap-1 text-brown-800 hover:text-yellow-600 font-medium transition-colors"
+              >
+                Our Services
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                </svg>
+              </button>
+              {activeDropdown === 'services' && (
+                <div className="absolute top-full left-0 mt-2 w-48 bg-white/95 backdrop-blur-md rounded-xl shadow-2xl border-2 border-yellow-200/50 py-2 z-50">
+                  <Link to="/services" onClick={handleMenuItemClick} className="block px-4 py-2 text-brown-700 hover:bg-yellow-50 hover:text-yellow-600">All Services</Link>
+                  <Link to="/kundli" onClick={handleMenuItemClick} className="block px-4 py-2 text-brown-700 hover:bg-yellow-50 hover:text-yellow-600">Free Kundli</Link>
+                  <Link to="/horoscope" onClick={handleMenuItemClick} className="block px-4 py-2 text-brown-700 hover:bg-yellow-50 hover:text-yellow-600">Horoscope</Link>
+                  <Link to="/vastu" onClick={handleMenuItemClick} className="block px-4 py-2 text-brown-700 hover:bg-yellow-50 hover:text-yellow-600">Vastu Consultation</Link>
+                </div>
+              )}
+            </div>
+            <Link
+              to="/store"
+              className="text-brown-800 hover:text-yellow-600 font-medium transition-colors"
+            >
+              RUDRAGURU Store
+            </Link>
+            <div className="relative">
+              <button
+                onClick={() => handleDropdownToggle('blog')}
+                className="flex items-center gap-1 text-brown-800 hover:text-yellow-600 font-medium transition-colors"
+              >
+                Blogs
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                </svg>
+              </button>
+              {activeDropdown === 'blog' && (
+                <div className="absolute top-full left-0 mt-2 w-48 bg-white/95 backdrop-blur-md rounded-xl shadow-2xl border-2 border-yellow-200/50 py-2 z-50">
+                  <Link to="/blog" onClick={handleMenuItemClick} className="block px-4 py-2 text-brown-700 hover:bg-yellow-50 hover:text-yellow-600">All Articles</Link>
+                  <Link to="/write-article" onClick={handleMenuItemClick} className="block px-4 py-2 text-brown-700 hover:bg-yellow-50 hover:text-yellow-600">Write Article</Link>
+                  <Link to="/become-author" onClick={handleMenuItemClick} className="block px-4 py-2 text-brown-700 hover:bg-yellow-50 hover:text-yellow-600">Become Author</Link>
+                </div>
+              )}
+            </div>
+          </div>
         </div>
       </nav>
+
+      {/* Click outside to close dropdowns */}
+      {activeDropdown && (
+        <div
+          className="fixed inset-0 z-40"
+          onClick={handleDropdownClose}
+        />
+      )}
     </header>
   );
 }

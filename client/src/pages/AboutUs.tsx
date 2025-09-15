@@ -12,7 +12,9 @@ interface SectionProps {
 }
 
 const Section = ({ children, className = "" }: SectionProps) => (
-  <section className={`mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 ${className}`}>{children}</section>
+  <section className={`mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 ${className}`}>
+    {children}
+  </section>
 );
 
 export default function AboutUs() {
@@ -24,15 +26,24 @@ export default function AboutUs() {
   }, []);
 
   return (
-    <main className="relative bg-white overflow-hidden">
+    <main className="relative bg-transparent overflow-hidden">
       {/* Animated, subtle brownish background */}
-      <div aria-hidden="true" className="pointer-events-none absolute inset-0 -z-10">
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-0 -z-10"
+      >
         <div className="absolute -top-24 -left-24 h-72 w-72 rounded-full bg-[rgba(120,72,32,0.10)] blur-3xl animate-[float1_12s_ease-in-out_infinite]" />
         <div className="absolute top-1/3 -right-24 h-96 w-96 rounded-full bg-[rgba(179,120,58,0.10)] blur-3xl animate-[float2_14s_ease-in-out_infinite]" />
         <div className="absolute bottom-0 left-1/4 h-72 w-72 rounded-full bg-[rgba(90,56,28,0.10)] blur-3xl animate-[float3_16s_ease-in-out_infinite]" />
-        <div className="absolute left-12 top-28 text-[rgba(179,120,58,0.45)] animate-[twinkle_3.5s_ease-in-out_infinite]">✦</div>
-        <div className="absolute right-16 top-40 text-[rgba(120,72,32,0.40)] animate-[twinkle_4.2s_ease-in-out_infinite]">✧</div>
-        <div className="absolute left-1/3 bottom-24 text-[rgba(179,120,58,0.42)] animate-[twinkle_5s_ease-in-out_infinite]">✶</div>
+        <div className="absolute left-12 top-28 text-[rgba(179,120,58,0.45)] animate-[twinkle_3.5s_ease-in-out_infinite]">
+          ✦
+        </div>
+        <div className="absolute right-16 top-40 text-[rgba(120,72,32,0.40)] animate-[twinkle_4.2s_ease-in-out_infinite]">
+          ✧
+        </div>
+        <div className="absolute left-1/3 bottom-24 text-[rgba(179,120,58,0.42)] animate-[twinkle_5s_ease-in-out_infinite]">
+          ✶
+        </div>
       </div>
 
       <style>{`
@@ -54,14 +65,18 @@ export default function AboutUs() {
               mounted ? "opacity-100 translate-y-0" : "opacity-2 translate-y-2"
             }`}
           >
-            RUDRAGURU is a company dedicated to providing Astrology sessions or guidance,
-            high‑quality Rudraksha beads and certified gemstones to our customers. We believe
-            in the power of these beads and gemstones to bring about positive changes in people’s lives.
+            RUDRAGURU is a company dedicated to providing Astrology sessions or
+            guidance, high‑quality Rudraksha beads and certified gemstones to
+            our customers. We believe in the power of these beads and gemstones
+            to bring about positive changes in people’s lives.
           </p>
 
           <img
             src="/images/about/team-hero.jpg"
-            onError={(e) => { e.currentTarget.src = "https://avatar-placeholder.iran.liara.run/public/20"; }}
+            onError={(e) => {
+              e.currentTarget.src =
+                "https://avatar-placeholder.iran.liara.run/public/20";
+            }}
             alt="Our Team"
             className="w-full max-w-md rounded-2xl object-cover shadow-md transition-transform duration-300 hover:scale-[1.02]"
           />
@@ -70,7 +85,9 @@ export default function AboutUs() {
 
       {/* Why our team is best – screenshot style feature cards */}
       <Section className="pb-12">
-        <h2 className={`text-3xl sm:text-4xl font-bold mb-6 ${gradHead}`}>Why Our Team Stands Out</h2>
+        <h2 className={`text-3xl sm:text-4xl font-bold mb-6 ${gradHead}`}>
+          Why Our Team Stands Out
+        </h2>
         <div className="grid gap-6 md:grid-cols-3">
           <FeatureCard
             icon="🪬"
@@ -107,19 +124,36 @@ export default function AboutUs() {
 
       {/* Orders on Hold / Common reasons */}
       <Section className="pb-12">
-        <h2 className={`text-3xl sm:text-4xl font-bold mb-6 ${gradHead}`}>How to Not Put Your Orders on Hold</h2>
+        <h2 className={`text-3xl sm:text-4xl font-bold mb-6 ${gradHead}`}>
+          How to Not Put Your Orders on Hold
+        </h2>
         <div className="grid lg:grid-cols-2 gap-6">
           {/* Left: reasons */}
           <div className="rounded-2xl border border-yellow-400 bg-white p-6 transition duration-300 hover:shadow-xl hover:-translate-y-0.5">
             <div className="relative mb-9">
-              <div className="absolute -top-4 left-0 h-10 w-10 rounded-xl bg-yellow-100 text-yellow-700 flex items-center justify-center shadow-sm">⏳</div>
+              <div className="absolute -top-4 left-0 h-10 w-10 rounded-xl bg-yellow-100 text-yellow-700 flex items-center justify-center shadow-sm">
+                ⏳
+              </div>
             </div>
-            <h3 className="text-xl font-semibold text-brown-900 mb-3">Common Reasons Orders Get Delayed</h3>
+            <h3 className="text-xl font-semibold text-brown-900 mb-3">
+              Common Reasons Orders Get Delayed
+            </h3>
             <ul className="space-y-2 text-brown-900">
-              <li className="flex items-start gap-3"><span className="text-yellow-600 mt-1">•</span> Incorrect or incomplete shipping details</li>
-              <li className="flex items-start gap-3"><span className="text-yellow-600 mt-1">•</span> Payment issues (pending transactions/orders)</li>
-              <li className="flex items-start gap-3"><span className="text-yellow-600 mt-1">•</span> Ring size issue</li>
-              <li className="flex items-start gap-3"><span className="text-yellow-600 mt-1">•</span> Special orders requiring customization or energization</li>
+              <li className="flex items-start gap-3">
+                <span className="text-yellow-600 mt-1">•</span> Incorrect or
+                incomplete shipping details
+              </li>
+              <li className="flex items-start gap-3">
+                <span className="text-yellow-600 mt-1">•</span> Payment issues
+                (pending transactions/orders)
+              </li>
+              <li className="flex items-start gap-3">
+                <span className="text-yellow-600 mt-1">•</span> Ring size issue
+              </li>
+              <li className="flex items-start gap-3">
+                <span className="text-yellow-600 mt-1">•</span> Special orders
+                requiring customization or energization
+              </li>
             </ul>
             <div className="mt-4 h-1 w-16 rounded-full bg-gradient-to-r from-yellow-300 to-yellow-500"></div>
           </div>
@@ -127,14 +161,30 @@ export default function AboutUs() {
           {/* Right: ensure smooth */}
           <div className="rounded-2xl border border-yellow-400 bg-white p-6 transition duration-300 hover:shadow-xl hover:-translate-y-0.5">
             <div className="relative mb-9">
-              <div className="absolute -top-4 left-0 h-10 w-10 rounded-xl bg-yellow-100 text-yellow-700 flex items-center justify-center shadow-sm">⚡</div>
+              <div className="absolute -top-4 left-0 h-10 w-10 rounded-xl bg-yellow-100 text-yellow-700 flex items-center justify-center shadow-sm">
+                ⚡
+              </div>
             </div>
-            <h3 className="text-xl font-semibold text-brown-900 mb-3">Ensure a Smooth & Fast Delivery!</h3>
+            <h3 className="text-xl font-semibold text-brown-900 mb-3">
+              Ensure a Smooth & Fast Delivery!
+            </h3>
             <ul className="space-y-2 text-brown-900">
-              <li className="flex items-start gap-3"><span className="text-yellow-600 mt-1">•</span> Double‑check your shipping address & details</li>
-              <li className="flex items-start gap-3"><span className="text-yellow-600 mt-1">•</span> Try to collect minimum 20% advance</li>
-              <li className="flex items-start gap-3"><span className="text-yellow-600 mt-1">•</span> Offer adjustable rings to avoid sizing delays</li>
-              <li className="flex items-start gap-3"><span className="text-yellow-600 mt-1">•</span> Pre‑book energized gemstones to save time</li>
+              <li className="flex items-start gap-3">
+                <span className="text-yellow-600 mt-1">•</span> Double‑check
+                your shipping address & details
+              </li>
+              <li className="flex items-start gap-3">
+                <span className="text-yellow-600 mt-1">•</span> Try to collect
+                minimum 20% advance
+              </li>
+              <li className="flex items-start gap-3">
+                <span className="text-yellow-600 mt-1">•</span> Offer adjustable
+                rings to avoid sizing delays
+              </li>
+              <li className="flex items-start gap-3">
+                <span className="text-yellow-600 mt-1">•</span> Pre‑book
+                energized gemstones to save time
+              </li>
             </ul>
             <div className="mt-4 h-1 w-16 rounded-full bg-gradient-to-r from-yellow-300 to-yellow-500"></div>
           </div>
@@ -143,7 +193,9 @@ export default function AboutUs() {
 
       {/* Meet Our Team (top image, column layout) */}
       <Section className="pb-12">
-        <h2 className={`text-3xl sm:text-4xl font-bold mb-6 ${gradHead}`}>Meet Our Team</h2>
+        <h2 className={`text-3xl sm:text-4xl font-bold mb-6 ${gradHead}`}>
+          Meet Our Team
+        </h2>
         <div className="grid gap-6 md:grid-cols-3">
           {[
             {
@@ -189,13 +241,24 @@ export default function AboutUs() {
       {/* CTA */}
       <Section className="py-16">
         <div className="rounded-2xl border border-yellow-400 p-8 text-center bg-white transition-all duration-300 hover:shadow-xl hover:-translate-y-0.5">
-          <h3 className={`text-2xl sm:text-3xl font-bold ${gradHead}`}>Ready to get guidance?</h3>
-          <p className="mt-2 text-brown-800">Talk to verified astrologers or order certified gemstones and Rudraksha.</p>
+          <h3 className={`text-2xl sm:text-3xl font-bold ${gradHead}`}>
+            Ready to get guidance?
+          </h3>
+          <p className="mt-2 text-brown-800">
+            Talk to verified astrologers or order certified gemstones and
+            Rudraksha.
+          </p>
           <div className="mt-5 flex justify-center gap-3">
-            <Link to="/astrologers" className="inline-flex items-center rounded-xl bg-yellow-500 px-6 py-3 text-brown-900 font-semibold shadow hover:bg-white hover:text-brown-900 hover:border hover:border-yellow-500 transition">
+            <Link
+              to="/astrologers"
+              className="inline-flex items-center rounded-xl bg-yellow-500 px-6 py-3 text-brown-900 font-semibold shadow hover:bg-white hover:text-brown-900 hover:border hover:border-yellow-500 transition"
+            >
               Consult Now
             </Link>
-            <Link to="/gemstones" className="inline-flex items-center rounded-xl border border-brown-300 px-6 py-3 text-yellow-600 font-semibold hover:bg-brown-50 transition">
+            <Link
+              to="/gemstones"
+              className="inline-flex items-center rounded-xl border border-brown-300 px-6 py-3 text-yellow-600 font-semibold hover:bg-brown-50 transition"
+            >
               Explore Gemstones
             </Link>
           </div>
@@ -228,22 +291,49 @@ function FeatureCard({ icon, title, text }: FeatureCardProps) {
 /* FAQ accordion */
 function FAQSection() {
   const items = [
-    { q: "Which details are needed for an accurate kundli or report?", a: "Accurate date, time, and place of birth. If time is unknown, a rectification session can narrow it down for better accuracy." },
-    { q: "How soon can a gemstone start showing results?", a: "Results vary by chart and intent. Many experience subtle changes within weeks; energized and correctly worn stones may show faster alignment." },
-    { q: "Are Rudraksha beads suitable for everyone?", a: "Most beads are universally beneficial when chosen by a professional. We recommend a brief consultation to match the bead to your goals." },
-    { q: "Do remedies interfere with religious beliefs?", a: "Remedies are supportive, non‑coercive practices. They complement diverse beliefs and can be personalized to comfort and faith." },
-    { q: "Can sessions be done online at late hours?", a: "Yes. Many astrologers are 24×7 available via chat and call. Scheduling ensures fast response and dedicated time." },
-    { q: "What if the ring size or product customization is wrong?", a: "Contact support immediately. Adjustable options and pre‑measurement help avoid delays; exchanges follow quality checks and policy." },
+    {
+      q: "Which details are needed for an accurate kundli or report?",
+      a: "Accurate date, time, and place of birth. If time is unknown, a rectification session can narrow it down for better accuracy.",
+    },
+    {
+      q: "How soon can a gemstone start showing results?",
+      a: "Results vary by chart and intent. Many experience subtle changes within weeks; energized and correctly worn stones may show faster alignment.",
+    },
+    {
+      q: "Are Rudraksha beads suitable for everyone?",
+      a: "Most beads are universally beneficial when chosen by a professional. We recommend a brief consultation to match the bead to your goals.",
+    },
+    {
+      q: "Do remedies interfere with religious beliefs?",
+      a: "Remedies are supportive, non‑coercive practices. They complement diverse beliefs and can be personalized to comfort and faith.",
+    },
+    {
+      q: "Can sessions be done online at late hours?",
+      a: "Yes. Many astrologers are 24×7 available via chat and call. Scheduling ensures fast response and dedicated time.",
+    },
+    {
+      q: "What if the ring size or product customization is wrong?",
+      a: "Contact support immediately. Adjustable options and pre‑measurement help avoid delays; exchanges follow quality checks and policy.",
+    },
   ];
 
   const [open, setOpen] = useState<number | null>(0);
 
   return (
     <Section className="py-12">
-      <h2 className={`text-3xl sm:text-4xl font-bold mb-6 ${gradHead}`}>Frequently Asked Questions</h2>
+      <h2 className={`text-3xl sm:text-4xl font-bold mb-6 ${gradHead}`}>
+        Frequently Asked Questions
+      </h2>
       <div className="rounded-2xl border border-yellow-300 bg-white divide-y divide-yellow-200 transition duration-300 hover:shadow-md">
         {items.map((item, idx) => (
-          <AccordionItem key={idx} idx={idx} open={open} setOpen={setOpen} q={item.q} a={item.a} />
+          <AccordionItem
+            key={idx}
+            idx={idx}
+            open={open}
+            setOpen={setOpen}
+            q={item.q}
+            a={item.a}
+          />
         ))}
       </div>
     </Section>
@@ -267,9 +357,21 @@ function AccordionItem({ idx, open, setOpen, q, a }: AccordionItemProps) {
         className="w-full text-left flex items-center justify-between gap-3"
       >
         <span className="font-semibold text-brown-900">{q}</span>
-        <span className={`text-yellow-600 transform transition-transform ${isOpen ? "rotate-45" : ""}`}>✦</span>
+        <span
+          className={`text-yellow-600 transform transition-transform ${
+            isOpen ? "rotate-45" : ""
+          }`}
+        >
+          ✦
+        </span>
       </button>
-      <div className={`grid transition-all duration-300 ease-in-out ${isOpen ? "grid-rows-[1fr] opacity-100 mt-2" : "grid-rows-[0fr] opacity-0"} overflow-hidden`}>
+      <div
+        className={`grid transition-all duration-300 ease-in-out ${
+          isOpen
+            ? "grid-rows-[1fr] opacity-100 mt-2"
+            : "grid-rows-[0fr] opacity-0"
+        } overflow-hidden`}
+      >
         <div className="text-brown-800 text-sm">{a}</div>
       </div>
     </div>
