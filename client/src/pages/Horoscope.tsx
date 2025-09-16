@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import { Palette, Hash, Calendar, Gem, Sparkles, Star } from "lucide-react";
 
 // Gradient heading
 const gradHead =
@@ -16,7 +17,7 @@ const Section = ({ children, className = "" }: SectionProps) => (
 
 const ZODIAC_SIGNS = [
   { name: "Aries", date: "Mar 21 - Apr 19", symbol: "♈", color: "bg-red-500" },
-  { name: "Taurus", date: "Apr 20 - May 20", symbol: "♉", color: "bg-green-500" },
+  { name: "Taurus", date: "Apr 20 - May 20", symbol: "♉", color: "bg-yellow-500" },
   { name: "Gemini", date: "May 21 - Jun 20", symbol: "♊", color: "bg-yellow-500" },
   { name: "Cancer", date: "Jun 21 - Jul 22", symbol: "♋", color: "bg-blue-500" },
   { name: "Leo", date: "Jul 23 - Aug 22", symbol: "♌", color: "bg-orange-500" },
@@ -36,43 +37,56 @@ export default function Horoscope() {
   const [selectedPeriod, setSelectedPeriod] = useState("Today");
   const [userBirthDate, setUserBirthDate] = useState("");
 
-  const getHoroscopeData = (sign: string, period: string) => {
-    const horoscopes = {
-      Aries: {
-        Today: {
-          overall: 4,
-          love: 3,
-          career: 5,
-          health: 4,
-          finance: 3,
-          text: "Today brings opportunities for leadership and new beginnings. Your energy is high, making it perfect for starting new projects. In love, be patient with your partner. Career prospects look promising with potential recognition coming your way."
-        },
-        Tomorrow: {
-          overall: 3,
-          love: 4,
-          career: 4,
-          health: 3,
-          finance: 4,
-          text: "Tomorrow requires more patience and careful planning. Avoid impulsive decisions, especially in financial matters. Your relationships will benefit from open communication."
-        },
-        "This Week": {
-          overall: 4,
-          love: 4,
-          career: 4,
-          health: 4,
-          finance: 3,
-          text: "This week brings a mix of challenges and opportunities. Focus on your goals and don't let minor setbacks discourage you. Mid-week is particularly favorable for important decisions."
-        }
-      }
-    };
-    
-    return horoscopes[sign as keyof typeof horoscopes]?.[period as keyof typeof horoscopes.Aries] || {
-      overall: 3,
-      love: 3,
-      career: 3,
-      health: 3,
-      finance: 3,
-      text: "Your horoscope is being prepared. Please check back soon for detailed predictions."
+  interface DailySection { title: string; body: string; }
+  interface DailyHoroscope { sections: DailySection[]; lucky: string; }
+
+  const getDaily = (sign: string): DailyHoroscope => {
+    if (sign === "Aries") {
+      return {
+        lucky: "Lucky numbers 3, 9, 21. Best hours: afternoon. Colors: red, orange.",
+        sections: [
+          { title: "Overview", body: "Aries, the pioneering fire sign ruled by Mars, embodies courage, leadership, and boundless energy. Your natural enthusiasm drives bold beginnings and decisive action today." },
+          { title: "Love & Relationships", body: "Romantic sparks ignite through confident expression and spontaneous gestures. Singles attract those who admire your authenticity; couples deepen bonds via shared adventure." },
+          { title: "Personal Life", body: "Powerful opportunities for reinvention appear. Make choices that align with your true self and watch growth accelerate." },
+          { title: "Career & Finance", body: "Breakthroughs arrive through initiative. Showcase leadership on challenging tasks and leverage key networking moments this evening." },
+          { title: "Health & Wellness", body: "Midday energy peaks—ideal for vigorous workouts. Hydrate and favor strength‑building routines." },
+          { title: "Emotions & Mind", body: "Passion runs high; use direct communication to resolve issues. Channel intensity into constructive action or creativity." },
+          { title: "Lucky Insights", body: "Fortune favors competitive settings and new ventures. Trust courageous instincts." },
+          { title: "Travel & Movement", body: "Short, spontaneous trips are favored. Explore nearby routes and opportunities." },
+          { title: "Remedies", body: "Wear red or orange; carry carnelian; chant 'Om Angarakaya Namaha'; exercise at sunrise." }
+        ]
+      };
+    }
+    if (sign === "Taurus") {
+      return {
+        lucky: "Lucky numbers 6, 15, 24. Best window 3‑5 PM. Colors: green, pink.",
+        sections: [
+          { title: "Overview", body: "Taurus, Venus blesses stability, comfort, and steady progress today." },
+          { title: "Love & Relationships", body: "Nurturing connection grows through simple shared pleasures and sincere dialogue." },
+          { title: "Personal Life", body: "Focus on strong foundations; patient effort shows tangible results." },
+          { title: "Career & Finance", body: "Consistency and practical solutions win recognition. Lunch networking helps." },
+          { title: "Health & Wellness", body: "Keep routine steady; soothe neck/throat; herbal teas support balance." },
+          { title: "Emotions & Mind", body: "Gentle attention to family matters restores peace." },
+          { title: "Lucky Insights", body: "Practical choices over speculation; harmony brings fortune." },
+          { title: "Travel & Movement", body: "Choose leisurely routes and nature‑rich stops." },
+          { title: "Remedies", body: "Wear earthy greens; carry rose quartz; chant 'Om Shukraya Namaha'." }
+        ]
+      };
+    }
+    // Generic template for other signs (can be expanded similarly)
+    return {
+      lucky: "Fortune favors calm focus and clear communication today.",
+      sections: [
+        { title: "Overview", body: `${sign} energy supports progress through mindful action and balance.` },
+        { title: "Love & Relationships", body: "Honest conversation strengthens bonds; singles connect through shared values." },
+        { title: "Personal Life", body: "Small disciplined steps produce meaningful gains." },
+        { title: "Career & Finance", body: "Collaborative efforts and thoughtful planning bring steady results." },
+        { title: "Health & Wellness", body: "Favor routine movement, hydration, and restorative sleep." },
+        { title: "Emotions & Mind", body: "Name feelings clearly; channel them into creative or practical outlets." },
+        { title: "Lucky Insights", body: "Keep decisions simple; align with long‑term intent." },
+        { title: "Travel & Movement", body: "Short local trips run smoothly; avoid unnecessary rush." },
+        { title: "Remedies", body: "Light incense, wear your sign color, and practice 5 minutes of breathwork." }
+      ]
     };
   };
 
@@ -81,12 +95,12 @@ export default function Horoscope() {
   };
 
   const getRatingColor = (rating: number) => {
-    if (rating >= 4) return "text-green-500";
+    if (rating >= 4) return "text-yellow-500";
     if (rating >= 3) return "text-yellow-500";
     return "text-red-500";
   };
 
-  const horoscopeData = getHoroscopeData(selectedSign, selectedPeriod);
+  const horoscopeDaily = getDaily(selectedSign);
 
   return (
     <main className="relative bg-transparent overflow-hidden">
@@ -95,9 +109,9 @@ export default function Horoscope() {
         <div className="absolute -top-24 -left-24 h-72 w-72 rounded-full bg-[rgba(120,72,32,0.10)] blur-3xl animate-[float1_12s_ease-in-out_infinite]" />
         <div className="absolute top-1/3 -right-24 h-96 w-96 rounded-full bg-[rgba(179,120,58,0.10)] blur-3xl animate-[float2_14s_ease-in-out_infinite]" />
         <div className="absolute bottom-0 left-1/4 h-72 w-72 rounded-full bg-[rgba(90,56,28,0.10)] blur-3xl animate-[float3_16s_ease-in-out_infinite]" />
-        <div className="absolute left-12 top-28 text-[rgba(179,120,58,0.45)] animate-[twinkle_3.5s_ease-in-out_infinite]">✦</div>
-        <div className="absolute right-16 top-40 text-[rgba(120,72,32,0.40)] animate-[twinkle_4.2s_ease-in-out_infinite]">✧</div>
-        <div className="absolute left-1/3 bottom-24 text-[rgba(179,120,58,0.42)] animate-[twinkle_5s_ease-in-out_infinite]">✶</div>
+        <div className="absolute left-12 top-28 text-[rgba(179,120,58,0.45)] animate-[twinkle_3.5s_ease-in-out_infinite]"><Sparkles className="w-4 h-4" /></div>
+        <div className="absolute right-16 top-40 text-[rgba(120,72,32,0.40)] animate-[twinkle_4.2s_ease-in-out_infinite]"><Sparkles className="w-4 h-4" /></div>
+        <div className="absolute left-1/3 bottom-24 text-[rgba(179,120,58,0.42)] animate-[twinkle_5s_ease-in-out_infinite]"><Sparkles className="w-4 h-4" /></div>
       </div>
 
       <style>{`
@@ -108,7 +122,7 @@ export default function Horoscope() {
       `}</style>
 
       {/* Hero Section */}
-      <Section className="pt-28 pb-12">
+      <Section className="pt-20 pb-12">
         <div className="text-center">
           <h1 className={`text-4xl sm:text-6xl font-extrabold mb-6 ${gradHead}`}>
             Daily Horoscope
@@ -206,52 +220,18 @@ export default function Horoscope() {
               </div>
             </div>
 
-            {/* Overall Rating */}
-            <div className="text-center mb-8">
-              <div className="text-4xl mb-2">
-                <span className={getRatingColor(horoscopeData.overall)}>
-                  {getRatingStars(horoscopeData.overall)}
-                </span>
-              </div>
-              <p className="text-brown-600">Overall Rating: {horoscopeData.overall}/5</p>
-            </div>
-
-            {/* Detailed Ratings */}
-            <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4 mb-8">
-              <div className="text-center p-4 bg-yellow-50 rounded-xl">
-                <div className="text-2xl mb-2">💕</div>
-                <h4 className="font-semibold text-brown-900">Love</h4>
-                <div className={`text-lg ${getRatingColor(horoscopeData.love)}`}>
-                  {getRatingStars(horoscopeData.love)}
+            {/* Detailed Sections */}
+            <div className="space-y-6">
+              {horoscopeDaily.sections.map((s) => (
+                <div key={s.title} className="bg-yellow-50 p-6 rounded-xl">
+                  <h3 className={`text-xl font-bold mb-2 ${gradHead}`}>{s.title}</h3>
+                  <p className="text-brown-800 leading-relaxed">{s.body}</p>
                 </div>
+              ))}
+              <div className="bg-white border border-yellow-200 p-6 rounded-xl">
+                <h4 className="font-semibold text-brown-900 mb-1">Lucky Insights</h4>
+                <p className="text-brown-800">{horoscopeDaily.lucky}</p>
               </div>
-              <div className="text-center p-4 bg-yellow-50 rounded-xl">
-                <div className="text-2xl mb-2">💼</div>
-                <h4 className="font-semibold text-brown-900">Career</h4>
-                <div className={`text-lg ${getRatingColor(horoscopeData.career)}`}>
-                  {getRatingStars(horoscopeData.career)}
-                </div>
-              </div>
-              <div className="text-center p-4 bg-yellow-50 rounded-xl">
-                <div className="text-2xl mb-2">🏥</div>
-                <h4 className="font-semibold text-brown-900">Health</h4>
-                <div className={`text-lg ${getRatingColor(horoscopeData.health)}`}>
-                  {getRatingStars(horoscopeData.health)}
-                </div>
-              </div>
-              <div className="text-center p-4 bg-yellow-50 rounded-xl">
-                <div className="text-2xl mb-2">💰</div>
-                <h4 className="font-semibold text-brown-900">Finance</h4>
-                <div className={`text-lg ${getRatingColor(horoscopeData.finance)}`}>
-                  {getRatingStars(horoscopeData.finance)}
-                </div>
-              </div>
-            </div>
-
-            {/* Horoscope Text */}
-            <div className="bg-yellow-50 p-6 rounded-xl">
-              <h3 className={`text-xl font-bold mb-4 ${gradHead}`}>Your Prediction</h3>
-              <p className="text-brown-800 leading-relaxed text-lg">{horoscopeData.text}</p>
             </div>
           </div>
         </div>
@@ -264,22 +244,22 @@ export default function Horoscope() {
         </h2>
         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
           <div className="rounded-2xl border border-yellow-400 bg-white p-6 text-center">
-            <div className="text-4xl mb-3">🎨</div>
+            <Palette className="w-8 h-8 text-pink-500 mx-auto mb-3" />
             <h3 className="font-bold text-brown-900 mb-2">Lucky Color</h3>
             <p className="text-brown-600">Red & Gold</p>
           </div>
           <div className="rounded-2xl border border-yellow-400 bg-white p-6 text-center">
-            <div className="text-4xl mb-3">🔢</div>
+            <Hash className="w-8 h-8 text-blue-500 mx-auto mb-3" />
             <h3 className="font-bold text-brown-900 mb-2">Lucky Number</h3>
             <p className="text-brown-600">1, 8, 17</p>
           </div>
           <div className="rounded-2xl border border-yellow-400 bg-white p-6 text-center">
-            <div className="text-4xl mb-3">📅</div>
+            <Calendar className="w-8 h-8 text-yellow-500 mx-auto mb-3" />
             <h3 className="font-bold text-brown-900 mb-2">Lucky Day</h3>
             <p className="text-brown-600">Tuesday</p>
           </div>
           <div className="rounded-2xl border border-yellow-400 bg-white p-6 text-center">
-            <div className="text-4xl mb-3">💎</div>
+            <Gem className="w-8 h-8 text-purple-500 mx-auto mb-3" />
             <h3 className="font-bold text-brown-900 mb-2">Lucky Gemstone</h3>
             <p className="text-brown-600">Ruby</p>
           </div>

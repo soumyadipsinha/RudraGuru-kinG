@@ -94,7 +94,7 @@ export default function WriteArticle() {
       `}</style>
 
       {/* Header */}
-      <Section className="pt-28 pb-8">
+      <Section className="pt-20 pb-8">
         <div className="text-center">
           <h1 className={`text-4xl sm:text-5xl font-extrabold mb-4 ${gradHead}`}>
             Write an Article

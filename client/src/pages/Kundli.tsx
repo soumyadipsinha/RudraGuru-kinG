@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import { Star, Sparkles, Gem, Circle, BarChart3, Home, Check, Moon, ArrowUp } from "lucide-react";
 
 // Gradient heading
 const gradHead =
@@ -20,6 +21,7 @@ interface KundliForm {
   timeOfBirth: string;
   placeOfBirth: string;
   gender: string;
+  phone: string;
   email: string;
 }
 
@@ -30,6 +32,7 @@ export default function Kundli() {
     timeOfBirth: "",
     placeOfBirth: "",
     gender: "",
+    phone: "",
     email: ""
   });
   const [isGenerating, setIsGenerating] = useState(false);
@@ -90,9 +93,9 @@ export default function Kundli() {
         <div className="absolute -top-24 -left-24 h-72 w-72 rounded-full bg-[rgba(120,72,32,0.10)] blur-3xl animate-[float1_12s_ease-in-out_infinite]" />
         <div className="absolute top-1/3 -right-24 h-96 w-96 rounded-full bg-[rgba(179,120,58,0.10)] blur-3xl animate-[float2_14s_ease-in-out_infinite]" />
         <div className="absolute bottom-0 left-1/4 h-72 w-72 rounded-full bg-[rgba(90,56,28,0.10)] blur-3xl animate-[float3_16s_ease-in-out_infinite]" />
-        <div className="absolute left-12 top-28 text-[rgba(179,120,58,0.45)] animate-[twinkle_3.5s_ease-in-out_infinite]">✦</div>
-        <div className="absolute right-16 top-40 text-[rgba(120,72,32,0.40)] animate-[twinkle_4.2s_ease-in-out_infinite]">✧</div>
-        <div className="absolute left-1/3 bottom-24 text-[rgba(179,120,58,0.42)] animate-[twinkle_5s_ease-in-out_infinite]">✶</div>
+        <div className="absolute left-12 top-28 text-[rgba(179,120,58,0.45)] animate-[twinkle_3.5s_ease-in-out_infinite]"><Sparkles className="w-4 h-4" /></div>
+        <div className="absolute right-16 top-40 text-[rgba(120,72,32,0.40)] animate-[twinkle_4.2s_ease-in-out_infinite]"><Sparkles className="w-4 h-4" /></div>
+        <div className="absolute left-1/3 bottom-24 text-[rgba(179,120,58,0.42)] animate-[twinkle_5s_ease-in-out_infinite]"><Sparkles className="w-4 h-4" /></div>
       </div>
 
       <style>{`
@@ -103,7 +106,7 @@ export default function Kundli() {
       `}</style>
 
       {/* Hero Section */}
-      <Section className="pt-28 pb-12">
+      <Section className="pt-20 pb-12">
         <div className="text-center">
           <h1 className={`text-4xl sm:text-6xl font-extrabold mb-6 ${gradHead}`}>
             Free Kundli Generation
@@ -205,6 +208,25 @@ export default function Kundli() {
                     </select>
                   </div>
                   <div>
+                    <label htmlFor="phone" className="block text-sm font-medium text-brown-900 mb-2">
+                      Phone Number *
+                    </label>
+                    <input
+                      type="tel"
+                      id="phone"
+                      name="phone"
+                      value={formData.phone}
+                      onChange={handleInputChange}
+                      placeholder="e.g. 9876543210"
+                      pattern="[0-9]{10}"
+                      className="w-full rounded-xl border border-yellow-400 p-3 focus:ring-2 focus:ring-yellow-500 focus:border-transparent"
+                      required
+                    />
+                  </div>
+                </div>
+
+                <div className="grid gap-4 md:grid-cols-2">
+                  <div>
                     <label htmlFor="email" className="block text-sm font-medium text-brown-900 mb-2">
                       Email Address
                     </label>
@@ -217,6 +239,9 @@ export default function Kundli() {
                       placeholder="your@email.com"
                       className="w-full rounded-xl border border-yellow-400 p-3 focus:ring-2 focus:ring-yellow-500 focus:border-transparent"
                     />
+                  </div>
+                  <div className="text-sm text-brown-700 self-end">
+                    We will send your free Kundli link to your phone number.
                   </div>
                 </div>
 
@@ -251,8 +276,8 @@ export default function Kundli() {
           <div className="max-w-6xl mx-auto">
             {/* Success Message */}
             <div className="text-center mb-8">
-              <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                <span className="text-green-600 text-2xl">✓</span>
+              <div className="w-16 h-16 bg-transparent border-2 border-yellow-400 rounded-full flex items-center justify-center mx-auto mb-4">
+                <Check className="w-6 h-6 text-yellow-600" />
               </div>
               <h2 className={`text-3xl font-bold mb-2 ${gradHead}`}>Kundli Generated Successfully!</h2>
               <p className="text-brown-600">Here's your detailed birth chart analysis</p>
@@ -266,12 +291,12 @@ export default function Kundli() {
                 <p className="text-brown-600">{kundliData.zodiacSign}</p>
               </div>
               <div className="rounded-2xl border border-yellow-400 bg-white p-6 text-center">
-                <div className="text-3xl mb-2">🌙</div>
+                <Moon className="w-8 h-8 text-blue-500 mx-auto mb-2" />
                 <h3 className="font-bold text-brown-900">Moon Sign</h3>
                 <p className="text-brown-600">{kundliData.moonSign}</p>
               </div>
               <div className="rounded-2xl border border-yellow-400 bg-white p-6 text-center">
-                <div className="text-3xl mb-2">⬆️</div>
+                <ArrowUp className="w-8 h-8 text-green-500 mx-auto mb-2" />
                 <h3 className="font-bold text-brown-900">Rising Sign</h3>
                 <p className="text-brown-600">{kundliData.risingSign}</p>
               </div>
@@ -335,32 +360,32 @@ export default function Kundli() {
         </h2>
         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
           <div className="rounded-2xl border border-yellow-400 bg-white p-6 text-center">
-            <div className="text-4xl mb-4">🌟</div>
+            <Star className="w-8 h-8 text-yellow-500 mx-auto mb-4" />
             <h3 className="font-bold text-brown-900 mb-2">Planetary Positions</h3>
             <p className="text-brown-600">Detailed analysis of all planets and their positions in your birth chart</p>
           </div>
           <div className="rounded-2xl border border-yellow-400 bg-white p-6 text-center">
-            <div className="text-4xl mb-4">🏠</div>
+            <Home className="w-8 h-8 text-orange-500 mx-auto mb-4" />
             <h3 className="font-bold text-brown-900 mb-2">House Analysis</h3>
             <p className="text-brown-600">Complete breakdown of all 12 houses and their significance in your life</p>
           </div>
           <div className="rounded-2xl border border-yellow-400 bg-white p-6 text-center">
-            <div className="text-4xl mb-4">💫</div>
+            <Sparkles className="w-8 h-8 text-blue-500 mx-auto mb-4" />
             <h3 className="font-bold text-brown-900 mb-2">Zodiac Signs</h3>
             <p className="text-brown-600">Your Sun, Moon, and Rising signs with detailed interpretations</p>
           </div>
           <div className="rounded-2xl border border-yellow-400 bg-white p-6 text-center">
-            <div className="text-4xl mb-4">📊</div>
+            <BarChart3 className="w-8 h-8 text-green-500 mx-auto mb-4" />
             <h3 className="font-bold text-brown-900 mb-2">Life Predictions</h3>
             <p className="text-brown-600">Insights into career, relationships, health, and financial prospects</p>
           </div>
           <div className="rounded-2xl border border-yellow-400 bg-white p-6 text-center">
-            <div className="text-4xl mb-4">💎</div>
+            <Gem className="w-8 h-8 text-purple-500 mx-auto mb-4" />
             <h3 className="font-bold text-brown-900 mb-2">Gemstone Recommendations</h3>
             <p className="text-brown-600">Personalized gemstone suggestions based on your planetary positions</p>
           </div>
           <div className="rounded-2xl border border-yellow-400 bg-white p-6 text-center">
-            <div className="text-4xl mb-4">🔮</div>
+            <Circle className="w-8 h-8 text-indigo-500 mx-auto mb-4" />
             <h3 className="font-bold text-brown-900 mb-2">Remedies</h3>
             <p className="text-brown-600">Vedic remedies and mantras to enhance positive planetary influences</p>
           </div>

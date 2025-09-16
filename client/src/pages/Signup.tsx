@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import { Circle, Star, User, Gem, Sparkles } from "lucide-react";
 
 // Gradient heading
 const gradHead =
@@ -86,9 +87,9 @@ export default function Signup() {
         <div className="absolute -top-24 -left-24 h-72 w-72 rounded-full bg-[rgba(120,72,32,0.10)] blur-3xl animate-[float1_12s_ease-in-out_infinite]" />
         <div className="absolute top-1/3 -right-24 h-96 w-96 rounded-full bg-[rgba(179,120,58,0.10)] blur-3xl animate-[float2_14s_ease-in-out_infinite]" />
         <div className="absolute bottom-0 left-1/4 h-72 w-72 rounded-full bg-[rgba(90,56,28,0.10)] blur-3xl animate-[float3_16s_ease-in-out_infinite]" />
-        <div className="absolute left-12 top-28 text-[rgba(179,120,58,0.45)] animate-[twinkle_3.5s_ease-in-out_infinite]">✦</div>
-        <div className="absolute right-16 top-40 text-[rgba(120,72,32,0.40)] animate-[twinkle_4.2s_ease-in-out_infinite]">✧</div>
-        <div className="absolute left-1/3 bottom-24 text-[rgba(179,120,58,0.42)] animate-[twinkle_5s_ease-in-out_infinite]">✶</div>
+        <div className="absolute left-12 top-28 text-[rgba(179,120,58,0.45)] animate-[twinkle_3.5s_ease-in-out_infinite]"><Sparkles className="w-4 h-4" /></div>
+        <div className="absolute right-16 top-40 text-[rgba(120,72,32,0.40)] animate-[twinkle_4.2s_ease-in-out_infinite]"><Sparkles className="w-4 h-4" /></div>
+        <div className="absolute left-1/3 bottom-24 text-[rgba(179,120,58,0.42)] animate-[twinkle_5s_ease-in-out_infinite]"><Sparkles className="w-4 h-4" /></div>
       </div>
 
       <style>{`
@@ -103,7 +104,7 @@ export default function Signup() {
           {/* Header */}
           <div className="text-center">
             <div className="mx-auto h-16 w-16 bg-yellow-500 rounded-full flex items-center justify-center mb-4">
-              <span className="text-brown-900 text-2xl font-bold">✦</span>
+              <Sparkles className="w-6 h-6 text-brown-900" />
             </div>
             <h2 className={`text-3xl font-extrabold ${gradHead}`}>
               Join RUDRAGURU
@@ -289,16 +290,16 @@ export default function Signup() {
                   <div className="bg-yellow-50 p-4 rounded-xl">
                     <h4 className="font-medium text-brown-900 mb-2">Password Requirements:</h4>
                     <ul className="text-sm text-brown-700 space-y-1">
-                      <li className={formData.password.length >= 8 ? "text-green-600" : ""}>
+                      <li className={formData.password.length >= 8 ? "text-yellow-600" : ""}>
                         • At least 8 characters long
                       </li>
-                      <li className={/[A-Z]/.test(formData.password) ? "text-green-600" : ""}>
+                      <li className={/[A-Z]/.test(formData.password) ? "text-yellow-600" : ""}>
                         • Contains uppercase letter
                       </li>
-                      <li className={/[a-z]/.test(formData.password) ? "text-green-600" : ""}>
+                      <li className={/[a-z]/.test(formData.password) ? "text-yellow-600" : ""}>
                         • Contains lowercase letter
                       </li>
-                      <li className={/\d/.test(formData.password) ? "text-green-600" : ""}>
+                      <li className={/\d/.test(formData.password) ? "text-yellow-600" : ""}>
                         • Contains number
                       </li>
                     </ul>
@@ -444,28 +445,28 @@ export default function Signup() {
             <h3 className={`text-lg font-bold mb-4 ${gradHead}`}>Why Join RUDRAGURU?</h3>
             <div className="grid gap-4 md:grid-cols-2">
               <div className="flex items-start gap-3">
-                <span className="text-2xl">🔮</span>
+                <Circle className="w-6 h-6 text-purple-600" />
                 <div>
                   <div className="font-medium text-brown-900">Free Kundli Generation</div>
                   <div className="text-sm text-brown-600">Get your detailed birth chart for free</div>
                 </div>
               </div>
               <div className="flex items-start gap-3">
-                <span className="text-2xl">⭐</span>
+                <Star className="w-6 h-6 text-yellow-500" />
                 <div>
                   <div className="font-medium text-brown-900">Daily Horoscopes</div>
                   <div className="text-sm text-brown-600">Personalized daily predictions</div>
                 </div>
               </div>
               <div className="flex items-start gap-3">
-                <span className="text-2xl">👨‍💼</span>
+                <User className="w-6 h-6 text-blue-600" />
                 <div>
                   <div className="font-medium text-brown-900">Expert Consultations</div>
                   <div className="text-sm text-brown-600">Chat with certified astrologers</div>
                 </div>
               </div>
               <div className="flex items-start gap-3">
-                <span className="text-2xl">💎</span>
+                <Gem className="w-6 h-6 text-purple-600" />
                 <div>
                   <div className="font-medium text-brown-900">Gemstone Guidance</div>
                   <div className="text-sm text-brown-600">Personalized gemstone recommendations</div>

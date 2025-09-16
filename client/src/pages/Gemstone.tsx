@@ -1,5 +1,6 @@
 // src/pages/Gemstones.jsx
 import { Link } from "react-router-dom";
+import { Scale, Palette, MapPin, FlaskConical, Sparkles, Shield, Zap } from "lucide-react";
 
 // Assets
 import Gemsstone from "../assets/gemstone.png";
@@ -111,9 +112,9 @@ export default function Gemstones() {
         <div className="absolute -top-24 -left-24 h-72 w-72 rounded-full bg-[rgba(120,72,32,0.10)] blur-3xl animate-[float1_12s_ease-in-out_infinite]" />
         <div className="absolute top-1/3 -right-24 h-96 w-96 rounded-full bg-[rgba(179,120,58,0.10)] blur-3xl animate-[float2_14s_ease-in-out_infinite]" />
         <div className="absolute bottom-0 left-1/4 h-72 w-72 rounded-full bg-[rgba(90,56,28,0.10)] blur-3xl animate-[float3_16s_ease-in-out_infinite]" />
-        <div className="absolute left-12 top-28 text-[rgba(179,120,58,0.45)] animate-[twinkle_3.5s_ease-in-out_infinite]">✦</div>
-        <div className="absolute right-16 top-40 text-[rgba(120,72,32,0.40)] animate-[twinkle_4.2s_ease-in-out_infinite]">✧</div>
-        <div className="absolute left-1/3 bottom-24 text-[rgba(179,120,58,0.42)] animate-[twinkle_5s_ease-in-out_infinite]">✶</div>
+        <div className="absolute left-12 top-28 text-[rgba(179,120,58,0.45)] animate-[twinkle_3.5s_ease-in-out_infinite]"><Sparkles className="w-4 h-4" /></div>
+        <div className="absolute right-16 top-40 text-[rgba(120,72,32,0.40)] animate-[twinkle_4.2s_ease-in-out_infinite]"><Sparkles className="w-4 h-4" /></div>
+        <div className="absolute left-1/3 bottom-24 text-[rgba(179,120,58,0.42)] animate-[twinkle_5s_ease-in-out_infinite]"><Sparkles className="w-4 h-4" /></div>
       </div>
       <style>{`
 @keyframes float1 { 0%,100% { transform: translateY(0) translateX(0);} 50% { transform: translateY(12px) translateX(8px);} }
@@ -123,7 +124,7 @@ export default function Gemstones() {
       `}</style>
 
       {/* Intro: About Gemstones */}
-      <Section className="pt-28 pb-12">
+      <Section className="pt-20 pb-12">
         <div className="grid gap-10 md:grid-cols-2 items-center">
           <div>
             <h1 className={`text-4xl sm:text-5xl font-extrabold mb-4 ${gradHead}`}>
@@ -224,10 +225,10 @@ export default function Gemstones() {
       <Section className="pb-12">
         <h2 className={`text-3xl sm:text-4xl font-bold mb-6 ${gradHead}`}>How is Price Determined?</h2>
         <div className="grid gap-6 md:grid-cols-4">
-          <PriceCard icon="⚖️" title="Carat Weight" text="Heavier stones are more expensive." />
-          <PriceCard icon="🌈" title="Color & Clarity" text="Vibrant & clear stones cost more." />
-          <PriceCard icon="📍" title="Origin & Rarity" text="Rare sources increase price." />
-          <PriceCard icon="🧪" title="Treatment" text="Untreated stones have higher value." />
+          <PriceCard icon={<Scale className="w-6 h-6 text-blue-600" />} title="Carat Weight" text="Heavier stones are more expensive." />
+          <PriceCard icon={<Palette className="w-6 h-6 text-pink-600" />} title="Color & Clarity" text="Vibrant & clear stones cost more." />
+          <PriceCard icon={<MapPin className="w-6 h-6 text-yellow-600" />} title="Origin & Rarity" text="Rare sources increase price." />
+          <PriceCard icon={<FlaskConical className="w-6 h-6 text-purple-600" />} title="Treatment" text="Untreated stones have higher value." />
         </div>
       </Section>
 
@@ -267,7 +268,7 @@ export default function Gemstones() {
               {/* Card 1 */}
               <div className="rounded-2xl bg-white p-6 transition duration-300 hover:shadow-xl hover:-translate-y-0.5">
                 <div className="flex items-start gap-3">
-                  <div className="h-10 w-10 rounded-xl bg-yellow-100 text-yellow-700 flex items-center justify-center text-lg">🕉️</div>
+                  <div className="h-10 w-10 rounded-xl bg-yellow-100 text-yellow-700 flex items-center justify-center"><Zap className="w-5 h-5" /></div>
                   <div>
                     <p className="font-semibold text-brown-900">Vedic Energization</p>
                     <p className="text-brown-800 text-sm">
@@ -281,7 +282,7 @@ export default function Gemstones() {
               {/* Card 2 */}
               <div className="rounded-2xl bg-white p-6 transition duration-300 hover:shadow-xl hover:-translate-y-0.5">
                 <div className="flex items-start gap-3">
-                  <div className="h-10 w-10 rounded-xl bg-yellow-100 text-yellow-700 flex items-center justify-center text-lg">🛡️</div>
+                  <div className="h-10 w-10 rounded-xl bg-yellow-100 text-yellow-700 flex items-center justify-center"><Shield className="w-5 h-5" /></div>
                   <div>
                     <p className="font-semibold text-brown-900">Protective Aura</p>
                     <p className="text-brown-800 text-sm">
@@ -295,7 +296,7 @@ export default function Gemstones() {
               {/* Card 3 */}
               <div className="rounded-2xl bg-white p-6 transition duration-300 hover:shadow-xl hover:-translate-y-0.5">
                 <div className="flex items-start gap-3">
-                  <div className="h-10 w-10 rounded-xl bg-yellow-100 text-yellow-700 flex items-center justify-center text-lg">✨</div>
+                  <div className="h-10 w-10 rounded-xl bg-yellow-100 text-yellow-700 flex items-center justify-center"><Sparkles className="w-5 h-5" /></div>
                   <div>
                     <p className="font-semibold text-brown-900">Planetary Support</p>
                     <p className="text-brown-800 text-sm">

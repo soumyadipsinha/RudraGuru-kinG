@@ -1,6 +1,7 @@
 // src/Pages/AboutUs.jsx
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import { Gem, Search, Compass, Clock, Handshake, Shield, Sparkles, Timer, Zap, Check } from "lucide-react";
 
 // Gradient heading
 const gradHead =
@@ -36,13 +37,13 @@ export default function AboutUs() {
         <div className="absolute top-1/3 -right-24 h-96 w-96 rounded-full bg-[rgba(179,120,58,0.10)] blur-3xl animate-[float2_14s_ease-in-out_infinite]" />
         <div className="absolute bottom-0 left-1/4 h-72 w-72 rounded-full bg-[rgba(90,56,28,0.10)] blur-3xl animate-[float3_16s_ease-in-out_infinite]" />
         <div className="absolute left-12 top-28 text-[rgba(179,120,58,0.45)] animate-[twinkle_3.5s_ease-in-out_infinite]">
-          ✦
+          <Sparkles className="w-4 h-4" />
         </div>
         <div className="absolute right-16 top-40 text-[rgba(120,72,32,0.40)] animate-[twinkle_4.2s_ease-in-out_infinite]">
-          ✧
+          <Sparkles className="w-4 h-4" />
         </div>
         <div className="absolute left-1/3 bottom-24 text-[rgba(179,120,58,0.42)] animate-[twinkle_5s_ease-in-out_infinite]">
-          ✶
+          <Sparkles className="w-4 h-4" />
         </div>
       </div>
 
@@ -54,7 +55,7 @@ export default function AboutUs() {
       `}</style>
 
       {/* Intro (centered) */}
-      <Section className="pt-30 pb-20">
+      <Section className="pt-20 pb-20">
         <div className="flex flex-col items-center text-center gap-6">
           <h1 className={`text-4xl sm:text-5xl font-extrabold ${gradHead}`}>
             About RUDRAGURU
@@ -83,6 +84,39 @@ export default function AboutUs() {
         </div>
       </Section>
 
+      {/* Why Astrology (moved from Home) */}
+      <Section className="pb-12">
+        <h2 className={`text-3xl sm:text-4xl font-bold mb-6 ${gradHead}`}>WHY ASTROLOGY? Astrology Reveals the Will of God</h2>
+        <p className="text-brown-800 mb-4">Have you ever felt that things in life sometimes happen at just the right time, like someone is silently guiding you? Astrology helps us understand this. It shows how God’s energy flows through planets and stars, shaping our daily lives.</p>
+        <p className="text-brown-800 mb-4">This old and trusted knowledge explains that nothing is random; everything has a reason. The stars often hold clues about our purpose and future. Many people today feel unsure about life choices, but astrology offers direction.</p>
+        <p className="text-brown-800 mb-8">It connects our daily worries to higher wisdom. By learning to read signs from the universe, we can walk in tune with God’s plan. For years, astrology has helped people make better decisions in love, work, family, and their spiritual journey.</p>
+
+        <h3 className="text-2xl sm:text-3xl font-bold mb-4 text-brown-900">How does Online Astrology Consultation & Services Work?</h3>
+        <ol className="space-y-3 list-decimal pl-6 text-brown-800">
+          <li>Online astrology consultation brings ancient astrological wisdom right to your phone or computer. You can get divine guidance anytime you need it, right from your home.</li>
+          <li>Using your birth details like date, time, and place, professional astrologers prepare a special chart. This chart helps them understand your life's journey as per God's plan.</li>
+          <li>Apps and platforms connect you with experienced astrologers. Choose chat, call, or video—whatever feels right for you.</li>
+          <li>Many websites also offer free predictions so you can begin your spiritual journey easily at no cost.</li>
+          <li>In the session, your astrologer studies your birth chart and current planetary placements to share future insights.</li>
+          <li>These platforms also provide free daily horoscope readings to help you stay in sync with cosmic energy.</li>
+          <li>The best part? It’s simple and convenient. You can get guidance without travelling, and some sessions are recorded for later.</li>
+        </ol>
+
+        <h3 className="text-2xl sm:text-3xl font-bold mt-10 mb-4 text-brown-900">Why Should You Choose an Online Astrologer?</h3>
+        <p className="text-brown-800 mb-4">Online astrologers bring ancient wisdom with modern convenience—easy access, pocket‑friendly pricing, and verified expertise. You can try different astrologers, protect your privacy, and get 24×7 support, often with recordings to revisit guidance.</p>
+
+        <h3 className="text-2xl sm:text-3xl font-bold mt-10 mb-4 text-brown-900">How to Stay Updated With Daily Horoscope Predictions & Zodiac Signs?</h3>
+        <p className="text-brown-800 mb-4">Daily horoscopes reveal how today’s cosmic movements influence your sign—helping you make better choices and avoid small troubles.</p>
+        <ul className="list-disc pl-6 space-y-2 text-brown-800 mb-8">
+          <li>12 zodiac signs react differently to planetary shifts. Knowing your sun, moon, and rising gives a fuller picture.</li>
+          <li>Start your day with guidance on love, career, health, and spiritual growth.</li>
+          <li>Track patterns in mood and outcomes, and use weekly/monthly updates for planning.</li>
+        </ul>
+
+        <h3 className="text-2xl sm:text-3xl font-bold mb-4 text-brown-900">Why Choose Our Astrology Experts?</h3>
+        <p className="text-brown-800 mb-8">Our certified experts blend Vedic wisdom with a modern, empathetic approach. You’ll find original spiritual items—gemstones, yantras, and puja tools—recommended with clear, safe instructions. Transparent options include chats, reports, and quick answers.</p>
+      </Section>
+
       {/* Why our team is best – screenshot style feature cards */}
       <Section className="pb-12">
         <h2 className={`text-3xl sm:text-4xl font-bold mb-6 ${gradHead}`}>
@@ -90,32 +124,32 @@ export default function AboutUs() {
         </h2>
         <div className="grid gap-6 md:grid-cols-3">
           <FeatureCard
-            icon="🪬"
+            icon={<Shield className="w-6 h-6 text-indigo-600" />}
             title="Certified Expertise"
             text="Astrologers with verified credentials across Vedic, KP, Tarot, Numerology, and Vastu."
           />
           <FeatureCard
-            icon="🔎"
+            icon={<Search className="w-6 h-6 text-blue-600" />}
             title="Evidence‑led Guidance"
             text="Practical remedies rooted in tradition and aligned to real‑world goals."
           />
           <FeatureCard
-            icon="💎"
+            icon={<Gem className="w-6 h-6 text-purple-600" />}
             title="Ethical Sourcing"
             text="Rudraksha & gemstones are responsibly procured and lab‑certified."
           />
           <FeatureCard
-            icon="🧭"
+            icon={<Compass className="w-6 h-6 text-yellow-600" />}
             title="Personalization First"
             text="Reports & sessions tailored to birth details, timelines, and intent."
           />
           <FeatureCard
-            icon="🕒"
+            icon={<Clock className="w-6 h-6 text-orange-600" />}
             title="24×7 Availability"
             text="Consult via chat, call, and receive detailed reports round‑the‑clock."
           />
           <FeatureCard
-            icon="🤝"
+            icon={<Handshake className="w-6 h-6 text-pink-600" />}
             title="After‑care Support"
             text="Follow‑ups ensure remedies are easy to adopt and effective."
           />
@@ -132,7 +166,7 @@ export default function AboutUs() {
           <div className="rounded-2xl border border-yellow-400 bg-white p-6 transition duration-300 hover:shadow-xl hover:-translate-y-0.5">
             <div className="relative mb-9">
               <div className="absolute -top-4 left-0 h-10 w-10 rounded-xl bg-yellow-100 text-yellow-700 flex items-center justify-center shadow-sm">
-                ⏳
+                <Timer className="w-5 h-5" />
               </div>
             </div>
             <h3 className="text-xl font-semibold text-brown-900 mb-3">
@@ -162,7 +196,7 @@ export default function AboutUs() {
           <div className="rounded-2xl border border-yellow-400 bg-white p-6 transition duration-300 hover:shadow-xl hover:-translate-y-0.5">
             <div className="relative mb-9">
               <div className="absolute -top-4 left-0 h-10 w-10 rounded-xl bg-yellow-100 text-yellow-700 flex items-center justify-center shadow-sm">
-                ⚡
+                <Zap className="w-5 h-5" />
               </div>
             </div>
             <h3 className="text-xl font-semibold text-brown-900 mb-3">
@@ -362,7 +396,7 @@ function AccordionItem({ idx, open, setOpen, q, a }: AccordionItemProps) {
             isOpen ? "rotate-45" : ""
           }`}
         >
-          ✦
+          <Check className="w-4 h-4" />
         </span>
       </button>
       <div

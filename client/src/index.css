@@ -4,6 +4,11 @@
 
 @import "tw-animate-css";
 
+/* Swiper CSS */
+@import 'swiper/css';
+@import 'swiper/css/pagination';
+@import 'swiper/css/navigation';
+
 @custom-variant dark (&:is(.dark *));
 
 *{

@@ -1,8 +1,9 @@
-import { useMemo, useState } from "react";
-import { Link } from "react-router-dom";
-import { Gem, ShieldCheck, Stars } from "lucide-react";
+import { useEffect, useMemo, useState } from "react";
+import { Link, useLocation } from "react-router-dom";
+import { Gem, ShieldCheck, Stars, MessageSquare, Phone, Star } from "lucide-react";
 
 import Astrologer from "../assets/astrologer.png"
+import { ASTROLOGERS } from "../data/astrologers";
 
 const gradHead =
   "inline-block bg-clip-text text-transparent bg-gradient-to-r from-yellow-500 via-yellow-600 to-amber-800";
@@ -16,16 +17,7 @@ const Section = ({ children, className = "" }: SectionProps) => (
   <section className={`mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 ${className}`}>{children}</section>
 );
 
-const ASTROLOGERS = [
-  { id: 1, name: "Pandit Rajesh Sharma", skills: ["Vedic Astrology","Marriage"], langs: ["Hindi","English"], rating: 4.9, chat: 18, call: 45, img: "https://avatar-placeholder.iran.liara.run/public/1" },
-  { id: 2, name: "Astrologer Priya Devi", skills: ["Tarot Reading","Love & Relationships"], langs: ["Hindi","English","Bengali"], rating: 4.8, chat: 22, call: 50, img: "https://avatar-placeholder.iran.liara.run/public/2" },
-  { id: 3, name: "Guruji Arun Kumar", skills: ["KP Astrology","Business"], langs: ["Hindi","Tamil","English"], rating: 4.9, chat: 20, call: 48, img: "https://avatar-placeholder.iran.liara.run/public/3" },
-  { id: 4, name: "Smt. Kavita Joshi", skills: ["Palm Reading","Gemstone"], langs: ["Hindi","Gujarati","English"], rating: 4.7, chat: 19, call: 46, img: "https://avatar-placeholder.iran.liara.run/public/4" },
-  { id: 5, name: "Acharya Vivek Sharma", skills: ["Vedic Astrology","Career"], langs: ["Hindi","English"], rating: 4.95, chat: 25, call: 55, img: "https://avatar-placeholder.iran.liara.run/public/5" },
-  { id: 6, name: "Dr. Meera Iyer", skills: ["Numerology","Vastu"], langs: ["English","Tamil"], rating: 4.6, chat: 16, call: 40, img: "https://avatar-placeholder.iran.liara.run/public/6" },
-  { id: 7, name: "Pandit Suresh Rao", skills: ["Vastu","KP Astrology"], langs: ["Hindi","English"], rating: 4.85, chat: 21, call: 49, img: "https://avatar-placeholder.iran.liara.run/public/7" },
-  { id: 8, name: "Astrologer Nisha Gupta", skills: ["Tarot Reading","Gemstone"], langs: ["Hindi","English"], rating: 4.75, chat: 17, call: 44, img: "https://avatar-placeholder.iran.liara.run/public/8" },
-];
+// Using shared ASTROLOGERS from data module
 
 const skillBuckets: Record<string, (skills: string[]) => boolean> = {
   "Palm Reading": (s: string[]) => s.some((x: string) => /palm/i.test(x)),
@@ -35,6 +27,7 @@ const skillBuckets: Record<string, (skills: string[]) => boolean> = {
 };
 
 export default function Astrologers() {
+  const location = useLocation();
   const [q, setQ] = useState("");
   const [skill, setSkill] = useState("All");
   const [lang, setLang] = useState("All");
@@ -93,11 +86,24 @@ export default function Astrologers() {
     return [...ASTROLOGERS].sort((a,b) => b.rating - a.rating).slice(0,4);
   }, []);
 
+  // Scroll to selected astrologer if query param present
+  useEffect(() => {
+    const params = new URLSearchParams(location.search);
+    const selected = params.get("select");
+    if (!selected) return;
+    const element = document.getElementById(`astro-${selected}`);
+    if (element) {
+      element.scrollIntoView({ behavior: "smooth", block: "start" });
+      element.classList.add("ring-2","ring-yellow-500");
+      setTimeout(() => element.classList.remove("ring-2","ring-yellow-500"), 2000);
+    }
+  }, [location.search]);
+
   return (
     <main className="relative bg-transparent overflow-hidden">
 
       {/* Intro Section */}
-      <Section className="pt-28 pb-9">
+      <Section className="pt-20 pb-9">
         <div className="grid gap-8 md:gap-10 md:grid-cols-2 items-center">
           <div className="text-center md:text-left">
             <h1 className={`text-3xl sm:text-4xl md:text-5xl font-extrabold pb-1 mb-6 ${gradHead}`}>Connect with Expert Astrologers</h1>
@@ -193,13 +199,13 @@ export default function Astrologers() {
           <h3 className={`text-xl font-bold mb-4 ${gradHead}`}>Quick Booking</h3>
           <div className="grid gap-4 md:grid-cols-3">
             <div className="text-center p-4 bg-yellow-50 rounded-xl">
-              <div className="text-3xl mb-2">💬</div>
+              <MessageSquare className="w-8 h-8 text-blue-600 mx-auto mb-2" />
               <h4 className="font-semibold text-brown-900">Instant Chat</h4>
               <p className="text-sm text-brown-600">Start chatting immediately</p>
               <p className="text-yellow-600 font-bold">From ₹10/min</p>
             </div>
             <div className="text-center p-4 bg-yellow-50 rounded-xl">
-              <div className="text-3xl mb-2">📞</div>
+              <Phone className="w-8 h-8 text-yellow-600 mx-auto mb-2" />
               <h4 className="font-semibold text-brown-900">Voice Call</h4>
               <p className="text-sm text-brown-600">Clear audio consultation</p>
               <p className="text-yellow-600 font-bold">From ₹15/min</p>
@@ -246,13 +252,13 @@ interface AstroCardProps {
 
 function AstroCard({ a }: AstroCardProps) {
   return (
-    <div className="rounded-2xl border border-yellow-400 p-5 bg-white hover:shadow-xl transition">
+    <div id={`astro-${a.id}`} className="rounded-2xl border border-yellow-400 p-5 bg-white hover:shadow-xl transition">
       <div className="flex items-center gap-4">
         <img src={a.img} alt={a.name} className="h-16 w-16 rounded-full object-cover" />
         <div className="flex-1">
           <div className="flex justify-between items-center">
             <h3 className="font-semibold">{a.name}</h3>
-            <span className="text-yellow-600">★ {a.rating.toFixed(2)}</span>
+            <div className="flex items-center gap-1"><Star className="w-4 h-4 text-yellow-500 fill-current" /><span className="text-yellow-600">{a.rating.toFixed(2)}</span></div>
           </div>
           <div className="flex flex-wrap gap-2 text-sm mt-1">
             {a.skills.map(s => (
@@ -264,11 +270,11 @@ function AstroCard({ a }: AstroCardProps) {
       </div>
       {/* Rates aligned right */}
       <div className="mt-2 flex justify-end text-sm font-medium text-gray-700">
-        Chat ₹{a.chat}/min • Call ₹{a.call}/min
+        Chat ₹{a.chat} / 5 min • Call ₹{a.call}/min
       </div>
       <div className="mt-3 flex gap-3">
-        <Link to="/chat" className="flex-1 rounded-md bg-yellow-500 py-2 text-center text-brown-900 font-semibold hover:bg-yellow-400 transition">Chat ₹{a.chat}/min</Link>
-        <Link to="/call" className="flex-1 rounded-md border border-yellow-400 py-2 text-center text-yellow-600 font-semibold hover:bg-yellow-50 transition">Call ₹{a.call}/min</Link>
+        <Link to={`/chat?astro=${a.id}`} className="flex-1 rounded-md bg-yellow-500 py-2 text-center text-brown-900 font-semibold hover:bg-yellow-400 transition">Chat • 3 min FREE</Link>
+        <Link to={`/calling?astro=${a.id}`} className="flex-1 rounded-md border border-yellow-400 py-2 text-center text-yellow-600 font-semibold hover:bg-yellow-50 transition">Call ₹{a.call}/min</Link>
       </div>
     </div>
   );

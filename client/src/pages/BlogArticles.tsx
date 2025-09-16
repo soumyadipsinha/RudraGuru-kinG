@@ -1,5 +1,6 @@
 import { useState, useMemo } from "react";
 import { Link } from "react-router-dom";
+import { Sparkles } from "lucide-react";
 
 // Import gemstone assets
 import Ruby from "../assets/ruby.png";
@@ -47,7 +48,7 @@ const BLOG_ARTICLES: BlogArticle[] = [
     title: "The Complete Guide to Ruby (Manikya) - The King of Gemstones",
     excerpt: "Discover the powerful properties of Ruby, its astrological significance, and how to choose the perfect stone for maximum benefits.",
     content: "Ruby, known as Manikya in Sanskrit, is one of the most powerful gemstones in Vedic astrology...",
-    author: "Dr. Kavita Joshi",
+    author: "Acharya Pradeep Shastri",
     authorImage: "https://avatar-placeholder.iran.liara.run/public/4",
     publishDate: "2024-01-15",
     readTime: "8 min read",
@@ -175,9 +176,9 @@ export default function BlogArticles() {
         <div className="absolute -top-24 -left-24 h-72 w-72 rounded-full bg-[rgba(120,72,32,0.10)] blur-3xl animate-[float1_12s_ease-in-out_infinite]" />
         <div className="absolute top-1/3 -right-24 h-96 w-96 rounded-full bg-[rgba(179,120,58,0.10)] blur-3xl animate-[float2_14s_ease-in-out_infinite]" />
         <div className="absolute bottom-0 left-1/4 h-72 w-72 rounded-full bg-[rgba(90,56,28,0.10)] blur-3xl animate-[float3_16s_ease-in-out_infinite]" />
-        <div className="absolute left-12 top-28 text-[rgba(179,120,58,0.45)] animate-[twinkle_3.5s_ease-in-out_infinite]">✦</div>
-        <div className="absolute right-16 top-40 text-[rgba(120,72,32,0.40)] animate-[twinkle_4.2s_ease-in-out_infinite]">✧</div>
-        <div className="absolute left-1/3 bottom-24 text-[rgba(179,120,58,0.42)] animate-[twinkle_5s_ease-in-out_infinite]">✶</div>
+        <div className="absolute left-12 top-28 text-[rgba(179,120,58,0.45)] animate-[twinkle_3.5s_ease-in-out_infinite]"><Sparkles className="w-4 h-4" /></div>
+        <div className="absolute right-16 top-40 text-[rgba(120,72,32,0.40)] animate-[twinkle_4.2s_ease-in-out_infinite]"><Sparkles className="w-4 h-4" /></div>
+        <div className="absolute left-1/3 bottom-24 text-[rgba(179,120,58,0.42)] animate-[twinkle_5s_ease-in-out_infinite]"><Sparkles className="w-4 h-4" /></div>
       </div>
 
       <style>{`
@@ -188,7 +189,7 @@ export default function BlogArticles() {
       `}</style>
 
       {/* Hero Section */}
-      <Section className="pt-28 pb-12">
+      <Section className="pt-20 pb-12">
         <div className="text-center">
           <h1 className={`text-4xl sm:text-6xl font-extrabold mb-6 ${gradHead}`}>
             Blog & Articles

@@ -517,7 +517,7 @@ export default function GemstonesPage() {
     <div className="min-h-screen bg-transparent">
       {/* Header */}
       <div className="bg-white shadow-sm border-b">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 pt-28">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 pt-20">
           <div className="text-center">
             <h1 className="text-4xl font-bold text-gray-900 mb-4">Gemstones</h1>
             <p className="text-xl text-gray-600 mb-6">The whispers of the universe curated into a collection</p>

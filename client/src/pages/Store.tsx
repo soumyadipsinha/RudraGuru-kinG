@@ -844,7 +844,7 @@ export default function Store() {
     <div className="min-h-screen bg-transparent">
       {/* Header */}
       <div className="bg-white shadow-sm border-b">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 pt-28">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 pt-20">
           <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
             <div>
               <h1 className="text-2xl sm:text-3xl font-bold text-gray-900">RudraGuru Store</h1>

@@ -80,7 +80,7 @@ export default function Checkout() {
     <div className="min-h-screen bg-transparent">
       {/* Header */}
       <div className="bg-white shadow-sm border-b">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 pt-28">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 pt-20">
           <div className="flex items-center gap-4">
             <Link to="/store" className="text-gray-600 hover:text-gray-800">
               <ArrowLeft className="w-6 h-6" />
@@ -303,7 +303,7 @@ export default function Checkout() {
                       Next
                     </Button>
                   ) : (
-                    <Button onClick={handleSubmit} className="bg-green-500 hover:bg-green-600 text-white">
+                    <Button onClick={handleSubmit} className="bg-transparent border-2 border-yellow-400 hover:bg-yellow-50 text-yellow-600">
                       Place Order
                     </Button>
                   )}

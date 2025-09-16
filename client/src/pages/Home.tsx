@@ -1,7 +1,11 @@
 import { Link } from "react-router-dom";
 import HeroLogo from "../assets/HeroLogo.png";
 import Astrologer from "../assets/astrologer.png";
-import { MessageSquare, PhoneCall, ShoppingBag, Sparkles, Gem, ShieldCheck, Stars, ArrowRight } from "lucide-react";
+import { MessageSquare, PhoneCall, ShoppingBag, Sparkles, Gem, ShieldCheck, Stars, ArrowRight, Video, Clock3, FileText, Star } from "lucide-react";
+import { ASTROLOGERS } from "../data/astrologers";
+import ladyastro from "../assets/ladyastro.png";
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { Autoplay, Pagination, Navigation } from 'swiper/modules';
 
 // Shared gradient heading classes
 const gradHead =
@@ -25,31 +29,101 @@ const ZODIAC = [
 export default function Home() {
   return (
     <main className="bg-transparent">
-      {/* Top Promo Banner (Astrotalk-style) */}
-      <Section className="pt-18 pb-8 ">
-        <div className="rounded-2xl md:rounded-3xl bg-gradient-to-r from-yellow-500 via-yellow-300 to-amber-500 p-4 sm:p-6 md:p-8 shadow-xl">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-10 items-center">
-            {/* Text */}
-            <div className="text-center md:text-left">
-              <p className="text-sm sm:text-base font-semibold text-brown-800/90 tracking-wide">200+ Celebs recommend RudraGuru</p>
-              <h1 className="mt-2 text-3xl sm:text-4xl md:text-5xl font-extrabold text-brown-900">
-                Chat With Astrologer
-              </h1>
-              <Link
-                to="/chat"
-                className="mt-5 inline-flex items-center justify-center gap-2 rounded-full bg-black px-6 py-3 text-white font-semibold shadow-md hover:bg-gray-800 transition"
-              >
-                Chat Now
-                <ArrowRight className="w-4 h-4" />
-              </Link>
+      <style>{`
+        .banner-swiper {
+          padding: 0 0 50px 0;
+        }
+        .banner-swiper .swiper-pagination {
+          bottom: 10px;
+        }
+        .banner-swiper .swiper-pagination-bullet {
+          background: rgba(255, 255, 255, 0.5);
+          opacity: 1;
+        }
+        .banner-swiper .swiper-pagination-bullet-active {
+          background: #f59e0b;
+        }
+        .banner-swiper .swiper-button-next,
+        .banner-swiper .swiper-button-prev {
+          color: #f59e0b;
+        }
+        .banner-swiper .swiper-button-next:after,
+        .banner-swiper .swiper-button-prev:after {
+          font-size: 24px;
+        }
+      `}</style>
+      {/* Swiper Banner Section */}
+      <Section className="pt-20 pb-8">
+        <Swiper
+          modules={[Autoplay, Pagination, Navigation]}
+          spaceBetween={30}
+          slidesPerView={1}
+          autoplay={{
+            delay: 2000,
+            disableOnInteraction: false,
+          }}
+          pagination={{
+            clickable: true,
+            dynamicBullets: true,
+          }}
+          navigation={true}
+          loop={true}
+          className="banner-swiper"
+        >
+          {/* First Banner - Male Astrologer */}
+          <SwiperSlide>
+            <div className="rounded-2xl md:rounded-3xl bg-gradient-to-r from-yellow-500 via-yellow-300 to-amber-500 p-4 sm:p-6 md:p-8 shadow-xl">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-10 items-center">
+                {/* Text */}
+                <div className="text-center md:text-left">
+                  <p className="text-sm sm:text-base font-semibold text-brown-800/90 tracking-wide">200+ Celebs recommend RudraGuru</p>
+                  <h1 className="mt-2 text-3xl sm:text-4xl md:text-5xl font-extrabold text-brown-900">
+                    Chat With Expert Astrologer
+                  </h1>
+                  <Link
+                    to="/chat"
+                    className="mt-5 inline-flex items-center justify-center gap-2 rounded-full bg-black px-6 py-3 text-white font-semibold shadow-md hover:bg-gray-800 transition"
+                  >
+                    Chat Now 
+                    <ArrowRight className="w-4 h-4" />
+                  </Link>
+                </div>
+                {/* Image */}
+                <div className="flex justify-center md:justify-end">
+                  <img src={Astrologer} alt="Expert Astrologer" className="w-full max-w-[260px] md:max-w-[320px] h-auto object-contain drop-shadow-lg" />
+                </div>
+              </div>
             </div>
-            {/* Image */}
-            <div className="flex justify-center md:justify-end">
-              <img src={Astrologer} alt="Astrologer" className="w-full max-w-[260px] md:max-w-[320px] h-auto object-contain drop-shadow-lg" />
+          </SwiperSlide>
+
+          {/* Second Banner - Female Astrologer */}
+          <SwiperSlide>
+            <div className="rounded-2xl md:rounded-3xl bg-gradient-to-r from-yellow-500 via-pink-300 to-rose-500 p-4 sm:p-6 md:p-8 shadow-xl">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-10 items-center">
+                {/* Text */}
+                <div className="text-center md:text-left">
+                  <p className="text-sm sm:text-base font-semibold text-white/90 tracking-wide">Expert Female Astrologer Available</p>
+                  <h1 className="mt-2 text-3xl sm:text-4xl md:text-5xl font-extrabold text-white">
+                    Connect with Lady Astrologer
+                  </h1>
+                  <Link
+                    to="/chat"
+                    className="mt-5 inline-flex items-center justify-center gap-2 rounded-full bg-white px-6 py-3 text-purple-600 font-semibold shadow-md hover:bg-gray-100 transition"
+                  >
+                    Start Consultation 
+                    <ArrowRight className="w-4 h-4" />
+                  </Link>
+                </div>
+                {/* Image */}
+                <div className="flex justify-center md:justify-end">
+                  <img src={ladyastro} alt="Lady Astrologer" className="w-full max-w-[260px] md:max-w-[320px] h-auto object-contain drop-shadow-lg" />
+                </div>
+              </div>
             </div>
-          </div>
-        </div>
+          </SwiperSlide>
+        </Swiper>
       </Section>
+
 
       {/* Why Astrology - Long Form Content */}
       
@@ -98,7 +172,7 @@ export default function Home() {
               </Link>
               <Link
                 to="/store"
-                className="inline-flex items-center justify-center rounded-xl bg-green-500 px-6 py-3 text-white font-semibold shadow hover:bg-green-400 transition"
+                className="inline-flex items-center justify-center rounded-xl bg-transparent border-2 border-yellow-400 px-6 py-3 text-yellow-600 font-semibold shadow hover:bg-yellow-50 transition"
               >
                 Shop Astro Products
               </Link>
@@ -159,20 +233,20 @@ export default function Home() {
         </p>
         <div className="mt-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
           {[
-            { title: "Instant Chat", text: "Get quick answers on our secure chat platform.", emoji: "💬" },
-            { title: "Voice Calls", text: "Detailed conversations over crystal clear calls.", emoji: "📞" },
-            { title: "Video Sessions", text: "Face‑to‑face consultations for deeper readings.", emoji: "🎥" },
-            { title: "Verified Experts", text: "All astrologers are vetted and certified.", emoji: "🛡️" },
-            { title: "24×7 Available", text: "Round‑the‑clock guidance, anywhere.", emoji: "🕒" },
-            { title: "Personalized Reports", text: "Detailed birth charts, kundli, and reports.", emoji: "⭐" },
+            { title: "Instant Chat", text: "Get quick answers on our secure chat platform.", icon: <MessageSquare className="w-6 h-6" /> },
+            { title: "Voice Calls", text: "Detailed conversations over crystal clear calls.", icon: <PhoneCall className="w-6 h-6" /> },
+            { title: "Video Sessions", text: "Face‑to‑face consultations for deeper readings.", icon: <Video className="w-6 h-6" /> },
+            { title: "Verified Experts", text: "All astrologers and Gemologists verified and certified.", icon: <ShieldCheck className="w-6 h-6" /> },
+            { title: "24×7 Available", text: "Round‑the‑clock guidance, anywhere.", icon: <Clock3 className="w-6 h-6" /> },
+            { title: "Personalized Reports", text: "Detailed birth charts, kundli, and reports.", icon: <FileText className="w-6 h-6" /> },
           ].map((c) => (
             <div
               key={c.title}
               className="rounded-2xl border-2 border-yellow-300/60 p-7 bg-white/90 backdrop-blur-sm shadow-lg transition duration-300 hover:-translate-y-1 hover:shadow-2xl hover:border-yellow-400/80"
             >
               <div className="flex items-start gap-4">
-                <div className="h-12 w-12 rounded-2xl bg-yellow-100 text-yellow-700 flex items-center justify-center text-2xl shadow">
-                  {c.emoji}
+                <div className="h-12 w-12 rounded-2xl bg-yellow-100 text-yellow-700 flex items-center justify-center shadow">
+                  {c.icon}
                 </div>
                 <div>
                   <h3 className="font-semibold text-yellow-600 mb-2 text-xl">{c.title}</h3>
@@ -251,72 +325,34 @@ export default function Home() {
         </div>
 
         {/* Astrologer Cards */}
-        <div className="mt-6 grid grid-cols-1 md:grid-cols-2 gap-6">
-          {[
-            {
-              name: "Dr. Kavita Joshi",
-              specialty: "Vedic Astrology, Palm Reading",
-              language: "Hindi, English",
-              rate: "₹15/min",
-              rating: "4.9",
-              img: "https://randomuser.me/api/portraits/women/45.jpg",
-            },
-            {
-              name: "Rajesh Mehta",
-              specialty: "Numerology, Vastu Shastra",
-              language: "Hindi, Gujarati",
-              rate: "₹10/min",
-              rating: "4.7",
-              img: "https://randomuser.me/api/portraits/men/32.jpg",
-            },
-            {
-              name: "Ananya Kapoor",
-              specialty: "Tarot Reading, Relationship Expert",
-              language: "English, Bengali",
-              rate: "₹20/min",
-              rating: "4.8",
-              img: "https://randomuser.me/api/portraits/women/68.jpg",
-            },
-            {
-              name: "Arjun Sharma",
-              specialty: "Career Guidance, Numerology",
-              language: "Hindi, Tamil",
-              rate: "₹12/min",
-              rating: "4.6",
-              img: "https://randomuser.me/api/portraits/men/76.jpg",
-            },
-          ].map((p) => (
-            <div
-              key={p.name}
-              className="rounded-2xl border-2 border-yellow-300/60 p-5 bg-white/90 backdrop-blur-sm shadow-lg transition duration-300 hover:shadow-2xl hover:-translate-y-1 hover:border-yellow-400/80"
-            >
-              <div className="flex gap-4">
-                <img
-                  src={p.img}
-                  alt={p.name}
-                  className="w-20 h-20 rounded-full object-cover border-2 border-yellow-500"
-                />
-                <div>
-                  <h3 className="font-bold text-lg text-yellow-700">
-                    {p.name}
-                  </h3>
-                  <p className="text-sm text-brown-700">{p.specialty}</p>
-                  <p className="text-sm text-brown-600">Languages: {p.language}</p>
-                  <p className="text-sm font-semibold text-green-700">{p.rate}</p>
-                  <p className="text-sm text-yellow-500">⭐ {p.rating}</p>
+       <Section className="py-12">
+        <div className="flex items-center justify-between mb-6">
+          <h2 className={`text-3xl sm:text-4xl font-bold ${gradHead}`}>Choose Your Best Astrologer</h2>
+          <Link to="/astrologers" className="text-yellow-700 font-semibold hover:underline">View all</Link>
+        </div>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          {ASTROLOGERS.slice(0,3).map((a) => (
+            <div key={a.id} className="rounded-2xl border-2 border-yellow-300/60 p-5 bg-white/90 backdrop-blur-sm shadow-lg hover:shadow-2xl transition">
+              <div className="flex items-center gap-4">
+                <Link to={`/astrologers?select=${a.id}`} className="shrink-0">
+                  <img src={a.img} alt={a.name} className="h-16 w-16 rounded-full object-cover border-2 border-yellow-500" />
+                </Link>
+                <div className="flex-1">
+                  <div className="flex items-center justify-between">
+                    <Link to={`/astrologers?select=${a.id}`} className="font-semibold text-brown-900 hover:underline">{a.name}</Link>
+                    <div className="flex items-center gap-1"><Star className="w-4 h-4 text-yellow-500 fill-current" /><span className="text-yellow-600">{a.rating.toFixed(1)}</span></div>
+                  </div>
+                  <p className="text-sm text-brown-700">{a.skills[0]}</p>
                 </div>
               </div>
-              <div className="mt-4 flex gap-3">
-                <button className="flex-1 rounded-lg bg-yellow-600 text-white px-4 py-2 hover:bg-yellow-700">
-                  Chat
-                </button>
-                <button className="flex-1 rounded-lg border border-yellow-600 text-yellow-600 px-4 py-2 hover:bg-yellow-50">
-                  Call
-                </button>
+              <div className="mt-3 flex gap-3">
+                <Link to={`/chat?astro=${a.id}`} className="flex-1 rounded-md bg-yellow-500 py-2 text-center text-brown-900 font-semibold hover:bg-yellow-400 transition">Chat • 3 min FREE</Link>
+                <Link to={`/calling?astro=${a.id}`} className="flex-1 rounded-md border border-yellow-400 py-2 text-center text-yellow-600 font-semibold hover:bg-yellow-50 transition">Call</Link>
               </div>
             </div>
           ))}
         </div>
+      </Section>
       </Section>
 
       {/* Choose Your Sign */}
@@ -370,7 +406,7 @@ export default function Home() {
                 <div>
                   <p className="text-sm font-bold text-yellow-700">{c.name}</p>
                   <p className="text-xs text-brown-700">{c.city}</p>
-                  <div className="text-yellow-500 text-sm">★★★★★</div>
+                  <div className="flex text-sm"><Star className="w-4 h-4 text-yellow-500 fill-current" /><Star className="w-4 h-4 text-yellow-500 fill-current" /><Star className="w-4 h-4 text-yellow-500 fill-current" /><Star className="w-4 h-4 text-yellow-500 fill-current" /><Star className="w-4 h-4 text-yellow-500 fill-current" /></div>
                 </div>
               </div>
             </div>
@@ -456,74 +492,13 @@ export default function Home() {
         <div className="text-center mt-8">
           <Link
             to="/store"
-            className="inline-flex items-center rounded-xl bg-green-500 px-6 py-3 text-white font-semibold shadow hover:bg-green-400 transition"
+            className="inline-flex items-center rounded-xl bg-transparent border-2 border-yellow-400 px-6 py-3 text-yellow-600 font-semibold shadow hover:bg-yellow-50 transition"
           >
             View All Products
           </Link>
         </div>
       </Section>
-      <Section className="py-16">
-        <h2 className={`text-3xl sm:text-4xl font-bold mb-6 ${gradHead}`}>WHY ASTROLOGY? Astrology Reveals the Will of God</h2>
-        <p className="text-brown-800 mb-4">
-          Have you ever felt that things in life sometimes happen at just the right time, like someone is silently guiding you? Astrology helps us understand this. It shows how God’s energy flows through planets and stars, shaping our daily lives.
-        </p>
-        <p className="text-brown-800 mb-4">
-          This old and trusted knowledge explains that nothing is random; everything has a reason. The stars often hold clues about our purpose and future. Many people today feel unsure about life choices, but astrology offers direction.
-        </p>
-        <p className="text-brown-800 mb-8">
-          It connects our daily worries to higher wisdom. By learning to read signs from the universe, we can walk in tune with God’s plan. For years, astrology has helped people make better decisions in love, work, family, and their spiritual journey.
-        </p>
-
-        <h3 className="text-2xl sm:text-3xl font-bold mb-4 text-brown-900">How does Online Astrology Consultation & Services Work?</h3>
-        <ol className="space-y-3 list-decimal pl-6 text-brown-800">
-          <li>Online astrology consultation brings ancient astrological wisdom right to your phone or computer. You can get divine guidance anytime you need it, right from your home.</li>
-          <li>Using your birth details like date, time, and place, professional astrologers prepare a special chart. This chart helps them understand your life's journey as per God's plan.</li>
-          <li>Apps and platforms connect you with experienced astrologers. Choose chat, call, or video—whatever feels right for you.</li>
-          <li>Many websites also offer free predictions so you can begin your spiritual journey easily at no cost.</li>
-          <li>In the session, your astrologer studies your birth chart and current planetary placements to share future insights.</li>
-          <li>These platforms also provide free daily horoscope readings to help you stay in sync with cosmic energy.</li>
-          <li>The best part? It’s simple and convenient. You can get guidance without travelling, and some sessions are recorded for later.</li>
-        </ol>
-
-        <h3 className="text-2xl sm:text-3xl font-bold mt-10 mb-4 text-brown-900">Why Should You Choose an Online Astrologer?</h3>
-        <p className="text-brown-800 mb-4">
-          Online astrologers bring ancient wisdom with modern convenience—easy access, pocket‑friendly pricing, and verified expertise. You can try different astrologers, protect your privacy, and get 24×7 support, often with recordings to revisit guidance.
-        </p>
-
-        <h3 className="text-2xl sm:text-3xl font-bold mt-10 mb-4 text-brown-900">How to Stay Updated With Daily Horoscope Predictions & Zodiac Signs?</h3>
-        <p className="text-brown-800 mb-4">Daily horoscopes reveal how today’s cosmic movements influence your sign—helping you make better choices and avoid small troubles.</p>
-        <ul className="list-disc pl-6 space-y-2 text-brown-800 mb-8">
-          <li>12 zodiac signs react differently to planetary shifts. Knowing your sun, moon, and rising gives a fuller picture.</li>
-          <li>Start your day with guidance on love, career, health, and spiritual growth.</li>
-          <li>Track patterns in mood and outcomes, and use weekly/monthly updates for planning.</li>
-        </ul>
-
-        <h3 className="text-2xl sm:text-3xl font-bold mb-4 text-brown-900">Why Choose Our Astrology Experts?</h3>
-        <p className="text-brown-800 mb-4">
-          Our certified experts blend Vedic wisdom with a modern, empathetic approach. You’ll find original spiritual items—gemstones, yantras, and puja tools—recommended with clear, safe instructions. Transparent options include chats, reports, and quick answers.
-        </p>
-
-        <h3 className="text-2xl sm:text-3xl font-bold mt-10 mb-4 text-brown-900">Conclusion</h3>
-        <p className="text-brown-800 mb-8">
-          Astrology helps you align with God’s plan by reading the universe’s signs. It doesn’t remove free will—it empowers it, so your actions are wise and well‑timed.
-        </p>
-
-        <h3 className="text-2xl sm:text-3xl font-bold mb-4 text-brown-900">FAQs</h3>
-        <div className="space-y-4">
-          <div className="rounded-2xl border-2 border-yellow-300/60 bg-white/90 backdrop-blur-sm p-4">
-            <p className="font-semibold text-brown-900">Q: Why is astrology so accurate?</p>
-            <p className="text-brown-800">Because it’s based on centuries of observation linking planetary patterns with human experience. A birth chart maps energies at your exact birth moment for personalized insight.</p>
-          </div>
-          <div className="rounded-2xl border-2 border-yellow-300/60 bg-white/90 backdrop-blur-sm p-4">
-            <p className="font-semibold text-brown-900">Q: Is astrology prediction true?</p>
-            <p className="text-brown-800">Predictions indicate likely outcomes from cosmic patterns—your free will and actions shape the final result. Skilled astrologers interpret how transits interact with your chart.</p>
-          </div>
-          <div className="rounded-2xl border-2 border-yellow-300/60 bg-white/90 backdrop-blur-sm p-4">
-            <p className="font-semibold text-brown-900">Q: How can online astrology help with the future?</p>
-            <p className="text-brown-800">By analyzing transits and timing to highlight opportunities, challenges, and ideal moments for decisions—so you act in harmony with universal energy.</p>
-          </div>
-        </div>
-      </Section>
+      
 
 
       {/* Footer CTA */}

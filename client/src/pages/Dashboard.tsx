@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import { Home, MessageSquare, BarChart3, User, ShoppingBag, Star, Phone, CreditCard } from "lucide-react";
 
 // Gradient heading
 const gradHead =
@@ -18,17 +19,17 @@ export default function Dashboard() {
   const [activeTab, setActiveTab] = useState("overview");
 
   const tabs = [
-    { id: "overview", label: "Overview", icon: "🏠" },
-    { id: "consultations", label: "My Consultations", icon: "💬" },
-    { id: "reports", label: "My Reports", icon: "📊" },
-    { id: "profile", label: "Profile", icon: "👤" },
-    { id: "orders", label: "Orders", icon: "🛍️" }
+    { id: "overview", label: "Overview", icon: <Home className="w-5 h-5" /> },
+    { id: "consultations", label: "My Consultations", icon: <MessageSquare className="w-5 h-5" /> },
+    { id: "reports", label: "My Reports", icon: <BarChart3 className="w-5 h-5" /> },
+    { id: "profile", label: "Profile", icon: <User className="w-5 h-5" /> },
+    { id: "orders", label: "Orders", icon: <ShoppingBag className="w-5 h-5" /> }
   ];
 
   const recentConsultations = [
     {
       id: 1,
-      astrologer: "Dr. Kavita Joshi",
+      astrologer: "Acharya Pradeep Shastri",
       type: "Chat",
       date: "2024-01-15",
       duration: "25 min",
@@ -95,7 +96,7 @@ export default function Dashboard() {
       `}</style>
 
       {/* Header */}
-      <Section className="pt-28 pb-8">
+      <Section className="pt-20 pb-8">
         <div className="flex items-center justify-between">
           <div>
             <h1 className={`text-3xl sm:text-4xl font-extrabold mb-2 ${gradHead}`}>
@@ -147,22 +148,22 @@ export default function Dashboard() {
             {/* Quick Stats */}
             <div className="grid gap-6 md:grid-cols-4">
               <div className="rounded-2xl border border-yellow-400 bg-white p-6 text-center">
-                <div className="text-3xl mb-2">💬</div>
+                <MessageSquare className="w-8 h-8 text-blue-600 mx-auto mb-2" />
                 <div className="text-2xl font-bold text-brown-900">12</div>
                 <div className="text-brown-600">Total Consultations</div>
               </div>
               <div className="rounded-2xl border border-yellow-400 bg-white p-6 text-center">
-                <div className="text-3xl mb-2">📊</div>
+                <BarChart3 className="w-8 h-8 text-yellow-600 mx-auto mb-2" />
                 <div className="text-2xl font-bold text-brown-900">5</div>
                 <div className="text-brown-600">Reports Generated</div>
               </div>
               <div className="rounded-2xl border border-yellow-400 bg-white p-6 text-center">
-                <div className="text-3xl mb-2">⭐</div>
+                <Star className="w-8 h-8 text-yellow-500 mx-auto mb-2" />
                 <div className="text-2xl font-bold text-brown-900">4.8</div>
                 <div className="text-brown-600">Average Rating</div>
               </div>
               <div className="rounded-2xl border border-yellow-400 bg-white p-6 text-center">
-                <div className="text-3xl mb-2">💰</div>
+                <CreditCard className="w-8 h-8 text-emerald-600 mx-auto mb-2" />
                 <div className="text-2xl font-bold text-brown-900">₹2,450</div>
                 <div className="text-brown-600">Total Spent</div>
               </div>
@@ -175,7 +176,7 @@ export default function Dashboard() {
                 <div key={consultation.id} className="flex items-center justify-between p-4 bg-yellow-50 rounded-xl mb-3">
                   <div className="flex items-center gap-4">
                     <div className="w-12 h-12 bg-yellow-100 rounded-full flex items-center justify-center">
-                      <span className="text-yellow-600 font-bold">📞</span>
+                      <Phone className="w-6 h-6 text-yellow-600" />
                     </div>
                     <div>
                       <div className="font-semibold text-brown-900">{consultation.astrologer}</div>
@@ -202,7 +203,7 @@ export default function Dashboard() {
                     </div>
                     <div className="text-right">
                       <div className="text-sm text-brown-600">{consultation.date}</div>
-                      <div className="text-yellow-500">{"★".repeat(consultation.rating)}</div>
+                      <div className="flex"><Star className="w-4 h-4 text-yellow-500 fill-current" /><Star className="w-4 h-4 text-yellow-500 fill-current" /><Star className="w-4 h-4 text-yellow-500 fill-current" /><Star className="w-4 h-4 text-yellow-500 fill-current" /><Star className="w-4 h-4 text-yellow-500 fill-current" /></div>
                     </div>
                   </div>
                 ))}
@@ -245,7 +246,7 @@ export default function Dashboard() {
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-4">
                       <div className="w-16 h-16 bg-yellow-100 rounded-full flex items-center justify-center">
-                        <span className="text-2xl">👨‍💼</span>
+                        <User className="w-8 h-8 text-blue-600" />
                       </div>
                       <div>
                         <div className="font-bold text-brown-900">{consultation.astrologer}</div>
@@ -260,13 +261,13 @@ export default function Dashboard() {
                       <div className="font-bold text-brown-900">{consultation.amount}</div>
                       <div className={`text-sm px-3 py-1 rounded-full ${
                         consultation.status === 'Completed' 
-                          ? 'bg-green-100 text-green-700' 
+                          ? 'bg-transparent border border-yellow-400 text-yellow-700' 
                           : 'bg-yellow-100 text-yellow-700'
                       }`}>
                         {consultation.status || 'Upcoming'}
                       </div>
                       {consultation.rating && (
-                        <div className="text-yellow-500 mt-1">{"★".repeat(consultation.rating)}</div>
+                        <div className="flex mt-1"><Star className="w-4 h-4 text-yellow-500 fill-current" /><Star className="w-4 h-4 text-yellow-500 fill-current" /><Star className="w-4 h-4 text-yellow-500 fill-current" /><Star className="w-4 h-4 text-yellow-500 fill-current" /><Star className="w-4 h-4 text-yellow-500 fill-current" /></div>
                       )}
                     </div>
                   </div>
@@ -293,7 +294,7 @@ export default function Dashboard() {
                 <div key={report.id} className="rounded-2xl border border-yellow-400 bg-white p-6">
                   <div className="flex items-center gap-4 mb-4">
                     <div className="w-12 h-12 bg-yellow-100 rounded-full flex items-center justify-center">
-                      <span className="text-yellow-600 text-xl">📊</span>
+                      <BarChart3 className="w-6 h-6 text-yellow-600" />
                     </div>
                     <div>
                       <div className="font-bold text-brown-900">{report.title}</div>
@@ -380,7 +381,7 @@ export default function Dashboard() {
           <div className="space-y-6">
             <h3 className={`text-2xl font-bold ${gradHead}`}>My Orders</h3>
             <div className="text-center py-12">
-              <div className="text-6xl mb-4">🛍️</div>
+              <ShoppingBag className="w-16 h-16 text-gray-400 mx-auto mb-4" />
               <h4 className="text-xl font-semibold text-brown-900 mb-2">No Orders Yet</h4>
               <p className="text-brown-600 mb-6">You haven't placed any orders for gemstones or products.</p>
               <Link

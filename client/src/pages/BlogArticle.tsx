@@ -189,7 +189,7 @@ const SAMPLE_ARTICLE: BlogArticle = {
   title: "The Complete Guide to Ruby (Manikya) - The King of Gemstones",
   excerpt: "Discover the powerful properties of Ruby, its astrological significance, and how to choose the perfect stone for maximum benefits.",
   content: "Ruby, known as Manikya in Sanskrit, is one of the most powerful gemstones in Vedic astrology...",
-  author: "Dr. Kavita Joshi",
+  author: "Acharya Pradeep Shastri",
   authorImage: "https://avatar-placeholder.iran.liara.run/public/4",
   publishDate: "2024-01-15",
   readTime: "8 min read",
@@ -234,7 +234,7 @@ export default function BlogArticle() {
       `}</style>
 
       {/* Article Header */}
-      <Section className="pt-28 pb-8">
+      <Section className="pt-20 pb-8">
         <div className="max-w-4xl mx-auto">
           {/* Breadcrumb */}
           <nav className="mb-6">

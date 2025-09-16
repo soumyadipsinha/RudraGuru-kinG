@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import serviceLogo from "../assets/serviceLogo.png";
+import { Sparkles, Check } from "lucide-react";
 
 // Shared gradient heading classes
 const gradHead =
@@ -46,9 +47,9 @@ export default function Services() {
         </svg>
 
         {/* Gentle twinkling stars */}
-        <div className="absolute left-10 top-24 text-[rgba(179,120,58,0.45)] animate-[twinkle_3.5s_ease-in-out_infinite]">✦</div>
-        <div className="absolute right-16 top-40 text-[rgba(120,72,32,0.40)] animate-[twinkle_4.2s_ease-in-out_infinite]">✧</div>
-        <div className="absolute left-1/3 bottom-24 text-[rgba(179,120,58,0.42)] animate-[twinkle_5s_ease-in-out_infinite]">✶</div>
+        <div className="absolute left-10 top-24 text-[rgba(179,120,58,0.45)] animate-[twinkle_3.5s_ease-in-out_infinite]"><Sparkles className="w-4 h-4" /></div>
+        <div className="absolute right-16 top-40 text-[rgba(120,72,32,0.40)] animate-[twinkle_4.2s_ease-in-out_infinite]"><Sparkles className="w-4 h-4" /></div>
+        <div className="absolute left-1/3 bottom-24 text-[rgba(179,120,58,0.42)] animate-[twinkle_5s_ease-in-out_infinite]"><Sparkles className="w-4 h-4" /></div>
       </div>
 
       {/* Inline keyframes */}
@@ -60,7 +61,7 @@ export default function Services() {
       `}</style>
 
       {/* Intro */}
-      <Section className="pt-28 pb-5">
+      <Section className="pt-20 pb-5">
         <div className="grid gap-8 md:grid-cols-2 items-center">
           <div>
             <h1 className={`text-4xl sm:text-5xl font-extrabold mb-4 ${gradHead}`}>Our Services</h1>
@@ -266,7 +267,7 @@ export default function Services() {
                     className="mt-0.5 inline-flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-yellow-600 text-white"
                     aria-hidden="true"
                   >
-                    ✓
+                    <Check className="w-4 h-4" />
                   </span>
                   <span className="text-brown-900">{txt}</span>
                 </li>

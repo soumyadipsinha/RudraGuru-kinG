@@ -1,5 +1,6 @@
 import { useState, useRef, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
+import { BarChart3, Gem, Circle, Smartphone, Star } from "lucide-react";
 
 // Gradient heading
 const gradHead =
@@ -23,10 +24,13 @@ interface Message {
 }
 
 export default function Chat() {
+  const location = useLocation();
+  const params = new URLSearchParams(location.search);
+  const astroId = params.get('astro');
   const [messages, setMessages] = useState<Message[]>([
     {
       id: 1,
-      text: "Namaste! I'm Dr. Kavita Joshi. How can I help you today?",
+      text: "Namaste! I'm Acharya Pradeep Shastri. How can I help you today?",
       sender: 'astrologer',
       timestamp: '10:30 AM',
       type: 'text'
@@ -36,6 +40,8 @@ export default function Chat() {
   const [isTyping, setIsTyping] = useState(false);
   const [callDuration, setCallDuration] = useState(0);
   const [isCallActive, setIsCallActive] = useState(false);
+  const [chatSeconds, setChatSeconds] = useState(0);
+  const [chatStarted, setChatStarted] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
   const scrollToBottom = () => {
@@ -58,6 +64,7 @@ export default function Chat() {
       setMessages([...messages, message]);
       setNewMessage("");
       setIsTyping(true);
+      if (!chatStarted) setChatStarted(true);
 
       // Simulate astrologer response
       setTimeout(() => {
@@ -96,6 +103,16 @@ export default function Chat() {
     }, 300000);
   };
 
+  // Start chat timer after first user message; free for first 180 seconds
+  useEffect(() => {
+    if (!chatStarted) return;
+    const interval = setInterval(() => setChatSeconds(prev => prev + 1), 1000);
+    return () => clearInterval(interval);
+  }, [chatStarted]);
+
+  const freeRemaining = Math.max(0, 180 - chatSeconds);
+  const isFreeOver = freeRemaining === 0 && chatStarted;
+
   const formatTime = (seconds: number) => {
     const mins = Math.floor(seconds / 60);
     const secs = seconds % 60;
@@ -118,7 +135,7 @@ export default function Chat() {
       `}</style>
 
       {/* Header */}
-      <Section className="pt-28 pb-6">
+      <Section className="pt-20 pb-6">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-4">
             <Link
@@ -130,12 +147,29 @@ export default function Chat() {
           </div>
           <div className="flex items-center gap-3">
             <div className="text-sm text-brown-600">
-              Rate: ₹15/min • Balance: ₹500
+              Rate: ₹11 / 5 min • Balance: ₹500
             </div>
-            <button className="px-3 py-1 bg-green-100 text-green-700 rounded-full text-sm">
+            <button className="px-3 py-1 bg-transparent border border-yellow-400 text-yellow-700 rounded-full text-sm">
               Online
             </button>
           </div>
+        </div>
+      </Section>
+
+      {/* Free Chat Banner */}
+      <Section className="pb-0">
+        <div className={`rounded-2xl p-4 mb-4 ${isFreeOver ? 'bg-red-50 border border-red-200' : 'bg-transparent border border-yellow-200'}`}>
+          {isFreeOver ? (
+            <div className="flex items-center justify-between">
+              <p className="text-red-700 font-semibold">Free 3 minutes ended. Standard charges apply: ₹11 / 5 min.</p>
+              <span className="text-sm text-red-600">Session time: {formatTime(chatSeconds)}</span>
+            </div>
+          ) : (
+            <div className="flex items-center justify-between">
+              <p className="text-yellow-700 font-semibold">First 3 minutes FREE for all users.</p>
+              <span className="text-sm text-yellow-700">Free time left: {formatTime(freeRemaining)}</span>
+            </div>
+          )}
         </div>
       </Section>
 
@@ -147,13 +181,13 @@ export default function Chat() {
               <div className="text-center mb-6">
                 <img
                   src="https://avatar-placeholder.iran.liara.run/public/4"
-                  alt="Dr. Kavita Joshi"
+                  alt="Astrologer"
                   className="w-20 h-20 rounded-full mx-auto mb-4 border-4 border-yellow-400"
                 />
-                <h3 className="text-xl font-bold text-brown-900">Dr. Kavita Joshi</h3>
+                <h3 className="text-xl font-bold text-brown-900">{astroId ? `Astrologer #${astroId}` : 'Astrologer'}</h3>
                 <p className="text-brown-600">Vedic Astrology Expert</p>
                 <div className="flex items-center justify-center gap-1 mt-2">
-                  <span className="text-yellow-500">{"★".repeat(5)}</span>
+                  <div className="flex"><Star className="w-4 h-4 text-yellow-500 fill-current" /><Star className="w-4 h-4 text-yellow-500 fill-current" /><Star className="w-4 h-4 text-yellow-500 fill-current" /><Star className="w-4 h-4 text-yellow-500 fill-current" /><Star className="w-4 h-4 text-yellow-500 fill-current" /></div>
                   <span className="text-brown-600 text-sm">(4.9)</span>
                 </div>
               </div>
@@ -161,7 +195,7 @@ export default function Chat() {
               <div className="space-y-4">
                 <div className="flex justify-between items-center p-3 bg-yellow-50 rounded-xl">
                   <span className="text-brown-700">Chat Rate</span>
-                  <span className="font-semibold text-brown-900">₹15/min</span>
+                  <span className="font-semibold text-brown-900">₹11 / 5 min</span>
                 </div>
                 <div className="flex justify-between items-center p-3 bg-yellow-50 rounded-xl">
                   <span className="text-brown-700">Call Rate</span>
@@ -210,12 +244,12 @@ export default function Chat() {
               <div className="p-4 border-b border-yellow-200 bg-yellow-50 rounded-t-2xl">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-3">
-                    <div className="w-3 h-3 bg-green-500 rounded-full"></div>
-                    <span className="font-semibold text-brown-900">Dr. Kavita Joshi</span>
+                    <div className="w-3 h-3 bg-yellow-500 rounded-full"></div>
+                    <span className="font-semibold text-brown-900">{astroId ? `Astrologer #${astroId}` : 'Astrologer'}</span>
                     <span className="text-brown-600 text-sm">is online</span>
                   </div>
                   <div className="text-sm text-brown-600">
-                    Session: 5 min • Cost: ₹75
+                    Session: {formatTime(chatSeconds)} {isFreeOver ? '• Charges apply' : '• Free'}
                   </div>
                 </div>
               </div>
@@ -274,7 +308,7 @@ export default function Chat() {
                 </div>
                 <div className="flex justify-between items-center mt-2 text-sm text-brown-600">
                   <span>Press Enter to send</span>
-                  <span>₹15/min • Auto-recharge when balance is low</span>
+                  <span>{isFreeOver ? '₹11 / 5 min' : 'First 3 min FREE'} • Auto-recharge when balance is low</span>
                 </div>
               </div>
             </div>
@@ -288,19 +322,19 @@ export default function Chat() {
           <h3 className={`text-xl font-bold mb-4 ${gradHead}`}>Quick Actions</h3>
           <div className="grid gap-4 md:grid-cols-4">
             <button className="flex items-center gap-3 p-4 border border-yellow-300 rounded-xl hover:bg-yellow-50 transition">
-              <span className="text-2xl">📊</span>
+              <BarChart3 className="w-6 h-6 text-blue-600" />
               <span className="font-medium">Share Birth Chart</span>
             </button>
             <button className="flex items-center gap-3 p-4 border border-yellow-300 rounded-xl hover:bg-yellow-50 transition">
-              <span className="text-2xl">💎</span>
+              <Gem className="w-6 h-6 text-purple-600" />
               <span className="font-medium">Gemstone Query</span>
             </button>
             <button className="flex items-center gap-3 p-4 border border-yellow-300 rounded-xl hover:bg-yellow-50 transition">
-              <span className="text-2xl">🔮</span>
+              <Circle className="w-6 h-6 text-indigo-600" />
               <span className="font-medium">Ask Question</span>
             </button>
             <button className="flex items-center gap-3 p-4 border border-yellow-300 rounded-xl hover:bg-yellow-50 transition">
-              <span className="text-2xl">📱</span>
+              <Smartphone className="w-6 h-6 text-green-600" />
               <span className="font-medium">Upload Photo</span>
             </button>
           </div>

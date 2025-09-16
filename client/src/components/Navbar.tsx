@@ -1,20 +1,9 @@
 import { Link } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Logo from "../assets/Logo2.png";
 
 export default function Navbar() {
-  const [scrolled, setScrolled] = useState(false);
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
-
-  useEffect(() => {
-    const onScroll = () => {
-      const y = window.scrollY || window.pageYOffset;
-      setScrolled(y > 4);
-    };
-    onScroll();
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
-  }, []);
 
   const handleDropdownToggle = (dropdown: string) => {
     setActiveDropdown(activeDropdown === dropdown ? null : dropdown);
@@ -52,24 +41,13 @@ export default function Navbar() {
             >
               Free Kundli
             </Link>
-            <div className="relative">
-              <button
-                onClick={() => handleDropdownToggle('kundli-matching')}
-                className="flex items-center gap-1 text-brown-800 hover:text-yellow-600 font-medium transition-colors"
-              >
-                Kundli Matching
-                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                </svg>
-              </button>
-              {activeDropdown === 'kundli-matching' && (
-                <div className="absolute top-full left-0 mt-2 w-48 bg-white/95 backdrop-blur-md rounded-xl shadow-2xl border-2 border-yellow-200/50 py-2 z-50">
-                  <Link to="/kundli" onClick={handleMenuItemClick} className="block px-4 py-2 text-brown-700 hover:bg-yellow-50 hover:text-yellow-600">Kundli Matching</Link>
-                  <Link to="/compatibility" onClick={handleMenuItemClick} className="block px-4 py-2 text-brown-700 hover:bg-yellow-50 hover:text-yellow-600">Compatibility Check</Link>
-                  <Link to="/marriage-prediction" onClick={handleMenuItemClick} className="block px-4 py-2 text-brown-700 hover:bg-yellow-50 hover:text-yellow-600">Marriage Prediction</Link>
-                </div>
-              )}
-            </div>
+           
+            <Link
+              to="/kundli-matching"
+              className="text-brown-800 hover:text-yellow-600 font-medium transition-colors"
+            >
+              Kundli Matching
+            </Link>
             <div className="relative">
               <button
                 onClick={() => handleDropdownToggle('calculators')}
@@ -82,9 +60,12 @@ export default function Navbar() {
               </button>
               {activeDropdown === 'calculators' && (
                 <div className="absolute top-full left-0 mt-2 w-48 bg-white/95 backdrop-blur-md rounded-xl shadow-2xl border-2 border-yellow-200/50 py-2 z-50">
-                  <Link to="/numerology" onClick={handleMenuItemClick} className="block px-4 py-2 text-brown-700 hover:bg-yellow-50 hover:text-yellow-600">Numerology Calculator</Link>
-                  <Link to="/gemstone-calculator" onClick={handleMenuItemClick} className="block px-4 py-2 text-brown-700 hover:bg-yellow-50 hover:text-yellow-600">Gemstone Calculator</Link>
-                  <Link to="/vastu-calculator" onClick={handleMenuItemClick} className="block px-4 py-2 text-brown-700 hover:bg-yellow-50 hover:text-yellow-600">Vastu Calculator</Link>
+                  <Link to="/calculators" onClick={handleMenuItemClick} className="block px-4 py-2 text-brown-700 hover:bg-yellow-50 hover:text-yellow-600">All Calculators</Link>
+                  <Link to="/calculators/love" onClick={handleMenuItemClick} className="block px-4 py-2 text-brown-700 hover:bg-yellow-50 hover:text-yellow-600">Love Calculator</Link>
+                  <Link to="/calculators/numerology" onClick={handleMenuItemClick} className="block px-4 py-2 text-brown-700 hover:bg-yellow-50 hover:text-yellow-600">Numerology</Link>
+                  <Link to="/calculators/rashi" onClick={handleMenuItemClick} className="block px-4 py-2 text-brown-700 hover:bg-yellow-50 hover:text-yellow-600">Rashi (Zodiac)</Link>
+                  <Link to="/calculators/mangal-dosha" onClick={handleMenuItemClick} className="block px-4 py-2 text-brown-700 hover:bg-yellow-50 hover:text-yellow-600">Mangal Dosha</Link>
+                  <Link to="/calculators/lucky-name-number" onClick={handleMenuItemClick} className="block px-4 py-2 text-brown-700 hover:bg-yellow-50 hover:text-yellow-600">Lucky Name/Number</Link>
                 </div>
               )}
             </div>
@@ -99,14 +80,20 @@ export default function Navbar() {
                 </svg>
               </button>
               {activeDropdown === 'horoscopes' && (
-                <div className="absolute top-full left-0 mt-2 w-48 bg-white/95 backdrop-blur-md rounded-xl shadow-2xl border-2 border-yellow-200/50 py-2 z-50">
+                <div className="absolute top-full left-0 mt-2 w-56 bg-white/95 backdrop-blur-md rounded-xl shadow-2xl border-2 border-yellow-200/50 py-2 z-50">
                   <Link to="/horoscope" onClick={handleMenuItemClick} className="block px-4 py-2 text-brown-700 hover:bg-yellow-50 hover:text-yellow-600">Daily Horoscope</Link>
-                  <Link to="/weekly-horoscope" onClick={handleMenuItemClick} className="block px-4 py-2 text-brown-700 hover:bg-yellow-50 hover:text-yellow-600">Weekly Horoscope</Link>
-                  <Link to="/monthly-horoscope" onClick={handleMenuItemClick} className="block px-4 py-2 text-brown-700 hover:bg-yellow-50 hover:text-yellow-600">Monthly Horoscope</Link>
-                  <Link to="/yearly-horoscope" onClick={handleMenuItemClick} className="block px-4 py-2 text-brown-700 hover:bg-yellow-50 hover:text-yellow-600">Yearly Horoscope</Link>
+                  <Link to="/horoscope/weekly" onClick={handleMenuItemClick} className="block px-4 py-2 text-brown-700 hover:bg-yellow-50 hover:text-yellow-600">Weekly Horoscope</Link>
+                  <Link to="/horoscope/monthly" onClick={handleMenuItemClick} className="block px-4 py-2 text-brown-700 hover:bg-yellow-50 hover:text-yellow-600">Monthly Horoscope</Link>
+                  <Link to="/horoscope/yearly" onClick={handleMenuItemClick} className="block px-4 py-2 text-brown-700 hover:bg-yellow-50 hover:text-yellow-600">Yearly Horoscope</Link>
                 </div>
               )}
             </div>
+             <Link
+              to="/about"
+              className="text-brown-800 hover:text-yellow-600 font-medium transition-colors"
+            >
+              About Us
+            </Link>
             <div className="relative">
               <button
                 onClick={() => handleDropdownToggle('language')}
@@ -164,7 +151,11 @@ export default function Navbar() {
                   <span className="text-sm font-semibold text-yellow-600">Main Menu</span>
                 </div>
                 <Link to="/kundli" onClick={handleMenuItemClick} className="block px-4 py-3 text-brown-700 hover:bg-yellow-50 hover:text-yellow-600 transition-colors">Free Kundli</Link>
+                <Link to="/about" onClick={handleMenuItemClick} className="block px-4 py-3 text-brown-700 hover:bg-yellow-50 hover:text-yellow-600 transition-colors">About Us</Link>
                 <Link to="/horoscope" onClick={handleMenuItemClick} className="block px-4 py-3 text-brown-700 hover:bg-yellow-50 hover:text-yellow-600 transition-colors">Daily Horoscope</Link>
+                <Link to="/horoscope/weekly" onClick={handleMenuItemClick} className="block px-4 py-3 text-brown-700 hover:bg-yellow-50 hover:text-yellow-600 transition-colors">Weekly Horoscope</Link>
+                <Link to="/horoscope/monthly" onClick={handleMenuItemClick} className="block px-4 py-3 text-brown-700 hover:bg-yellow-50 hover:text-yellow-600 transition-colors">Monthly Horoscope</Link>
+                <Link to="/horoscope/yearly" onClick={handleMenuItemClick} className="block px-4 py-3 text-brown-700 hover:bg-yellow-50 hover:text-yellow-600 transition-colors">Yearly Horoscope</Link>
                 <Link to="/astrologers" onClick={handleMenuItemClick} className="block px-4 py-3 text-brown-700 hover:bg-yellow-50 hover:text-yellow-600 transition-colors">Best Astrologers</Link>
                 <Link to="/chat" onClick={handleMenuItemClick} className="block px-4 py-3 text-brown-700 hover:bg-yellow-50 hover:text-yellow-600 transition-colors">Chat with Astrologer</Link>
                 <div className="px-4 py-2 border-b border-yellow-200/30 mt-2">
@@ -173,6 +164,15 @@ export default function Navbar() {
                 <Link to="/gemstones" onClick={handleMenuItemClick} className="block px-4 py-3 text-brown-700 hover:bg-yellow-50 hover:text-yellow-600 transition-colors">Gemstones</Link>
                 <Link to="/store" onClick={handleMenuItemClick} className="block px-4 py-3 text-brown-700 hover:bg-yellow-50 hover:text-yellow-600 transition-colors">All Products</Link>
                 <Link to="/blog" onClick={handleMenuItemClick} className="block px-4 py-3 text-brown-700 hover:bg-yellow-50 hover:text-yellow-600 transition-colors">Blogs</Link>
+                <div className="px-4 py-2 border-b border-yellow-200/30 mt-2">
+                  <span className="text-sm font-semibold text-yellow-600">Calculators</span>
+                </div>
+                <Link to="/calculators" onClick={handleMenuItemClick} className="block px-4 py-3 text-brown-700 hover:bg-yellow-50 hover:text-yellow-600 transition-colors">All Calculators</Link>
+                <Link to="/calculators/love" onClick={handleMenuItemClick} className="block px-4 py-3 text-brown-700 hover:bg-yellow-50 hover:text-yellow-600 transition-colors">Love Calculator</Link>
+                <Link to="/calculators/numerology" onClick={handleMenuItemClick} className="block px-4 py-3 text-brown-700 hover:bg-yellow-50 hover:text-yellow-600 transition-colors">Numerology</Link>
+                <Link to="/calculators/rashi" onClick={handleMenuItemClick} className="block px-4 py-3 text-brown-700 hover:bg-yellow-50 hover:text-yellow-600 transition-colors">Rashi (Zodiac)</Link>
+                <Link to="/calculators/mangal-dosha" onClick={handleMenuItemClick} className="block px-4 py-3 text-brown-700 hover:bg-yellow-50 hover:text-yellow-600 transition-colors">Mangal Dosha</Link>
+                <Link to="/calculators/lucky-name-number" onClick={handleMenuItemClick} className="block px-4 py-3 text-brown-700 hover:bg-yellow-50 hover:text-yellow-600 transition-colors">Lucky Name/Number</Link>
                 <div className="px-4 py-2 border-b border-yellow-200/30 mt-2">
                   <span className="text-sm font-semibold text-yellow-600">Account</span>
                 </div>
@@ -212,11 +212,12 @@ export default function Navbar() {
               Chat with Astrologer
             </Link>
             <Link
-              to="/call"
+              to="/talk-to-astrologer"
               className="text-brown-800 hover:text-yellow-600 font-medium transition-colors"
             >
               Talk to Astrologer
             </Link>
+            
             <div className="relative">
               <button
                 onClick={() => handleDropdownToggle('store')}

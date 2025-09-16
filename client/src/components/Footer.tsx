@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import Logo from "../assets/Logo2.png";
-import { Facebook, Instagram, Linkedin, Youtube, Mail, Headphones } from "lucide-react";
+import { Facebook, Instagram, Linkedin, Youtube, Mail, Headphones, Gift } from "lucide-react";
 
 export default function Footer() {
   return (
@@ -118,7 +118,7 @@ export default function Footer() {
             {/* Free Gift Banner */}
             <div className="mt-6 bg-yellow-500 text-black px-4 py-2 rounded-lg flex items-center gap-2">
               <div className="w-6 h-6 bg-black rounded-full flex items-center justify-center">
-                <span className="text-yellow-500 text-xs">🎁</span>
+                <Gift className="w-4 h-4 text-yellow-500" />
               </div>
               <span className="font-semibold text-sm">Claim your FREE gift!</span>
             </div>
