@@ -2,20 +2,20 @@
 import { Link } from "react-router-dom";
 import { Scale, Palette, MapPin, FlaskConical, Sparkles, Shield, Zap } from "lucide-react";
 
-// Assets
-import Gemsstone from "../assets/gemstone.png";
-import Rudraksha from "../assets/rudraksha.png";
-import Abhimantrit from "../assets/abhimantrit.png";
-import Diamond from "../assets/heera.png";
-import SapphireBlue from "../assets/sapphire-blue.png";
-import SapphireYellow from "../assets/sapphire-yellow.png";
-import Ruby from "../assets/ruby.png";
-import Emerald from "../assets/Panna.png";
-import Opal from "../assets/opal.png";
-import RedCoral from "../assets/redCoral.png";
-import Turquoise from "../assets/turquoise.png";
-import Hessonite from "../assets/hessonite.png";
-import CatEye from "../assets/catEye.png";
+// Assets via public paths
+const Gemsstone = "/assets/gemstone.png";
+const Rudraksha = "/assets/rudraksha.png";
+const Abhimantrit = "/assets/abhimantrit.png";
+const Diamond = "/assets/heera.png";
+const SapphireBlue = "/assets/sapphire-blue.png";
+const SapphireYellow = "/assets/sapphire-yellow.png";
+const Ruby = "/assets/ruby.png";
+const Emerald = "/assets/panna.png";
+const Opal = "/assets/opal.png";
+const RedCoral = "/assets/redCoral.png";
+const Turquoise = "/assets/turquoise.png";
+const Hessonite = "/assets/hessonite.png";
+const CatEye = "/assets/catEye.png";
 
 // Gradient heading
 const gradHead =

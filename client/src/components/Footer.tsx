@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import Logo from "../assets/Logo2.png";
+// Use public asset path
 import { Facebook, Instagram, Linkedin, Youtube, Mail, Headphones, Gift } from "lucide-react";
 
 export default function Footer() {
@@ -10,7 +10,7 @@ export default function Footer() {
         <div className="mb-8 pb-8 border-b border-gray-700">
           <div className="flex flex-col md:flex-row items-center justify-between gap-6">
             <div className="flex items-center gap-3">
-              <img src={Logo} alt="RUDRAGURU" className="h-12 w-auto invert" />
+              <img src="/assets/Logo2.png" alt="RUDRAGURU" className="h-12 w-auto invert" />
               <div>
                 <h3 className="text-2xl font-extrabold text-yellow-400 tracking-wide">RUDRAGURU</h3>
                 <p className="text-sm text-gray-300">Expert Astrology & Spiritual Guidance</p>

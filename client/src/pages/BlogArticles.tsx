@@ -2,13 +2,13 @@ import { useState, useMemo } from "react";
 import { Link } from "react-router-dom";
 import { Sparkles } from "lucide-react";
 
-// Import gemstone assets
-import Ruby from "../assets/ruby.png";
-import Rudraksha from "../assets/rudraksha.png";
-import SapphireBlue from "../assets/sapphire-blue.png";
-import Emerald from "../assets/panna.png";
-import SapphireYellow from "../assets/sapphire-yellow.png";
-import GemstoneGeneral from "../assets/gemstone.png";
+// Use public asset paths
+const Ruby = "/assets/ruby.png";
+const Rudraksha = "/assets/rudraksha.png";
+const SapphireBlue = "/assets/sapphire-blue.png";
+const Emerald = "/assets/panna.png";
+const SapphireYellow = "/assets/sapphire-yellow.png";
+const GemstoneGeneral = "/assets/gemstone.png";
 
 // Gradient heading
 const gradHead =

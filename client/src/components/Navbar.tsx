@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { useState } from "react";
-import Logo from "../assets/Logo2.png";
+// Use public asset path
 
 export default function Navbar() {
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
@@ -29,7 +29,7 @@ export default function Navbar() {
         <div className="h-14 sm:h-16 flex items-center justify-between">
           {/* Logo */}
           <Link to="/" className="flex items-center gap-2 sm:gap-3">
-            <img src={Logo} alt="RUDRAGURU" className="h-8 w-auto sm:h-10 invert" />
+            <img src="/assets/Logo2.png" alt="RUDRAGURU" className="h-8 w-auto sm:h-10 invert" />
             <span className="text-brown-900 font-bold text-lg sm:text-xl tracking-wide">RUDRAGURU</span>
           </Link>
 

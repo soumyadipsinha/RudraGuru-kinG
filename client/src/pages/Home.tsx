@@ -1,9 +1,7 @@
 import { Link } from "react-router-dom";
-import HeroLogo from "../assets/HeroLogo.png";
-import Astrologer from "../assets/astrologer.png";
 import { MessageSquare, PhoneCall, ShoppingBag, Sparkles, Gem, ShieldCheck, Stars, ArrowRight, Video, Clock3, FileText, Star } from "lucide-react";
 import { ASTROLOGERS } from "../data/astrologers";
-import ladyastro from "../assets/ladyastro.png";
+// Images are served from Vite public folder
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Autoplay, Pagination, Navigation } from 'swiper/modules';
 
@@ -90,7 +88,7 @@ export default function Home() {
                 </div>
                 {/* Image */}
                 <div className="flex justify-center md:justify-end">
-                  <img src={Astrologer} alt="Expert Astrologer" className="w-full max-w-[260px] md:max-w-[320px] h-auto object-contain drop-shadow-lg" />
+                  <img src="/assets/astrologer.png" alt="Expert Astrologer" className="w-full max-w-[260px] md:max-w-[320px] h-auto object-contain drop-shadow-lg" />
                 </div>
               </div>
             </div>
@@ -116,7 +114,7 @@ export default function Home() {
                 </div>
                 {/* Image */}
                 <div className="flex justify-center md:justify-end">
-                  <img src={ladyastro} alt="Lady Astrologer" className="w-full max-w-[260px] md:max-w-[320px] h-auto object-contain drop-shadow-lg" />
+                  <img src="/assets/ladyastro.png" alt="Lady Astrologer" className="w-full max-w-[260px] md:max-w-[320px] h-auto object-contain drop-shadow-lg" />
                 </div>
               </div>
             </div>
@@ -152,7 +150,7 @@ export default function Home() {
       <Section className="pt-0 pb-20">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-center">
           <div className="flex justify-center order-2 md:order-1">
-            <img src={HeroLogo} alt="Astrology" className="w-full max-w-[400px] md:max-w-[550px] h-auto md:h-[320px] object-contain" />
+            <img src="/assets/HeroLogo.png" alt="Astrology" className="w-full max-w-[400px] md:max-w-[550px] h-auto md:h-[320px] object-contain" />
           </div>
           <div className="order-1 md:order-2 text-center md:text-left">
             <h1 className={`text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold leading-tight ${gradHead}`}>
@@ -431,7 +429,7 @@ export default function Home() {
               price: "₹25,000",
               originalPrice: "₹31,250",
               discount: "20% OFF",
-              image: "/src/assets/sapphire-yellow.png",
+              image: "/assets/sapphire-yellow.png",
               benefits: "Wisdom, Prosperity, Spiritual Growth"
             },
             {
@@ -439,7 +437,7 @@ export default function Home() {
               price: "₹2,500",
               originalPrice: "₹3,125",
               discount: "20% OFF",
-              image: "/src/assets/rudraksha.png",
+              image: "/assets/rudraksha.png",
               benefits: "Jupiter's Blessings, Knowledge, Success"
             },
             {
@@ -447,7 +445,7 @@ export default function Home() {
               price: "₹18,000",
               originalPrice: "₹22,500",
               discount: "20% OFF",
-              image: "/src/assets/sapphire-blue.png",
+              image: "/assets/sapphire-blue.png",
               benefits: "Discipline, Focus, Career Stability"
             },
             {
@@ -455,7 +453,7 @@ export default function Home() {
               price: "₹799",
               originalPrice: "₹999",
               discount: "20% OFF",
-              image: "/src/assets/serviceLogo.png",
+              image: "/assets/serviceLogo.png",
               benefits: "Energy Balance, Spiritual Healing"
             }
           ].map((product, index) => (

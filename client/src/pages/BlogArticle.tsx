@@ -1,11 +1,11 @@
 import { useState } from "react";
 import { Link, useParams } from "react-router-dom";
 
-// Import gemstone assets
-import Ruby from "../assets/ruby.png";
-import Rudraksha from "../assets/rudraksha.png";
-import SapphireBlue from "../assets/sapphire-blue.png";
-import Emerald from "../assets/panna.png";
+// Use public asset paths
+const Ruby = "/assets/ruby.png";
+const Rudraksha = "/assets/rudraksha.png";
+const SapphireBlue = "/assets/sapphire-blue.png";
+const Emerald = "/assets/panna.png";
 
 // Gradient heading
 const gradHead =

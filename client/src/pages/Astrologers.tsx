@@ -2,7 +2,7 @@ import { useEffect, useMemo, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Gem, ShieldCheck, Stars, MessageSquare, Phone, Star } from "lucide-react";
 
-import Astrologer from "../assets/astrologer.png"
+const Astrologer = "/assets/astrologer.png";
 import { ASTROLOGERS } from "../data/astrologers";
 
 const gradHead =

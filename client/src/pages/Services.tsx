@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import serviceLogo from "../assets/serviceLogo.png";
+// Use public asset path
 import { Sparkles, Check } from "lucide-react";
 
 // Shared gradient heading classes
@@ -81,7 +81,7 @@ export default function Services() {
           </div>
           <div className="flex justify-center">
             <img
-              src={serviceLogo}
+              src="/assets/serviceLogo.png"
               alt="Astrology Services"
               className="w-full max-w-md rounded-2xl object-cover transition-transform duration-300 hover:scale-[1.02]"
             />

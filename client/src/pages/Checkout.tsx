@@ -21,14 +21,14 @@ const cartItems = [
     name: "Yellow Sapphire (Pukhraj) - 2.5 Carats",
     price: 25000,
     quantity: 1,
-    image: "/src/assets/sapphire-yellow.png"
+    image: "/assets/sapphire-yellow.png"
   },
   {
     id: 2,
     name: "5 Mukhi Rudraksha (Nepali)",
     price: 2500,
     quantity: 2,
-    image: "/src/assets/rudraksha.png"
+    image: "/assets/rudraksha.png"
   }
 ];
 
