@@ -1220,7 +1220,7 @@ export default function Store() {
   return (
     <div className="min-h-screen bg-transparent">
       {/* Header */}
-      <div className="bg-white shadow-sm border-b">
+      <div className="bg-white shadow-deep">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 pt-20">
           <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
             <div>
@@ -1248,7 +1248,7 @@ export default function Store() {
         <div className="flex flex-col lg:flex-row gap-8">
           {/* Sidebar Filters */}
           <div className="lg:w-64 flex-shrink-0">
-            <div className="bg-white rounded-lg shadow-sm p-6 sticky top-24">
+            <div className="bg-white rounded-lg shadow-deep p-6 sticky top-24">
               <div className="flex items-center justify-between mb-4">
                 <h3 className="font-semibold text-gray-900">Filters</h3>
                 <button
@@ -1270,7 +1270,7 @@ export default function Store() {
                       placeholder="Search products..."
                       value={searchTerm}
                       onChange={(e) => setSearchTerm(e.target.value)}
-                      className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    className="w-full pl-10 pr-4 py-2 rounded-lg bg-white shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                     />
                   </div>
                 </div>
@@ -1286,9 +1286,9 @@ export default function Store() {
                           setSelectedCategory(category.id);
                           setSelectedSubcategory("all");
                         }}
-                        className={`w-full text-left px-3 py-2 rounded-lg text-sm transition-colors ${
+                        className={`w-full text-left px-3 py-2 rounded-lg text-sm transition-colors shadow-sm ${
                           selectedCategory === category.id
-                            ? 'bg-yellow-100 text-yellow-800 border border-gray-300'
+                            ? 'bg-yellow-100 text-yellow-800'
                             : 'text-gray-700 hover:bg-gray-100'
                         }`}
                       >
@@ -1305,9 +1305,9 @@ export default function Store() {
                     <div className="space-y-2">
                       <button
                         onClick={() => setSelectedSubcategory("all")}
-                        className={`w-full text-left px-3 py-2 rounded-lg text-sm transition-colors ${
+                        className={`w-full text-left px-3 py-2 rounded-lg text-sm transition-colors shadow-sm ${
                           selectedSubcategory === "all"
-                            ? 'bg-yellow-100 text-yellow-800 border border-gray-300'
+                            ? 'bg-yellow-100 text-yellow-800'
                             : 'text-gray-700 hover:bg-gray-100'
                         }`}
                       >
@@ -1317,9 +1317,9 @@ export default function Store() {
                         <button
                           key={subcategory.id}
                           onClick={() => setSelectedSubcategory(subcategory.id)}
-                          className={`w-full text-left px-3 py-2 rounded-lg text-sm transition-colors ${
+                          className={`w-full text-left px-3 py-2 rounded-lg text-sm transition-colors shadow-sm ${
                             selectedSubcategory === subcategory.id
-                              ? 'bg-yellow-100 text-yellow-800 border border-gray-300'
+                              ? 'bg-yellow-100 text-yellow-800'
                               : 'text-gray-700 hover:bg-gray-100'
                           }`}
                         >
@@ -1336,7 +1336,7 @@ export default function Store() {
                   <select
                     value={sortBy}
                     onChange={(e) => setSortBy(e.target.value)}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    className="w-full px-3 py-2 rounded-lg bg-white shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                   >
                     <option value="featured">Featured</option>
                     <option value="price-low">Price: Low to High</option>
@@ -1375,7 +1375,7 @@ export default function Store() {
             </div>
 
             {/* Products Grid */}
-            <div className={`grid gap-6 ${
+      <div className={`grid gap-6 ${
               viewMode === "grid" 
                 ? "grid-cols-1 sm:grid-cols-2 lg:grid-cols-3" 
                 : "grid-cols-1"
@@ -1668,19 +1668,18 @@ function ProductCard({
   }
 
   return (
-    <div className="bg-white rounded-lg shadow-sm border overflow-hidden hover:shadow-md transition-shadow">
+      <div className="bg-white rounded-lg shadow-deep overflow-hidden hover:shadow-xl transition-shadow">
       <div className="relative">
-        <Link to={`/product/${product.id}`}>
-          <img
-            src={product.image}
-            alt={product.name}
-            className="w-full h-48 object-cover hover:scale-105 transition-transform duration-200"
-          />
-        </Link>
+        <img
+          src={product.image}
+          alt={product.name}
+          onClick={() => onPreview(product)}
+          className="w-full h-48 object-cover hover:scale-105 transition-transform duration-200 cursor-pointer"
+        />
         <button
           onClick={() => onToggleWishlist(product.id)}
-          className={`absolute top-3 right-3 p-2 rounded-full transition-colors ${
-            isInWishlist ? 'text-red-500 bg-white shadow-md' : 'text-gray-400 bg-white shadow-md hover:text-red-500'
+          className={`absolute top-3 right-3 p-2 rounded-full transition-colors shadow-deep ${
+            isInWishlist ? 'text-red-500 bg-white' : 'text-gray-400 bg-white hover:text-red-500'
           }`}
         >
           <Heart className={`w-5 h-5 ${isInWishlist ? 'fill-current' : ''}`} />
@@ -1749,7 +1748,7 @@ function ProductCard({
           <div className="flex items-center gap-2">
             <Button
               onClick={() => onPreview(product)}
-              className="flex-1 bg-white text-brown-900 border border-gray-300 hover:bg-gray-50"
+              className="flex-1 bg-white text-brown-900 shadow-sm hover:bg-gray-50"
             >
               View
             </Button>
@@ -1782,13 +1781,14 @@ function CartSidebar({
   onRemoveFromCart: (id: number) => void;
   totalPrice: number;
 }) {
+  const totalItems = cart.reduce((sum, it) => sum + it.quantity, 0);
   return (
     <div className="fixed inset-0 z-50 overflow-hidden">
-      <div className="absolute inset-0 bg-black bg-opacity-50" onClick={onClose} />
-      <div className="absolute right-0 top-0 h-full w-full max-w-md bg-white shadow-xl">
+      <div className="absolute inset-0 bg-black/30 backdrop-blur-sm transition-opacity" onClick={onClose} />
+      <div className="absolute right-0 top-0 h-full w-full max-w-md bg-white shadow-deep">
         <div className="flex flex-col h-full">
-          <div className="flex items-center justify-between p-4 border-b">
-            <h2 className="text-lg font-semibold">Shopping Cart</h2>
+          <div className="flex items-center justify-between p-4 shadow-sm sticky top-0 bg-white/90 backdrop-blur-md z-10">
+            <h2 className="text-lg font-semibold">Your Cart ({totalItems})</h2>
             <button onClick={onClose} className="p-2 hover:bg-gray-100 rounded-full">
               <X className="w-5 h-5" />
             </button>
@@ -1807,50 +1807,76 @@ function CartSidebar({
                   if (!product) return null;
                   
                   return (
-                    <div key={item.id} className="flex gap-3 p-3 border rounded-lg">
-                      <img
-                        src={product.image}
-                        alt={product.name}
-                        className="w-16 h-16 object-cover rounded"
-                      />
-                      <div className="flex-1">
-                        <h4 className="font-medium text-sm line-clamp-2">{product.name}</h4>
-                        <p className="text-gray-600 text-sm">₹{product.price.toLocaleString()}</p>
-                        <div className="flex items-center gap-2 mt-2">
-                          <button
-                            onClick={() => onUpdateQuantity(item.id, item.quantity - 1)}
-                            className="p-1 rounded bg-gray-100 hover:bg-gray-200"
-                          >
-                            <Minus className="w-3 h-3" />
-                          </button>
-                          <span className="px-2 py-1 bg-yellow-100 text-yellow-800 rounded text-xs">
-                            {item.quantity}
-                          </span>
-                          <button
-                            onClick={() => onUpdateQuantity(item.id, item.quantity + 1)}
-                            className="p-1 rounded bg-gray-100 hover:bg-gray-200"
-                          >
-                            <Plus className="w-3 h-3" />
-                          </button>
+                    <div key={item.id} className="p-3 rounded-xl shadow-sm bg-white">
+                      <div className="flex gap-3">
+                        <img
+                          src={product.image}
+                          alt={product.name}
+                          className="w-16 h-16 object-cover rounded-lg"
+                        />
+                        <div className="flex-1 min-w-0">
+                          <h4 className="font-semibold text-sm text-gray-900 line-clamp-2">{product.name}</h4>
+                          <div className="mt-1 flex items-center justify-between">
+                            <div className="flex items-center gap-2">
+                              <button
+                                onClick={() => onUpdateQuantity(item.id, item.quantity - 1)}
+                                className="h-7 w-7 inline-flex items-center justify-center rounded-md bg-gray-100 hover:bg-gray-200"
+                                aria-label="Decrease quantity"
+                              >
+                                <Minus className="w-3.5 h-3.5" />
+                              </button>
+                              <span className="px-2 py-1 bg-yellow-100 text-yellow-800 rounded text-xs font-medium">
+                                {item.quantity}
+                              </span>
+                              <button
+                                onClick={() => onUpdateQuantity(item.id, item.quantity + 1)}
+                                className="h-7 w-7 inline-flex items-center justify-center rounded-md bg-gray-100 hover:bg-gray-200"
+                                aria-label="Increase quantity"
+                              >
+                                <Plus className="w-3.5 h-3.5" />
+                              </button>
+                            </div>
+                            <div className="text-right">
+                              <div className="text-sm font-semibold text-gray-900">₹{(product.price * item.quantity).toLocaleString()}</div>
+                              <div className="text-xs text-gray-500">₹{product.price.toLocaleString()} each</div>
+                            </div>
+                          </div>
+                          <div className="mt-2 flex items-center justify-between">
+                            <div className="text-xs text-gray-500">Eligible for returns</div>
+                            <button
+                              onClick={() => onRemoveFromCart(item.id)}
+                              className="text-xs text-red-500 hover:text-red-700"
+                            >
+                              Remove
+                            </button>
+                          </div>
                         </div>
                       </div>
-                      <button
-                        onClick={() => onRemoveFromCart(item.id)}
-                        className="p-1 text-red-500 hover:text-red-700"
-                      >
-                        <X className="w-4 h-4" />
-                      </button>
                     </div>
                   );
                 })}
+
+                {/* Promo code */}
+                <div className="p-3 rounded-xl shadow-sm bg-white">
+                  <label className="block text-sm font-medium text-gray-900 mb-2">Have a promo code?</label>
+                  <div className="flex gap-2">
+                    <input type="text" placeholder="ENTER CODE" className="flex-1 rounded-lg bg-white p-2.5 shadow-sm" />
+                    <button className="px-4 py-2 rounded-lg bg-yellow-500 text-brown-900 font-semibold hover:bg-yellow-400">Apply</button>
+                  </div>
+                  <p className="mt-2 text-xs text-gray-500">Only one code can be applied</p>
+                </div>
               </div>
             )}
           </div>
           
           {cart.length > 0 && (
-            <div className="border-t p-4">
-              <div className="flex justify-between items-center mb-4">
-                <span className="text-lg font-semibold">Total:</span>
+            <div className="p-4 shadow-inner sticky bottom-0 bg-white/90 backdrop-blur-md">
+              <div className="space-y-2 text-sm text-gray-700 mb-3">
+                <div className="flex justify-between"><span>Subtotal</span><span className="font-medium">₹{totalPrice.toLocaleString()}</span></div>
+                <div className="flex justify-between"><span>Estimated Tax</span><span className="font-medium">Calculated at checkout</span></div>
+              </div>
+              <div className="flex justify-between items-center mb-3">
+                <span className="text-lg font-semibold">Total</span>
                 <span className="text-lg font-bold">₹{totalPrice.toLocaleString()}</span>
               </div>
               <Link to="/checkout" className="block">
@@ -1858,6 +1884,7 @@ function CartSidebar({
                   Proceed to Checkout
                 </Button>
               </Link>
+              <Link to="/store" className="block mt-2 text-center text-sm text-gray-600 hover:text-gray-800">Continue shopping</Link>
             </div>
           )}
         </div>

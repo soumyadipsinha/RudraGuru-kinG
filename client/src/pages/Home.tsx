@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import { useEffect, useRef } from "react";
 import { MessageSquare, PhoneCall, ShoppingBag, Sparkles, Gem, ShieldCheck, Stars, ArrowRight, Video, Clock3, FileText, Star } from "lucide-react";
 import { ASTROLOGERS } from "../data/astrologers";
 // Images are served from Vite public folder
@@ -24,7 +25,110 @@ const ZODIAC = [
   "Aries","Taurus","Gemini","Cancer","Leo","Virgo","Libra","Scorpio","Sagittarius","Capricorn","Aquarius","Pisces",
 ];
 
+// Map zodiac names to public assets (handles two filenames with typos in assets)
+const ZODIAC_SVG_MAP: Record<string, string> = {
+  Aries: "/assets/areies.svg", // asset filename: areies.svg
+  Taurus: "/assets/tauras.svg", // asset filename: tauras.svg
+  Gemini: "/assets/gemini.svg",
+  Cancer: "/assets/cancer.svg",
+  Leo: "/assets/leo.svg",
+  Virgo: "/assets/virgo.svg",
+  Libra: "/assets/libra.svg",
+  Scorpio: "/assets/scorpio.svg",
+  Sagittarius: "/assets/sagittarius.svg",
+  Capricorn: "/assets/capricorn.svg",
+  Aquarius: "/assets/aquarius.svg",
+  Pisces: "/assets/pisces.svg",
+};
+
+const getZodiacAsset = (sign: string) => ZODIAC_SVG_MAP[sign] || `/assets/${sign.toLowerCase()}.svg`;
+
 export default function Home() {
+  const gemstonesRef = useRef<HTMLDivElement>(null);
+  const rudrakshaRef = useRef<HTMLDivElement>(null);
+  const braceletsRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const handleWheel = (e: WheelEvent, container: HTMLDivElement) => {
+      if (container && container.contains(e.target as Node)) {
+        e.preventDefault();
+        container.scrollLeft += e.deltaY;
+      }
+    };
+
+    const gemstonesContainer = gemstonesRef.current;
+    const rudrakshaContainer = rudrakshaRef.current;
+    const braceletsContainer = braceletsRef.current;
+
+    if (gemstonesContainer) {
+      gemstonesContainer.addEventListener('wheel', (e) => handleWheel(e, gemstonesContainer), { passive: false });
+    }
+    if (rudrakshaContainer) {
+      rudrakshaContainer.addEventListener('wheel', (e) => handleWheel(e, rudrakshaContainer), { passive: false });
+    }
+    if (braceletsContainer) {
+      braceletsContainer.addEventListener('wheel', (e) => handleWheel(e, braceletsContainer), { passive: false });
+    }
+
+    return () => {
+      if (gemstonesContainer) {
+        gemstonesContainer.removeEventListener('wheel', (e) => handleWheel(e, gemstonesContainer));
+      }
+      if (rudrakshaContainer) {
+        rudrakshaContainer.removeEventListener('wheel', (e) => handleWheel(e, rudrakshaContainer));
+      }
+      if (braceletsContainer) {
+        braceletsContainer.removeEventListener('wheel', (e) => handleWheel(e, braceletsContainer));
+      }
+    };
+  }, []);
+
+  // Auto-scroll functionality
+  useEffect(() => {
+    const autoScroll = (container: HTMLDivElement, speed: number) => {
+      if (!container) return;
+      
+      const scroll = () => {
+        container.scrollLeft += speed;
+        if (container.scrollLeft >= container.scrollWidth - container.clientWidth) {
+          container.scrollLeft = 0;
+        }
+      };
+      
+      return setInterval(scroll, 50);
+    };
+
+    const gemstonesContainer = gemstonesRef.current;
+    const rudrakshaContainer = rudrakshaRef.current;
+    const braceletsContainer = braceletsRef.current;
+
+    let gemstonesInterval: number | null = null;
+    let rudrakshaInterval: number | null = null;
+    let braceletsInterval: number | null = null;
+
+    // Start auto-scroll after a delay
+    const startAutoScroll = () => {
+      if (gemstonesContainer) {
+        gemstonesInterval = autoScroll(gemstonesContainer, 1) || null;
+      }
+      if (rudrakshaContainer) {
+        rudrakshaInterval = autoScroll(rudrakshaContainer, 1) || null;
+      }
+      if (braceletsContainer) {
+        braceletsInterval = autoScroll(braceletsContainer, 1) || null;
+      }
+    };
+
+    const timeoutId = setTimeout(startAutoScroll, 2000);
+
+    return () => {
+      clearTimeout(timeoutId);
+      if (gemstonesInterval) clearInterval(gemstonesInterval);
+      if (rudrakshaInterval) clearInterval(rudrakshaInterval);
+      if (braceletsInterval) clearInterval(braceletsInterval);
+    };
+  }, []);
+
   return (
     <main className="bg-transparent">
       <style>{`
@@ -48,6 +152,29 @@ export default function Home() {
         .banner-swiper .swiper-button-next:after,
         .banner-swiper .swiper-button-prev:after {
           font-size: 24px;
+        }
+        .scrollbar-hide {
+          -ms-overflow-style: none;
+          scrollbar-width: none;
+        }
+        .scrollbar-hide::-webkit-scrollbar {
+          display: none;
+        }
+        .product-scroll {
+          scroll-behavior: smooth;
+        }
+        @keyframes autoScroll {
+          0% { transform: translateX(0); }
+          100% { transform: translateX(-50%); }
+        }
+        .auto-scroll {
+          animation: autoScroll 30s linear infinite;
+        }
+        .auto-scroll:hover {
+          animation-play-state: paused;
+        }
+        .scroll-container {
+          scroll-behavior: smooth;
         }
       `}</style>
       {/* Swiper Banner Section */}
@@ -219,7 +346,7 @@ export default function Home() {
                 to="/chat"
                 className="inline-flex items-center justify-center rounded-xl border border-gray-300 px-6 py-3 text-gray-700 font-semibold hover:bg-gray-50 transition"
               >
-                Start Chat ₹1/min
+                Start Chat • 3 min FREE • ₹11/5 min after
               </Link>
             </div>
           </div>
@@ -338,17 +465,167 @@ export default function Home() {
           {ZODIAC.map((sign) => (
             <Link
               key={sign}
-              to={`/zodiac/${sign.toLowerCase()}`}
+              to={`/horoscope/${sign.toLowerCase()}`}
               className="group rounded-2xl p-4 bg-white/90 backdrop-blur-sm shadow-deep hover:shadow-deep-hover transition-all duration-300 hover:scale-105 animate-shadow-pulse"
             >
-              <div className="h-16 flex items-center justify-center">
-                <img src={`/images/zodiac/${sign.toLowerCase()}.png`} alt={sign} className="h-12 w-12 object-contain"/>
+              <div className="h-20 w-20 mx-auto rounded-2xl bg-yellow-50 border border-yellow-200 flex items-center justify-center shadow-sm">
+                <img src={getZodiacAsset(sign)} alt={sign} className="h-14 w-14 object-contain"/>
               </div>
               <p className="mt-3 text-center font-semibold text-brown-900 group-hover:text-gray-700">{sign}</p>
             </Link>
           ))}
         </div>
         
+      </Section>
+
+      {/* Product Showcase - Horizontal Scrolling Sections */}
+      <Section className="py-16">
+        <h2 className={`text-3xl sm:text-4xl font-bold mb-8 ${gradHead}`}>
+          Premium Astro Products
+        </h2>
+        
+        {/* Gemstones Section */}
+        <div className="mb-12">
+          <h3 className="text-2xl font-bold text-brown-900 mb-6 flex items-center gap-3">
+            <Gem className="w-6 h-6 text-yellow-600" />
+            Certified Gemstones
+          </h3>
+          <div className="relative overflow-hidden">
+            <div 
+              ref={gemstonesRef}
+              className="flex gap-6 scroll-container overflow-x-auto scrollbar-hide"
+              style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
+            >
+              {[
+                { name: "Blue Sapphire", image: "/assets/blueSapphire.jpg" },
+                { name: "Yellow Sapphire", image: "/assets/sapphire-yellow.png" },
+                { name: "Emerald", image: "/assets/emerald.webp" },
+                { name: "Ruby", image: "/assets/ruby.png" },
+                { name: "Diamond", image: "/assets/heera.png" },
+                { name: "Red Coral", image: "/assets/redCoral.png" },
+                { name: "Cat's Eye", image: "/assets/catEye.png" },
+                { name: "Hessonite", image: "/assets/hessonite.png" },
+                { name: "Opal", image: "/assets/opal.png" },
+                { name: "Turquoise", image: "/assets/turquoise.png" },
+                // Duplicate for seamless loop
+                { name: "Blue Sapphire", image: "/assets/blueSapphire.jpg" },
+                { name: "Yellow Sapphire", image: "/assets/sapphire-yellow.png" },
+                { name: "Emerald", image: "/assets/emerald.webp" },
+                { name: "Ruby", image: "/assets/ruby.png" },
+                { name: "Diamond", image: "/assets/heera.png" },
+                { name: "Red Coral", image: "/assets/redCoral.png" },
+                { name: "Cat's Eye", image: "/assets/catEye.png" },
+                { name: "Hessonite", image: "/assets/hessonite.png" },
+                { name: "Opal", image: "/assets/opal.png" },
+                { name: "Turquoise", image: "/assets/turquoise.png" }
+              ].map((gem, index) => (
+                <div key={index} className="flex-shrink-0 w-40">
+                  <div className="group rounded-2xl p-4 bg-white/95 backdrop-blur-sm shadow-deep hover:shadow-deep-hover transition-all duration-500 hover:scale-110 hover:-translate-y-2">
+                    <div className="relative mb-4">
+                      <img
+                        src={gem.image}
+                        alt={gem.name}
+                        className="w-full h-28 object-cover rounded-xl shadow-lg group-hover:shadow-xl transition-all duration-300"
+                      />
+                      <div className="absolute inset-0 rounded-xl bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                    </div>
+                    <h4 className="font-bold text-brown-900 text-center text-sm group-hover:text-yellow-700 transition-colors duration-300">{gem.name}</h4>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        {/* Rudraksha Section */}
+        <div className="mb-12">
+          <h3 className="text-2xl font-bold text-brown-900 mb-6 flex items-center gap-3">
+            <Sparkles className="w-6 h-6 text-yellow-600" />
+            Sacred Rudraksha Beads
+          </h3>
+          <div className="relative overflow-hidden">
+            <div 
+              ref={rudrakshaRef}
+              className="flex gap-6 scroll-container overflow-x-auto scrollbar-hide"
+              style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
+            >
+              {[
+                { name: "5 Mukhi Rudraksha", image: "/assets/5mukhi.webp" },
+                { name: "10 Mukhi Rudraksha", image: "/assets/10mukh2.jpg" },
+                { name: "Gauri Shankar", image: "/assets/GouriShankar2.jpg" },
+                { name: "Rudraksha Mala", image: "/assets/5mukhisilverrudrakhshamala.webp" },
+                { name: "Crystal Rudraksha", image: "/assets/rudrakhsacrystal.webp" },
+                { name: "Mini Crystal Tree", image: "/assets/Rudraksha Mini Crystal Tree.jpg" },
+                { name: "Original 5 Mukhi", image: "/assets/Original 5 Mukhi Rudraksha Mala 108+1 Beads (Lab Certified) Wood Necklace.jpg" },
+                // Duplicate for seamless loop
+                { name: "5 Mukhi Rudraksha", image: "/assets/5mukhi.webp" },
+                { name: "10 Mukhi Rudraksha", image: "/assets/10mukh2.jpg" },
+                { name: "Gauri Shankar", image: "/assets/GouriShankar2.jpg" },
+                { name: "Rudraksha Mala", image: "/assets/5mukhisilverrudrakhshamala.webp" },
+                { name: "Crystal Rudraksha", image: "/assets/rudrakhsacrystal.webp" },
+                { name: "Mini Crystal Tree", image: "/assets/Rudraksha Mini Crystal Tree.jpg" },
+                { name: "Original 5 Mukhi", image: "/assets/Original 5 Mukhi Rudraksha Mala 108+1 Beads (Lab Certified) Wood Necklace.jpg" }
+              ].map((rudraksha, index) => (
+                <div key={index} className="flex-shrink-0 w-40">
+                  <div className="group rounded-2xl p-4 bg-white/95 backdrop-blur-sm shadow-deep hover:shadow-deep-hover transition-all duration-500 hover:scale-110 hover:-translate-y-2">
+                    <div className="relative mb-4">
+                      <img
+                        src={rudraksha.image}
+                        alt={rudraksha.name}
+                        className="w-full h-28 object-cover rounded-xl shadow-lg group-hover:shadow-xl transition-all duration-300"
+                      />
+                      <div className="absolute inset-0 rounded-xl bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                    </div>
+                    <h4 className="font-bold text-brown-900 text-center text-sm group-hover:text-yellow-700 transition-colors duration-300">{rudraksha.name}</h4>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        {/* Bracelets Section */}
+        <div className="mb-12">
+          <h3 className="text-2xl font-bold text-brown-900 mb-6 flex items-center gap-3">
+            <ShieldCheck className="w-6 h-6 text-yellow-600" />
+            Spiritual Bracelets
+          </h3>
+          <div className="relative overflow-hidden">
+            <div 
+              ref={braceletsRef}
+              className="flex gap-6 scroll-container overflow-x-auto scrollbar-hide"
+              style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
+            >
+              {[
+                { name: "7 Chakra Bracelet", image: "/assets/7chakra.webp" },
+                { name: "Lava Stone Bracelet", image: "/assets/7chakralava.webp" },
+                { name: "Agate Bracelet", image: "/assets/7charaagate.webp" },
+                { name: "Pirate Bracelet", image: "/assets/piratebracelate.jpg" },
+                { name: "Premium Bracelet", image: "/assets/bracelate1.jpg" },
+                // Duplicate for seamless loop
+                { name: "7 Chakra Bracelet", image: "/assets/7chakra.webp" },
+                { name: "Lava Stone Bracelet", image: "/assets/7chakralava.webp" },
+                { name: "Agate Bracelet", image: "/assets/7charaagate.webp" },
+                { name: "Pirate Bracelet", image: "/assets/piratebracelate.jpg" },
+                { name: "Premium Bracelet", image: "/assets/bracelate1.jpg" }
+              ].map((bracelet, index) => (
+                <div key={index} className="flex-shrink-0 w-40">
+                  <div className="group rounded-2xl p-4 bg-white/95 backdrop-blur-sm shadow-deep hover:shadow-deep-hover transition-all duration-500 hover:scale-110 hover:-translate-y-2">
+                    <div className="relative mb-4">
+                      <img
+                        src={bracelet.image}
+                        alt={bracelet.name}
+                        className="w-full h-28 object-cover rounded-xl shadow-lg group-hover:shadow-xl transition-all duration-300"
+                      />
+                      <div className="absolute inset-0 rounded-xl bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                    </div>
+                    <h4 className="font-bold text-brown-900 text-center text-sm group-hover:text-yellow-700 transition-colors duration-300">{bracelet.name}</h4>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
       </Section>
 
       {/* Testimonials */}
@@ -481,7 +758,7 @@ export default function Home() {
           <p className="mt-2 text-brown-800">Start a chat with certified astrologers anytime, anywhere.</p>
           <div className="mt-5">
             <Link to="/chat" className="inline-flex items-center rounded-xl bg-yellow-500 px-6 py-3 text-brown-900 font-semibold shadow hover:bg-yellow-400">
-              Start Chat ₹1/min
+              Start Chat • 3 min FREE • ₹11/5 min after
             </Link>
           </div>
         </div>

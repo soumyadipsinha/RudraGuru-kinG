@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { Link } from "react-router-dom";
+import { useEffect, useMemo, useState } from "react";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { Palette, Hash, Calendar, Gem, Sparkles, Star } from "lucide-react";
 
 // Gradient heading
@@ -32,10 +32,103 @@ const ZODIAC_SIGNS = [
 
 const HOROSCOPE_PERIODS = ["Today", "Tomorrow", "This Week", "This Month", "This Year"];
 
+// Map zodiac names to public assets (handles two filenames with typos in assets)
+const ZODIAC_SVG_MAP: Record<string, string> = {
+  Aries: "/assets/areies.svg", // asset filename: areies.svg
+  Taurus: "/assets/tauras.svg", // asset filename: tauras.svg
+  Gemini: "/assets/gemini.svg",
+  Cancer: "/assets/cancer.svg",
+  Leo: "/assets/leo.svg",
+  Virgo: "/assets/virgo.svg",
+  Libra: "/assets/libra.svg",
+  Scorpio: "/assets/scorpio.svg",
+  Sagittarius: "/assets/sagittarius.svg",
+  Capricorn: "/assets/capricorn.svg",
+  Aquarius: "/assets/aquarius.svg",
+  Pisces: "/assets/pisces.svg",
+};
+
+const getZodiacAsset = (sign: string) => ZODIAC_SVG_MAP[sign] || `/assets/${sign.toLowerCase()}.svg`;
+
 export default function Horoscope() {
-  const [selectedSign, setSelectedSign] = useState("Aries");
+  const navigate = useNavigate();
+  const params = useParams();
+  const signParam = (params.sign || "").toLowerCase();
+  const validSigns = useMemo(() => ZODIAC_SIGNS.map(s => s.name.toLowerCase()), []);
+  const initialSign = useMemo(() => {
+    if (validSigns.includes(signParam)) return ZODIAC_SIGNS.find(s=>s.name.toLowerCase()===signParam)!.name;
+    return "Aries";
+  }, [signParam, validSigns]);
+  const [selectedSign, setSelectedSign] = useState(initialSign);
+  useEffect(() => {
+    if (signParam && validSigns.includes(signParam)) {
+      const proper = ZODIAC_SIGNS.find(s=>s.name.toLowerCase()===signParam)!.name;
+      setSelectedSign(proper);
+    }
+  }, [signParam, validSigns]);
+
+  const onSelectSign = (name: string) => {
+    setSelectedSign(name);
+    navigate(`/horoscope/${name.toLowerCase()}`);
+  };
   const [selectedPeriod, setSelectedPeriod] = useState("Today");
   const [userBirthDate, setUserBirthDate] = useState("");
+  const [showNotification, setShowNotification] = useState(false);
+  const [notificationMessage, setNotificationMessage] = useState("");
+
+  const handleGetHoroscope = () => {
+    if (!userBirthDate) {
+      setNotificationMessage("Please enter your date of birth to get your horoscope.");
+      setShowNotification(true);
+      setTimeout(() => setShowNotification(false), 3000);
+      return;
+    }
+    
+    // Calculate zodiac sign based on birth date
+    const birthDate = new Date(userBirthDate);
+    const month = birthDate.getMonth() + 1; // getMonth() returns 0-11
+    const day = birthDate.getDate();
+    
+    let calculatedSign = "Aries"; // default
+    
+    if ((month === 3 && day >= 21) || (month === 4 && day <= 19)) {
+      calculatedSign = "Aries";
+    } else if ((month === 4 && day >= 20) || (month === 5 && day <= 20)) {
+      calculatedSign = "Taurus";
+    } else if ((month === 5 && day >= 21) || (month === 6 && day <= 20)) {
+      calculatedSign = "Gemini";
+    } else if ((month === 6 && day >= 21) || (month === 7 && day <= 22)) {
+      calculatedSign = "Cancer";
+    } else if ((month === 7 && day >= 23) || (month === 8 && day <= 22)) {
+      calculatedSign = "Leo";
+    } else if ((month === 8 && day >= 23) || (month === 9 && day <= 22)) {
+      calculatedSign = "Virgo";
+    } else if ((month === 9 && day >= 23) || (month === 10 && day <= 22)) {
+      calculatedSign = "Libra";
+    } else if ((month === 10 && day >= 23) || (month === 11 && day <= 21)) {
+      calculatedSign = "Scorpio";
+    } else if ((month === 11 && day >= 22) || (month === 12 && day <= 21)) {
+      calculatedSign = "Sagittarius";
+    } else if ((month === 12 && day >= 22) || (month === 1 && day <= 19)) {
+      calculatedSign = "Capricorn";
+    } else if ((month === 1 && day >= 20) || (month === 2 && day <= 18)) {
+      calculatedSign = "Aquarius";
+    } else if ((month === 2 && day >= 19) || (month === 3 && day <= 20)) {
+      calculatedSign = "Pisces";
+    }
+    
+    // Set the calculated sign and navigate to it
+    setSelectedSign(calculatedSign);
+    navigate(`/horoscope/${calculatedSign.toLowerCase()}`);
+    
+    // Scroll to the horoscope content
+    setTimeout(() => {
+      const horoscopeContent = document.querySelector('[data-horoscope-content]');
+      if (horoscopeContent) {
+        horoscopeContent.scrollIntoView({ behavior: 'smooth' });
+      }
+    }, 100);
+  };
 
   interface DailySection { title: string; body: string; }
   interface DailyHoroscope { sections: DailySection[]; lucky: string; }
@@ -104,6 +197,21 @@ export default function Horoscope() {
 
   return (
     <main className="relative bg-transparent overflow-hidden">
+      {/* Notification Toast */}
+      {showNotification && (
+        <div className="fixed top-20 right-4 z-50 bg-red-500 text-white px-6 py-3 rounded-lg shadow-lg animate-slide-in">
+          <div className="flex items-center gap-2">
+            <span>{notificationMessage}</span>
+            <button 
+              onClick={() => setShowNotification(false)}
+              className="ml-2 text-white hover:text-gray-200"
+            >
+              ×
+            </button>
+          </div>
+        </div>
+      )}
+      
       {/* Background decoration */}
       <div aria-hidden="true" className="pointer-events-none absolute inset-0 -z-10">
         <div className="absolute -top-24 -left-24 h-72 w-72 rounded-full bg-[rgba(120,72,32,0.10)] blur-3xl animate-[float1_12s_ease-in-out_infinite]" />
@@ -119,6 +227,8 @@ export default function Horoscope() {
         @keyframes float2 { 0%,100% { transform: translateY(0) translateX(0);} 50% { transform: translateY(-10px) translateX(-12px);} }
         @keyframes float3 { 0%,100% { transform: translateY(0) translateX(0);} 50% { transform: translateY(14px) translateX(-10px);} }
         @keyframes twinkle{0%,100%{opacity:.25;transform:scale(1);}50%{opacity:.7;transform:scale(1.08);} }
+        @keyframes slide-in { 0% { transform: translateX(100%); opacity: 0; } 100% { transform: translateX(0); opacity: 1; } }
+        .animate-slide-in { animation: slide-in 0.3s ease-out; }
       `}</style>
 
       {/* Hero Section */}
@@ -149,7 +259,10 @@ export default function Horoscope() {
                   className="w-full rounded-xl border border-yellow-400 p-3 focus:ring-2 focus:ring-yellow-500 focus:border-transparent"
                 />
               </div>
-              <button className="w-full rounded-xl bg-yellow-500 py-3 text-brown-900 font-semibold shadow hover:bg-yellow-400 transition">
+              <button 
+                onClick={handleGetHoroscope}
+                className="w-full rounded-xl bg-yellow-500 py-3 text-brown-900 font-semibold shadow hover:bg-yellow-400 transition"
+              >
                 Get My Horoscope
               </button>
             </div>
@@ -166,7 +279,7 @@ export default function Horoscope() {
           {ZODIAC_SIGNS.map((sign) => (
             <button
               key={sign.name}
-              onClick={() => setSelectedSign(sign.name)}
+              onClick={() => onSelectSign(sign.name)}
               className={`p-4 rounded-2xl border transition-all ${
                 selectedSign === sign.name
                   ? "border-yellow-500 bg-yellow-50 ring-2 ring-yellow-300"
@@ -174,8 +287,8 @@ export default function Horoscope() {
               }`}
             >
               <div className="text-center">
-                <div className={`w-12 h-12 ${sign.color} rounded-full flex items-center justify-center mx-auto mb-3 text-white text-2xl`}>
-                  {sign.symbol}
+                <div className="w-16 h-16 rounded-2xl bg-yellow-50 border border-yellow-200 flex items-center justify-center mx-auto mb-3">
+                  <img src={getZodiacAsset(sign.name)} alt={sign.name} className="w-12 h-12 object-contain" />
                 </div>
                 <h3 className="font-bold text-brown-900">{sign.name}</h3>
                 <p className="text-sm text-brown-600">{sign.date}</p>
@@ -207,11 +320,11 @@ export default function Horoscope() {
       {/* Horoscope Content */}
       <Section className="pb-12">
         <div className="max-w-4xl mx-auto">
-          <div className="rounded-2xl border border-yellow-400 bg-white p-8">
+          <div className="rounded-2xl border border-yellow-400 bg-white p-8" data-horoscope-content>
             <div className="text-center mb-8">
               <div className="flex items-center justify-center gap-3 mb-4">
-                <div className="w-16 h-16 bg-yellow-500 rounded-full flex items-center justify-center text-white text-3xl">
-                  {ZODIAC_SIGNS.find(s => s.name === selectedSign)?.symbol}
+                <div className="w-16 h-16 rounded-2xl bg-yellow-50 border border-yellow-200 flex items-center justify-center">
+                  <img src={getZodiacAsset(selectedSign)} alt={selectedSign} className="w-12 h-12 object-contain" />
                 </div>
                 <div>
                   <h2 className="text-2xl font-bold text-brown-900">{selectedSign}</h2>

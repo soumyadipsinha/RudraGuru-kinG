@@ -169,7 +169,7 @@ export default function Kundli() {
         /* Kundli Form */
         <Section className="pb-16">
           <div className="max-w-2xl mx-auto">
-            <div className="rounded-2xl border border-yellow-400 bg-white p-8">
+            <div className="rounded-2xl bg-white p-8 shadow-deep">
               <h2 className={`text-2xl font-bold mb-6 ${gradHead}`}>Birth Details</h2>
               <form onSubmit={handleSubmit} className="space-y-6">
                 <div>
@@ -183,7 +183,7 @@ export default function Kundli() {
                     value={formData.name}
                     onChange={handleInputChange}
                     placeholder="Enter your full name"
-                    className="w-full rounded-xl border border-yellow-400 p-3 focus:ring-2 focus:ring-yellow-500 focus:border-transparent"
+                    className="w-full rounded-xl bg-white p-3 shadow-sm focus:ring-2 focus:ring-yellow-500 focus:border-transparent"
                     required
                   />
                 </div>
@@ -230,7 +230,7 @@ export default function Kundli() {
                     value={formData.placeOfBirth}
                     onChange={handleInputChange}
                     placeholder="City, State, Country"
-                    className="w-full rounded-xl border border-yellow-400 p-3 focus:ring-2 focus:ring-yellow-500 focus:border-transparent"
+                    className="w-full rounded-xl bg-white p-3 shadow-sm focus:ring-2 focus:ring-yellow-500 focus:border-transparent"
                     required
                   />
                 </div>
@@ -245,7 +245,7 @@ export default function Kundli() {
                       name="gender"
                       value={formData.gender}
                       onChange={handleInputChange}
-                      className="w-full rounded-xl border border-yellow-400 p-3 focus:ring-2 focus:ring-yellow-500 focus:border-transparent"
+                    className="w-full rounded-xl bg-white p-3 shadow-sm focus:ring-2 focus:ring-yellow-500 focus:border-transparent"
                       required
                     >
                       <option value="">Select Gender</option>
@@ -266,7 +266,7 @@ export default function Kundli() {
                       onChange={handleInputChange}
                       placeholder="e.g. 9876543210"
                       pattern="[0-9]{10}"
-                      className="w-full rounded-xl border border-yellow-400 p-3 focus:ring-2 focus:ring-yellow-500 focus:border-transparent"
+                    className="w-full rounded-xl bg-white p-3 shadow-sm focus:ring-2 focus:ring-yellow-500 focus:border-transparent"
                       required
                     />
                   </div>
@@ -284,7 +284,7 @@ export default function Kundli() {
                       value={formData.email}
                       onChange={handleInputChange}
                       placeholder="your@email.com"
-                      className="w-full rounded-xl border border-yellow-400 p-3 focus:ring-2 focus:ring-yellow-500 focus:border-transparent"
+                    className="w-full rounded-xl bg-white p-3 shadow-sm focus:ring-2 focus:ring-yellow-500 focus:border-transparent"
                     />
                   </div>
                   <div className="text-sm text-brown-700 self-end">
@@ -323,47 +323,47 @@ export default function Kundli() {
           <div className="max-w-5xl mx-auto">
             <div className="grid lg:grid-cols-2 gap-6">
               {/* Boy's Detail */}
-              <div className="rounded-2xl border-2 border-yellow-300/60 p-6 bg-white/90 backdrop-blur-sm shadow-lg">
+              <div className="rounded-2xl p-6 bg-white/90 backdrop-blur-sm shadow-deep">
                 <h3 className="font-semibold text-brown-900 mb-4">BOY'S DETAIL</h3>
                 <div className="space-y-4">
                   <div>
                     <label className="block text-sm font-medium text-brown-900 mb-1">Boy's Name *</label>
-                    <input name="name" value={boy.name} onChange={(e)=>handleMatchingChange('boy',e)} placeholder="Enter name" className="w-full rounded-xl border border-yellow-400 p-3"/>
+                    <input name="name" value={boy.name} onChange={(e)=>handleMatchingChange('boy',e)} placeholder="Enter name" className="w-full rounded-xl bg-white p-3 shadow-sm"/>
                   </div>
                   <div>
                     <label className="block text-sm font-medium text-brown-900 mb-1">Date of Birth *</label>
-                    <input type="date" name="dateOfBirth" value={boy.dateOfBirth} onChange={(e)=>handleMatchingChange('boy',e)} className="w-full rounded-xl border border-yellow-400 p-3"/>
+                    <input type="date" name="dateOfBirth" value={boy.dateOfBirth} onChange={(e)=>handleMatchingChange('boy',e)} className="w-full rounded-xl bg-white p-3 shadow-sm"/>
                   </div>
                   <div>
                     <label className="block text-sm font-medium text-brown-900 mb-1">Time of Birth *</label>
-                    <input type="time" name="timeOfBirth" value={boy.timeOfBirth} onChange={(e)=>handleMatchingChange('boy',e)} className="w-full rounded-xl border border-yellow-400 p-3"/>
+                    <input type="time" name="timeOfBirth" value={boy.timeOfBirth} onChange={(e)=>handleMatchingChange('boy',e)} className="w-full rounded-xl bg-white p-3 shadow-sm"/>
                   </div>
                   <div>
                     <label className="block text-sm font-medium text-brown-900 mb-1">Place of Birth *</label>
-                    <input name="placeOfBirth" value={boy.placeOfBirth} onChange={(e)=>handleMatchingChange('boy',e)} placeholder="City, State, Country" className="w-full rounded-xl border border-yellow-400 p-3"/>
+                    <input name="placeOfBirth" value={boy.placeOfBirth} onChange={(e)=>handleMatchingChange('boy',e)} placeholder="City, State, Country" className="w-full rounded-xl bg-white p-3 shadow-sm"/>
                   </div>
                 </div>
               </div>
 
               {/* Girl's Detail */}
-              <div className="rounded-2xl border-2 border-yellow-300/60 p-6 bg-white/90 backdrop-blur-sm shadow-lg">
+              <div className="rounded-2xl p-6 bg-white/90 backdrop-blur-sm shadow-deep">
                 <h3 className="font-semibold text-brown-900 mb-4">GIRL'S DETAIL</h3>
                 <div className="space-y-4">
                   <div>
                     <label className="block text-sm font-medium text-brown-900 mb-1">Girl's Name *</label>
-                    <input name="name" value={girl.name} onChange={(e)=>handleMatchingChange('girl',e)} placeholder="Enter name" className="w-full rounded-xl border border-yellow-400 p-3"/>
+                    <input name="name" value={girl.name} onChange={(e)=>handleMatchingChange('girl',e)} placeholder="Enter name" className="w-full rounded-xl bg-white p-3 shadow-sm"/>
                   </div>
                   <div>
                     <label className="block text-sm font-medium text-brown-900 mb-1">Date of Birth *</label>
-                    <input type="date" name="dateOfBirth" value={girl.dateOfBirth} onChange={(e)=>handleMatchingChange('girl',e)} className="w-full rounded-xl border border-yellow-400 p-3"/>
+                    <input type="date" name="dateOfBirth" value={girl.dateOfBirth} onChange={(e)=>handleMatchingChange('girl',e)} className="w-full rounded-xl bg-white p-3 shadow-sm"/>
                   </div>
                   <div>
                     <label className="block text-sm font-medium text-brown-900 mb-1">Time of Birth *</label>
-                    <input type="time" name="timeOfBirth" value={girl.timeOfBirth} onChange={(e)=>handleMatchingChange('girl',e)} className="w-full rounded-xl border border-yellow-400 p-3"/>
+                    <input type="time" name="timeOfBirth" value={girl.timeOfBirth} onChange={(e)=>handleMatchingChange('girl',e)} className="w-full rounded-xl bg-white p-3 shadow-sm"/>
                   </div>
                   <div>
                     <label className="block text-sm font-medium text-brown-900 mb-1">Place of Birth *</label>
-                    <input name="placeOfBirth" value={girl.placeOfBirth} onChange={(e)=>handleMatchingChange('girl',e)} placeholder="City, State, Country" className="w-full rounded-xl border border-yellow-400 p-3"/>
+                    <input name="placeOfBirth" value={girl.placeOfBirth} onChange={(e)=>handleMatchingChange('girl',e)} placeholder="City, State, Country" className="w-full rounded-xl bg-white p-3 shadow-sm"/>
                   </div>
                 </div>
               </div>
@@ -374,7 +374,7 @@ export default function Kundli() {
             </div>
 
             {score !== null && (
-              <div className="mt-8 rounded-2xl border-2 border-yellow-300/60 p-6 bg-white/90 backdrop-blur-sm shadow-lg">
+              <div className="mt-8 rounded-2xl p-6 bg-white/90 backdrop-blur-sm shadow-deep">
                 <h3 className={`text-2xl font-bold mb-2 ${gradHead}`}>Gun Milan Score: {score} / 36</h3>
                 <p className="text-brown-800">This is a quick overview for reference. For deeper understanding and remedies, consult our verified astrologers.</p>
               </div>
@@ -387,7 +387,7 @@ export default function Kundli() {
           <div className="max-w-6xl mx-auto">
             {/* Success Message */}
             <div className="text-center mb-8">
-              <div className="w-16 h-16 bg-transparent border-2 border-yellow-400 rounded-full flex items-center justify-center mx-auto mb-4">
+              <div className="w-16 h-16 bg-yellow-50 rounded-full flex items-center justify-center mx-auto mb-4 shadow-sm">
                 <Check className="w-6 h-6 text-yellow-600" />
               </div>
               <h2 className={`text-3xl font-bold mb-2 ${gradHead}`}>Kundli Generated Successfully!</h2>
@@ -396,17 +396,17 @@ export default function Kundli() {
 
             {/* Basic Information */}
             <div className="grid gap-6 md:grid-cols-3 mb-8">
-              <div className="rounded-2xl border border-yellow-400 bg-white p-6 text-center">
+              <div className="rounded-2xl bg-white p-6 text-center shadow-deep">
                 <div className="text-3xl mb-2">♈</div>
                 <h3 className="font-bold text-brown-900">Zodiac Sign</h3>
                 <p className="text-brown-600">{kundliData.zodiacSign}</p>
               </div>
-              <div className="rounded-2xl border border-yellow-400 bg-white p-6 text-center">
+              <div className="rounded-2xl bg-white p-6 text-center shadow-deep">
                 <Moon className="w-8 h-8 text-blue-500 mx-auto mb-2" />
                 <h3 className="font-bold text-brown-900">Moon Sign</h3>
                 <p className="text-brown-600">{kundliData.moonSign}</p>
               </div>
-              <div className="rounded-2xl border border-yellow-400 bg-white p-6 text-center">
+              <div className="rounded-2xl bg-white p-6 text-center shadow-deep">
                 <ArrowUp className="w-8 h-8 text-green-500 mx-auto mb-2" />
                 <h3 className="font-bold text-brown-900">Rising Sign</h3>
                 <p className="text-brown-600">{kundliData.risingSign}</p>
@@ -414,7 +414,7 @@ export default function Kundli() {
             </div>
 
             {/* Planetary Positions */}
-            <div className="rounded-2xl border border-yellow-400 bg-white p-8 mb-8">
+            <div className="rounded-2xl bg-white p-8 mb-8 shadow-deep">
               <h3 className={`text-2xl font-bold mb-6 ${gradHead}`}>Planetary Positions</h3>
               <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
                 {kundliData.planetaryPositions.map((planet, index) => (
@@ -432,7 +432,7 @@ export default function Kundli() {
             </div>
 
             {/* Houses */}
-            <div className="rounded-2xl border border-yellow-400 bg-white p-8 mb-8">
+            <div className="rounded-2xl bg-white p-8 mb-8 shadow-deep">
               <h3 className={`text-2xl font-bold mb-6 ${gradHead}`}>Houses Analysis</h3>
               <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
                 {kundliData.houses.map((house, index) => (
@@ -450,12 +450,12 @@ export default function Kundli() {
               <button className="px-6 py-3 bg-yellow-500 text-brown-900 rounded-xl font-semibold hover:bg-yellow-400 transition">
                 Download PDF
               </button>
-              <button className="px-6 py-3 border border-yellow-400 text-yellow-600 rounded-xl font-semibold hover:bg-yellow-50 transition">
+              <button className="px-6 py-3 bg-white text-yellow-600 rounded-xl font-semibold shadow-sm hover:bg-yellow-50 transition">
                 Share Kundli
               </button>
               <Link
                 to="/astrologers"
-                className="px-6 py-3 border border-yellow-400 text-yellow-600 rounded-xl font-semibold hover:bg-yellow-50 transition text-center"
+                className="px-6 py-3 bg-white text-yellow-600 rounded-xl font-semibold shadow-sm hover:bg-yellow-50 transition text-center"
               >
                 Get Detailed Analysis
               </Link>
@@ -469,33 +469,33 @@ export default function Kundli() {
         <h2 className={`text-3xl sm:text-4xl font-bold text-center mb-8 ${gradHead}`}>
           What You Get in Your Kundli
         </h2>
-        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-          <div className="rounded-2xl border border-yellow-400 bg-white p-6 text-center">
+          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+          <div className="rounded-2xl bg-white p-6 text-center shadow-deep">
             <Star className="w-8 h-8 text-yellow-500 mx-auto mb-4" />
             <h3 className="font-bold text-brown-900 mb-2">Planetary Positions</h3>
             <p className="text-brown-600">Detailed analysis of all planets and their positions in your birth chart</p>
           </div>
-          <div className="rounded-2xl border border-yellow-400 bg-white p-6 text-center">
+          <div className="rounded-2xl bg-white p-6 text-center shadow-deep">
             <Home className="w-8 h-8 text-orange-500 mx-auto mb-4" />
             <h3 className="font-bold text-brown-900 mb-2">House Analysis</h3>
             <p className="text-brown-600">Complete breakdown of all 12 houses and their significance in your life</p>
           </div>
-          <div className="rounded-2xl border border-yellow-400 bg-white p-6 text-center">
+          <div className="rounded-2xl bg-white p-6 text-center shadow-deep">
             <Sparkles className="w-8 h-8 text-blue-500 mx-auto mb-4" />
             <h3 className="font-bold text-brown-900 mb-2">Zodiac Signs</h3>
             <p className="text-brown-600">Your Sun, Moon, and Rising signs with detailed interpretations</p>
           </div>
-          <div className="rounded-2xl border border-yellow-400 bg-white p-6 text-center">
+          <div className="rounded-2xl bg-white p-6 text-center shadow-deep">
             <BarChart3 className="w-8 h-8 text-green-500 mx-auto mb-4" />
             <h3 className="font-bold text-brown-900 mb-2">Life Predictions</h3>
             <p className="text-brown-600">Insights into career, relationships, health, and financial prospects</p>
           </div>
-          <div className="rounded-2xl border border-yellow-400 bg-white p-6 text-center">
+          <div className="rounded-2xl bg-white p-6 text-center shadow-deep">
             <Gem className="w-8 h-8 text-purple-500 mx-auto mb-4" />
             <h3 className="font-bold text-brown-900 mb-2">Gemstone Recommendations</h3>
             <p className="text-brown-600">Personalized gemstone suggestions based on your planetary positions</p>
           </div>
-          <div className="rounded-2xl border border-yellow-400 bg-white p-6 text-center">
+          <div className="rounded-2xl bg-white p-6 text-center shadow-deep">
             <Circle className="w-8 h-8 text-indigo-500 mx-auto mb-4" />
             <h3 className="font-bold text-brown-900 mb-2">Remedies</h3>
             <p className="text-brown-600">Vedic remedies and mantras to enhance positive planetary influences</p>
@@ -505,7 +505,7 @@ export default function Kundli() {
 
       {/* CTA Section */}
       <Section className="pb-16">
-        <div className="rounded-2xl border border-yellow-400 p-8 text-center bg-white transition-all duration-300 hover:shadow-xl hover:-translate-y-0.5">
+        <div className="rounded-2xl p-8 text-center bg-white shadow-deep transition-all duration-300 hover:shadow-xl hover:-translate-y-0.5">
           <h3 className={`text-2xl sm:text-3xl font-bold mb-4 ${gradHead}`}>Need Expert Interpretation?</h3>
           <p className="text-brown-800 mb-6">
             Get detailed analysis and personalized guidance from our certified astrologers. 
@@ -520,7 +520,7 @@ export default function Kundli() {
             </Link>
             <Link
               to="/services"
-              className="inline-flex items-center rounded-xl border border-brown-300 px-6 py-3 text-yellow-600 font-semibold hover:bg-brown-50 transition"
+              className="inline-flex items-center rounded-xl bg-white px-6 py-3 text-yellow-600 font-semibold shadow-sm hover:bg-brown-50 transition"
             >
               View All Services
             </Link>

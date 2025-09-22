@@ -50,6 +50,7 @@ export default function Footer() {
             <h4 className="text-yellow-400 font-semibold mb-4 underline">Astromall & Services</h4>
             <ul className="space-y-2 text-sm">
               <li><Link to="/store" className="text-gray-300 hover:text-yellow-400">Astromall</Link></li>
+              <li><Link to="/carat-to-ratti-calculator" className="text-gray-300 hover:text-yellow-400">Carat to Ratti Calculator</Link></li>
               <li><Link to="/store" className="text-gray-300 hover:text-yellow-400">Today Panchang</Link></li>
               <li><Link to="/astrologers" className="text-gray-300 hover:text-yellow-400">Live Astrologers</Link></li>
               <li><Link to="/kundli" className="text-gray-300 hover:text-yellow-400">Free Kundli</Link></li>

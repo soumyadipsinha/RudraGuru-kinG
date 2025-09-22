@@ -16,6 +16,7 @@ import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import VerifyOtp from "./pages/VerifyOtp";
 import AboutUs from "./pages/AboutUs";
+import CaratToRattiCalculator from "./pages/CaratToRattiCalculator";
 import Store from "./pages/Store";
 import ProductDetail from "./pages/ProductDetail";
 import Checkout from "./pages/Checkout";
@@ -71,6 +72,7 @@ const App = () => {
           <Route path="/talk-to-astrologer" element={<RequireAuth><TalkToAstrologer/></RequireAuth>} />
           <Route path="/calling" element={<RequireAuth><CallingPage/></RequireAuth>} />
           <Route path="/horoscope" element={<RequireAuth><Horoscope/></RequireAuth>} />
+          <Route path="/horoscope/:sign" element={<RequireAuth><Horoscope/></RequireAuth>} />
           <Route path="/horoscope/weekly" element={<RequireAuth><WeeklyHoroscope/></RequireAuth>} />
           <Route path="/horoscope/monthly" element={<RequireAuth><MonthlyHoroscope/></RequireAuth>} />
           <Route path="/horoscope/yearly" element={<RequireAuth><YearlyHoroscope/></RequireAuth>} />
@@ -79,6 +81,7 @@ const App = () => {
           <Route path="/verify-otp" element={<VerifyOtp/>} />
           <Route path="/signup" element={<Signup/>} />
           <Route path="/about" element={<RequireAuth><AboutUs/></RequireAuth>} />
+          <Route path="/carat-to-ratti-calculator" element={<CaratToRattiCalculator/>} />
           <Route path="/calculators" element={<RequireAuth><CalculatorsIndex/></RequireAuth>} />
           <Route path="/calculators/love" element={<RequireAuth><LoveCalculator/></RequireAuth>} />
           <Route path="/calculators/numerology" element={<RequireAuth><NumerologyCalculator/></RequireAuth>} />
