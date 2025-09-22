@@ -210,7 +210,7 @@ export default function BlogArticles() {
               placeholder="Search articles..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full rounded-xl border border-yellow-400 p-3 focus:ring-2 focus:ring-yellow-500 focus:border-transparent"
+              className="w-full rounded-xl border border-gray-300 p-3 focus:ring-2 focus:ring-yellow-500 focus:border-transparent"
             />
           </div>
           <div className="flex flex-wrap gap-2">
@@ -221,7 +221,7 @@ export default function BlogArticles() {
                 className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${
                   selectedCategory === category
                     ? "bg-yellow-500 text-brown-900"
-                    : "bg-white border border-yellow-400 text-brown-800 hover:bg-yellow-50"
+                    : "bg-white border border-gray-300 text-brown-800 hover:bg-gray-50"
                 }`}
               >
                 {category}
@@ -267,7 +267,7 @@ export default function BlogArticles() {
 
       {/* Write Article CTA */}
       <Section className="pb-16">
-        <div className="rounded-2xl border border-yellow-400 p-8 text-center bg-white transition-all duration-300 hover:shadow-xl hover:-translate-y-0.5">
+        <div className="rounded-2xl border border-gray-300 p-8 text-center bg-white transition-all duration-300 hover:shadow-deep-hover hover:-translate-y-2 hover:scale-105">
           <h3 className={`text-2xl sm:text-3xl font-bold mb-4 ${gradHead}`}>Share Your Knowledge</h3>
           <p className="text-brown-800 mb-6">
             Are you an expert in astrology, gemstones, or spirituality? Share your knowledge with our community 
@@ -282,7 +282,7 @@ export default function BlogArticles() {
             </Link>
             <Link
               to="/become-author"
-              className="inline-flex items-center rounded-xl border border-brown-300 px-6 py-3 text-yellow-600 font-semibold hover:bg-brown-50 transition"
+              className="inline-flex items-center rounded-xl border border-gray-300 px-6 py-3 text-gray-700 font-semibold hover:bg-gray-50 transition"
             >
               Become an Author
             </Link>
@@ -301,7 +301,7 @@ interface ArticleCardProps {
 
 function ArticleCard({ article, featured }: ArticleCardProps) {
   return (
-    <article className={`rounded-2xl border border-yellow-400 bg-white overflow-hidden transition-all duration-300 hover:shadow-xl hover:-translate-y-1 ${
+    <article className={`rounded-2xl border border-gray-300 bg-white overflow-hidden transition-all duration-300 hover:shadow-deep-hover hover:-translate-y-2 hover:scale-105 ${
       featured ? 'ring-2 ring-yellow-300' : ''
     }`}>
       <div className="relative">
@@ -363,7 +363,7 @@ function ArticleCard({ article, featured }: ArticleCardProps) {
         
         <Link
           to={`/blog/${article.id}`}
-          className="inline-flex items-center text-yellow-600 hover:text-yellow-700 font-semibold transition"
+          className="inline-flex items-center text-gray-700 hover:text-yellow-700 font-semibold transition"
         >
           Read More
           <svg className="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">

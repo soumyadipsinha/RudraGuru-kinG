@@ -238,7 +238,7 @@ export default function BlogArticle() {
         <div className="max-w-4xl mx-auto">
           {/* Breadcrumb */}
           <nav className="mb-6">
-            <Link to="/blog" className="text-yellow-600 hover:text-yellow-700 font-medium">
+            <Link to="/blog" className="text-gray-700 hover:text-yellow-700 font-medium">
               ← Back to Blog
             </Link>
           </nav>
@@ -328,7 +328,7 @@ export default function BlogArticle() {
 
             <div className="flex items-center gap-4">
               <span className="text-brown-600">{SAMPLE_ARTICLE.views} views</span>
-              <button className="text-brown-600 hover:text-yellow-600 transition">
+              <button className="text-brown-600 hover:text-gray-700 transition">
                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.367 2.684 3 3 0 00-5.367-2.684z" />
                 </svg>
@@ -342,7 +342,7 @@ export default function BlogArticle() {
       <Section className="pb-16">
         <h2 className={`text-3xl sm:text-4xl font-bold mb-8 ${gradHead}`}>Related Articles</h2>
         <div className="grid gap-6 md:grid-cols-3">
-          <div className="rounded-2xl border border-yellow-400 bg-white p-6 transition-all duration-300 hover:shadow-xl hover:-translate-y-1">
+          <div className="rounded-2xl border border-gray-300 bg-white p-6 transition-all duration-300 hover:shadow-deep-hover hover:-translate-y-2 hover:scale-105">
             <img
               src={Emerald}
               alt="Emerald Gemstone"
@@ -350,11 +350,11 @@ export default function BlogArticle() {
             />
             <h3 className="font-bold text-brown-900 mb-2">Emerald (Panna) Guide</h3>
             <p className="text-brown-700 text-sm mb-4">Learn about the Mercury gemstone and its benefits...</p>
-            <Link to="/blog" className="text-yellow-600 hover:text-yellow-700 font-semibold text-sm">
+            <Link to="/blog" className="text-gray-700 hover:text-yellow-700 font-semibold text-sm">
               Read More →
             </Link>
           </div>
-          <div className="rounded-2xl border border-yellow-400 bg-white p-6 transition-all duration-300 hover:shadow-xl hover:-translate-y-1">
+          <div className="rounded-2xl border border-gray-300 bg-white p-6 transition-all duration-300 hover:shadow-deep-hover hover:-translate-y-2 hover:scale-105">
             <img
               src={SapphireBlue}
               alt="Blue Sapphire"
@@ -362,11 +362,11 @@ export default function BlogArticle() {
             />
             <h3 className="font-bold text-brown-900 mb-2">Blue Sapphire (Neelam)</h3>
             <p className="text-brown-700 text-sm mb-4">Discover the power of the Saturn stone...</p>
-            <Link to="/blog" className="text-yellow-600 hover:text-yellow-700 font-semibold text-sm">
+            <Link to="/blog" className="text-gray-700 hover:text-yellow-700 font-semibold text-sm">
               Read More →
             </Link>
           </div>
-          <div className="rounded-2xl border border-yellow-400 bg-white p-6 transition-all duration-300 hover:shadow-xl hover:-translate-y-1">
+          <div className="rounded-2xl border border-gray-300 bg-white p-6 transition-all duration-300 hover:shadow-deep-hover hover:-translate-y-2 hover:scale-105">
             <img
               src={Rudraksha}
               alt="Rudraksha Beads"
@@ -374,7 +374,7 @@ export default function BlogArticle() {
             />
             <h3 className="font-bold text-brown-900 mb-2">Rudraksha Benefits</h3>
             <p className="text-brown-700 text-sm mb-4">Understanding sacred Rudraksha beads...</p>
-            <Link to="/blog" className="text-yellow-600 hover:text-yellow-700 font-semibold text-sm">
+            <Link to="/blog" className="text-gray-700 hover:text-yellow-700 font-semibold text-sm">
               Read More →
             </Link>
           </div>
@@ -383,7 +383,7 @@ export default function BlogArticle() {
 
       {/* CTA Section */}
       <Section className="pb-16">
-        <div className="rounded-2xl border border-yellow-400 p-8 text-center bg-white transition-all duration-300 hover:shadow-xl hover:-translate-y-0.5">
+        <div className="rounded-2xl border border-gray-300 p-8 text-center bg-white transition-all duration-300 hover:shadow-deep-hover hover:-translate-y-2 hover:scale-105">
           <h3 className={`text-2xl sm:text-3xl font-bold mb-4 ${gradHead}`}>Need Personalized Guidance?</h3>
           <p className="text-brown-800 mb-6">
             Get expert advice on choosing the right gemstone for your birth chart and life goals.
@@ -397,7 +397,7 @@ export default function BlogArticle() {
             </Link>
             <Link
               to="/gemstones"
-              className="inline-flex items-center rounded-xl border border-brown-300 px-6 py-3 text-yellow-600 font-semibold hover:bg-brown-50 transition"
+              className="inline-flex items-center rounded-xl border border-gray-300 px-6 py-3 text-gray-700 font-semibold hover:bg-gray-50 transition"
             >
               Explore Gemstones
             </Link>

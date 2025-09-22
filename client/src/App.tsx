@@ -26,13 +26,28 @@ import NumerologyCalculator from "./pages/calculators/NumerologyCalculator";
 import RashiCalculator from "./pages/calculators/RashiCalculator";
 import MangalDoshaCalculator from "./pages/calculators/MangalDoshaCalculator";
 import LuckyNameNumberCalculator from "./pages/calculators/LuckyNameNumberCalculator";
-import KundliMatching from "./pages/KundliMatching";
 import TalkToAstrologer from "./pages/TalkToAstrologer";
 import CallingPage from "./pages/CallingPage";
+import PujaBooking from "./pages/PujaBooking";
 import RequireAuth from "./auth/RequireAuth";
+import RequireAdmin from "./auth/RequireAdmin";
+import AdminLayout from "./pages/admin/AdminLayout";
+import AdminLogin from "./pages/admin/AdminLogin";
+import AdminDashboard from "./pages/admin/AdminDashboard";
+import AdminAstrologers from "./pages/admin/AdminAstrologers";
+import AdminProducts from "./pages/admin/AdminProducts";
+import AdminNotifications from "./pages/admin/AdminNotifications";
 import WeeklyHoroscope from "./pages/WeeklyHoroscope";
 import MonthlyHoroscope from "./pages/MonthlyHoroscope";
 import YearlyHoroscope from "./pages/YearlyHoroscope";
+import AstrologerLayout from "./pages/astrologer/AstrologerLayout";
+import AstrologerLogin from "./pages/astrologer/AstrologerLogin";
+import AstrologerDashboard from "./pages/astrologer/AstrologerDashboard";
+import UserContacts from "./pages/astrologer/UserContacts";
+import ChatHistory from "./pages/astrologer/ChatHistory";
+import CallHistory from "./pages/astrologer/CallHistory";
+import Schedule from "./pages/astrologer/Schedule";
+import AstrologerSettings from "./pages/astrologer/AstrologerSettings";
 
 const App = () => {
   return (
@@ -60,7 +75,6 @@ const App = () => {
           <Route path="/horoscope/monthly" element={<RequireAuth><MonthlyHoroscope/></RequireAuth>} />
           <Route path="/horoscope/yearly" element={<RequireAuth><YearlyHoroscope/></RequireAuth>} />
           <Route path="/kundli" element={<RequireAuth><Kundli/></RequireAuth>} />
-          <Route path="/kundli-matching" element={<RequireAuth><KundliMatching/></RequireAuth>} />
           <Route path="/login" element={<Login/>} />
           <Route path="/verify-otp" element={<VerifyOtp/>} />
           <Route path="/signup" element={<Signup/>} />
@@ -71,6 +85,28 @@ const App = () => {
           <Route path="/calculators/rashi" element={<RequireAuth><RashiCalculator/></RequireAuth>} />
           <Route path="/calculators/mangal-dosha" element={<RequireAuth><MangalDoshaCalculator/></RequireAuth>} />
           <Route path="/calculators/lucky-name-number" element={<RequireAuth><LuckyNameNumberCalculator/></RequireAuth>} />
+          <Route path="/puja-booking" element={<RequireAuth><PujaBooking/></RequireAuth>} />
+        </Route>
+
+        {/* Admin Routes */}
+        <Route path="/admin/login" element={<AdminLogin/>} />
+        <Route path="/admin" element={<RequireAdmin><AdminLayout/></RequireAdmin>}>
+          <Route index element={<AdminDashboard/>} />
+          <Route path="astrologers" element={<AdminAstrologers/>} />
+          <Route path="products" element={<AdminProducts/>} />
+          <Route path="notifications" element={<AdminNotifications/>} />
+        </Route>
+
+        {/* Astrologer Routes */}
+        <Route path="/astrologer/login" element={<AstrologerLogin/>} />
+        <Route path="/astrologer" element={<AstrologerLayout/>}>
+          <Route index element={<AstrologerDashboard/>} />
+          <Route path="dashboard" element={<AstrologerDashboard/>} />
+          <Route path="contacts" element={<UserContacts/>} />
+          <Route path="chats" element={<ChatHistory/>} />
+          <Route path="calls" element={<CallHistory/>} />
+          <Route path="schedule" element={<Schedule/>} />
+          <Route path="settings" element={<AstrologerSettings/>} />
         </Route>
       </Routes>
     </Router>

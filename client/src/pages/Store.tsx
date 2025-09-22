@@ -12,7 +12,8 @@ import {
   ChevronDown,
   Grid3X3,
   List,
-  SlidersHorizontal
+  SlidersHorizontal,
+  Sparkles
 } from "lucide-react";
 import { Button } from "../components/ui/button";
 
@@ -717,6 +718,367 @@ const products = [
     benefits: ["Prosperity", "Protection"],
     weight: "—",
     origin: "India"
+  },
+  // New Products with Latest Assets
+  {
+    id: 41,
+    name: "Blue Sapphire (Neelam) - Premium Quality",
+    category: "gemstones",
+    subcategory: "rashi-ratna",
+    price: 35000,
+    originalPrice: 42000,
+    discount: 17,
+    image: "/assets/blueSapphire.jpg",
+    rating: 4.9,
+    reviews: 89,
+    inStock: true,
+    description: "Premium quality Blue Sapphire with excellent clarity and color. Perfect for Saturn planet.",
+    benefits: ["Discipline & Focus", "Career Success", "Spiritual Protection", "Wealth"],
+    weight: "3.5 Carats",
+    origin: "Kashmir",
+    certification: "GIA Certified"
+  },
+  {
+    id: 42,
+    name: "Blue Sapphire Ring - Luxury Collection",
+    category: "gemstones",
+    subcategory: "jewelry",
+    price: 55000,
+    originalPrice: 65000,
+    discount: 15,
+    image: "/assets/blueSapphire2.jpg",
+    rating: 4.8,
+    reviews: 67,
+    inStock: true,
+    description: "Luxury Blue Sapphire ring with diamond accents. Perfect for special occasions.",
+    benefits: ["Elegance", "Status", "Protection", "Wealth"],
+    weight: "4.2 Carats",
+    origin: "Sri Lanka",
+    certification: "IGI Certified"
+  },
+  {
+    id: 43,
+    name: "Cat's Eye (Lehsunia) - Natural",
+    category: "gemstones",
+    subcategory: "rashi-ratna",
+    price: 28000,
+    originalPrice: 35000,
+    discount: 20,
+    image: "/assets/catseye.jpg",
+    rating: 4.7,
+    reviews: 112,
+    inStock: true,
+    description: "Natural Cat's Eye gemstone for Ketu planet. Brings spiritual awakening and protection.",
+    benefits: ["Spiritual Awakening", "Protection from Evil", "Intuition", "Moksha"],
+    weight: "2.8 Carats",
+    origin: "Sri Lanka",
+    certification: "GIA Certified"
+  },
+  {
+    id: 44,
+    name: "Cat's Eye Ring - Designer",
+    category: "gemstones",
+    subcategory: "jewelry",
+    price: 45000,
+    originalPrice: 55000,
+    discount: 18,
+    image: "/assets/catseyeRing.jpg",
+    rating: 4.6,
+    reviews: 45,
+    inStock: true,
+    description: "Designer Cat's Eye ring with intricate gold work. Perfect for spiritual seekers.",
+    benefits: ["Spiritual Growth", "Protection", "Elegance", "Status"],
+    weight: "3.1 Carats",
+    origin: "India",
+    certification: "Hallmark Certified"
+  },
+  {
+    id: 45,
+    name: "Diamond - Premium Quality",
+    category: "gemstones",
+    subcategory: "rashi-ratna",
+    price: 85000,
+    originalPrice: 105000,
+    discount: 19,
+    image: "/assets/diamond1.jpg",
+    rating: 4.9,
+    reviews: 156,
+    inStock: true,
+    description: "Premium quality Diamond for Venus planet. Enhances luxury, beauty and relationships.",
+    benefits: ["Luxury & Beauty", "Love & Relationships", "Wealth", "Status"],
+    weight: "2.5 Carats",
+    origin: "South Africa",
+    certification: "GIA Certified"
+  },
+  {
+    id: 46,
+    name: "Diamond Ring - Wedding Collection",
+    category: "gemstones",
+    subcategory: "jewelry",
+    price: 125000,
+    originalPrice: 150000,
+    discount: 17,
+    image: "/assets/diamondRing.jpg",
+    rating: 4.8,
+    reviews: 89,
+    inStock: true,
+    description: "Exquisite diamond ring perfect for weddings and special occasions.",
+    benefits: ["Love & Commitment", "Elegance", "Status", "Wealth"],
+    weight: "3.8 Carats",
+    origin: "Belgium",
+    certification: "GIA Certified"
+  },
+  {
+    id: 47,
+    name: "Pearl (Moti) - Natural",
+    category: "gemstones",
+    subcategory: "rashi-ratna",
+    price: 15000,
+    originalPrice: 18000,
+    discount: 17,
+    image: "/assets/motiRing.jpg",
+    rating: 4.5,
+    reviews: 134,
+    inStock: true,
+    description: "Natural Pearl for Moon planet. Brings emotional balance and mental peace.",
+    benefits: ["Emotional Balance", "Mental Peace", "Fertility", "Motherhood"],
+    weight: "8-10mm",
+    origin: "Japan",
+    certification: "Natural Pearl"
+  },
+  {
+    id: 48,
+    name: "Pearl Ring - Classic Design",
+    category: "gemstones",
+    subcategory: "jewelry",
+    price: 25000,
+    originalPrice: 30000,
+    discount: 17,
+    image: "/assets/motiRing.jpg",
+    rating: 4.4,
+    reviews: 78,
+    inStock: true,
+    description: "Classic pearl ring design with elegant gold setting.",
+    benefits: ["Elegance", "Emotional Balance", "Femininity", "Grace"],
+    weight: "10-12mm",
+    origin: "Japan",
+    certification: "Natural Pearl"
+  },
+  {
+    id: 49,
+    name: "Opal - Fire Opal",
+    category: "gemstones",
+    subcategory: "other-gems",
+    price: 12000,
+    originalPrice: 15000,
+    discount: 20,
+    image: "/assets/opal.jpg",
+    rating: 4.3,
+    reviews: 67,
+    inStock: true,
+    description: "Beautiful Fire Opal with vibrant colors. Enhances creativity and imagination.",
+    benefits: ["Creativity", "Imagination", "Artistic Skills", "Inspiration"],
+    weight: "2.2 Carats",
+    origin: "Australia",
+    certification: "Natural Opal"
+  },
+  {
+    id: 50,
+    name: "Evil Eye Protection Bracelet",
+    category: "bracelets",
+    subcategory: "protection",
+    price: 2500,
+    originalPrice: 3200,
+    discount: 22,
+    image: "/assets/evileye.jpg",
+    rating: 4.6,
+    reviews: 234,
+    inStock: true,
+    description: "Evil Eye protection bracelet with natural stones. Protects from negative energy.",
+    benefits: ["Protection", "Negative Energy Removal", "Good Luck", "Peace"],
+    weight: "—",
+    origin: "Turkey",
+    certification: "Handmade"
+  },
+  {
+    id: 51,
+    name: "Pirate Style Bracelet",
+    category: "bracelets",
+    subcategory: "fashion",
+    price: 1800,
+    originalPrice: 2200,
+    discount: 18,
+    image: "/assets/piratebracelate.jpg",
+    rating: 4.2,
+    reviews: 89,
+    inStock: true,
+    description: "Unique pirate-style bracelet with authentic design elements.",
+    benefits: ["Style", "Uniqueness", "Adventure", "Boldness"],
+    weight: "—",
+    origin: "India",
+    certification: "Handcrafted"
+  },
+  {
+    id: 52,
+    name: "Designer Bracelet - Gold",
+    category: "bracelets",
+    subcategory: "luxury",
+    price: 35000,
+    originalPrice: 42000,
+    discount: 17,
+    image: "/assets/bracelate1.jpg",
+    rating: 4.7,
+    reviews: 56,
+    inStock: true,
+    description: "Luxury gold bracelet with intricate design and precious stones.",
+    benefits: ["Luxury", "Status", "Elegance", "Wealth"],
+    weight: "25g",
+    origin: "India",
+    certification: "Hallmark Gold"
+  },
+  {
+    id: 53,
+    name: "10 Mukhi Rudraksha - Premium",
+    category: "rudraksha",
+    subcategory: "premium",
+    price: 8500,
+    originalPrice: 10500,
+    discount: 19,
+    image: "/assets/10mukhirudrakhs.jpg",
+    rating: 4.8,
+    reviews: 145,
+    inStock: true,
+    description: "Premium 10 Mukhi Rudraksha for Lord Hanuman. Brings courage and strength.",
+    benefits: ["Courage", "Strength", "Protection", "Success"],
+    weight: "—",
+    origin: "Nepal",
+    certification: "Authentic"
+  },
+  {
+    id: 54,
+    name: "10 Mukhi Rudraksha - Special",
+    category: "rudraksha",
+    subcategory: "special",
+    price: 12000,
+    originalPrice: 15000,
+    discount: 20,
+    image: "/assets/10mukh2.jpg",
+    rating: 4.9,
+    reviews: 98,
+    inStock: true,
+    description: "Special 10 Mukhi Rudraksha with excellent quality and natural finish.",
+    benefits: ["Courage", "Leadership", "Protection", "Victory"],
+    weight: "—",
+    origin: "Nepal",
+    certification: "Authentic"
+  },
+  {
+    id: 55,
+    name: "5 Mukhi Rudraksha - Standard",
+    category: "rudraksha",
+    subcategory: "standard",
+    price: 1200,
+    originalPrice: 1500,
+    discount: 20,
+    image: "/assets/5 mukhi.jpg",
+    rating: 4.5,
+    reviews: 267,
+    inStock: true,
+    description: "Standard 5 Mukhi Rudraksha for Lord Shiva. Brings peace and meditation.",
+    benefits: ["Peace", "Meditation", "Spiritual Growth", "Calmness"],
+    weight: "—",
+    origin: "Nepal",
+    certification: "Authentic"
+  },
+  {
+    id: 56,
+    name: "5 Mukhi Rudraksha - Ridkharkh",
+    category: "rudraksha",
+    subcategory: "special",
+    price: 1800,
+    originalPrice: 2200,
+    discount: 18,
+    image: "/assets/5 mukhi ridkharkh.jpg",
+    rating: 4.6,
+    reviews: 123,
+    inStock: true,
+    description: "Special 5 Mukhi Rudraksha with Ridkharkh variety. Enhanced spiritual benefits.",
+    benefits: ["Spiritual Growth", "Peace", "Meditation", "Divine Connection"],
+    weight: "—",
+    origin: "Nepal",
+    certification: "Authentic"
+  },
+  {
+    id: 57,
+    name: "Gouri Shankar Rudraksha - Premium",
+    category: "rudraksha",
+    subcategory: "premium",
+    price: 25000,
+    originalPrice: 30000,
+    discount: 17,
+    image: "/assets/GouriShankarRudraksh.jpg",
+    rating: 4.9,
+    reviews: 78,
+    inStock: true,
+    description: "Premium Gouri Shankar Rudraksha representing Lord Shiva and Parvati.",
+    benefits: ["Marital Harmony", "Love", "Unity", "Divine Blessing"],
+    weight: "—",
+    origin: "Nepal",
+    certification: "Authentic"
+  },
+  {
+    id: 58,
+    name: "Gouri Shankar Rudraksha Mala",
+    category: "mala",
+    subcategory: "premium",
+    price: 45000,
+    originalPrice: 55000,
+    discount: 18,
+    image: "/assets/GouriShankarRudrakshMala.jpg",
+    rating: 4.8,
+    reviews: 45,
+    inStock: true,
+    description: "Premium Gouri Shankar Rudraksha Mala with 108+1 beads for meditation.",
+    benefits: ["Marital Harmony", "Meditation", "Spiritual Growth", "Divine Blessing"],
+    weight: "—",
+    origin: "Nepal",
+    certification: "Authentic"
+  },
+  {
+    id: 59,
+    name: "Rudraksha Mini Crystal Tree",
+    category: "rudraksha",
+    subcategory: "decorative",
+    price: 3500,
+    originalPrice: 4200,
+    discount: 17,
+    image: "/assets/Rudraksha Mini Crystal Tree.jpg",
+    rating: 4.4,
+    reviews: 89,
+    inStock: true,
+    description: "Beautiful Rudraksha mini crystal tree for home decoration and positive energy.",
+    benefits: ["Positive Energy", "Home Decoration", "Spiritual Ambiance", "Peace"],
+    weight: "—",
+    origin: "India",
+    certification: "Handcrafted"
+  },
+  {
+    id: 60,
+    name: "Original 5 Mukhi Rudraksha Mala",
+    category: "mala",
+    subcategory: "standard",
+    price: 2800,
+    originalPrice: 3500,
+    discount: 20,
+    image: "/assets/Original 5 Mukhi Rudraksha Mala 108+1 Beads (Lab Certified) Wood Necklace.jpg",
+    rating: 4.6,
+    reviews: 156,
+    inStock: true,
+    description: "Original 5 Mukhi Rudraksha Mala with 108+1 beads and lab certification.",
+    benefits: ["Meditation", "Peace", "Spiritual Growth", "Authenticity"],
+    weight: "—",
+    origin: "Nepal",
+    certification: "Lab Certified"
   }
 ];
 
@@ -764,6 +1126,21 @@ export default function Store() {
   const [showCart, setShowCart] = useState(false);
   const [wishlist, setWishlist] = useState<number[]>([]);
   const [previewProduct, setPreviewProduct] = useState<any | null>(null);
+  const [previewType, setPreviewType] = useState<'image' | 'video'>('image');
+
+  // Helper function to get video path for a product
+  const getProductVideo = (productName: string) => {
+    const videoMap: { [key: string]: string } = {
+      "Cat's Eye": "/assets/catseye.mp4",
+      "Cat's Eye Ring": "/assets/catseye2.mp4",
+      "Diamond": "/assets/diamond.mp4",
+      "Diamond Ring": "/assets/diamondRing.mp4",
+      "Pearl": "/assets/moti.mp4",
+      "Blue Sapphire": "/assets/neelam.mp4",
+      "Blue Sapphire Ring": "/assets/neelam2.mp4"
+    };
+    return videoMap[productName] || null;
+  };
 
   // Filter products based on search, category, and subcategory
   const filteredProducts = products.filter(product => {
@@ -893,7 +1270,7 @@ export default function Store() {
                       placeholder="Search products..."
                       value={searchTerm}
                       onChange={(e) => setSearchTerm(e.target.value)}
-                      className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500 focus:border-transparent"
+                      className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                     />
                   </div>
                 </div>
@@ -911,7 +1288,7 @@ export default function Store() {
                         }}
                         className={`w-full text-left px-3 py-2 rounded-lg text-sm transition-colors ${
                           selectedCategory === category.id
-                            ? 'bg-yellow-100 text-yellow-800 border border-yellow-300'
+                            ? 'bg-yellow-100 text-yellow-800 border border-gray-300'
                             : 'text-gray-700 hover:bg-gray-100'
                         }`}
                       >
@@ -930,7 +1307,7 @@ export default function Store() {
                         onClick={() => setSelectedSubcategory("all")}
                         className={`w-full text-left px-3 py-2 rounded-lg text-sm transition-colors ${
                           selectedSubcategory === "all"
-                            ? 'bg-yellow-100 text-yellow-800 border border-yellow-300'
+                            ? 'bg-yellow-100 text-yellow-800 border border-gray-300'
                             : 'text-gray-700 hover:bg-gray-100'
                         }`}
                       >
@@ -942,7 +1319,7 @@ export default function Store() {
                           onClick={() => setSelectedSubcategory(subcategory.id)}
                           className={`w-full text-left px-3 py-2 rounded-lg text-sm transition-colors ${
                             selectedSubcategory === subcategory.id
-                              ? 'bg-yellow-100 text-yellow-800 border border-yellow-300'
+                              ? 'bg-yellow-100 text-yellow-800 border border-gray-300'
                               : 'text-gray-700 hover:bg-gray-100'
                           }`}
                         >
@@ -959,7 +1336,7 @@ export default function Store() {
                   <select
                     value={sortBy}
                     onChange={(e) => setSortBy(e.target.value)}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500 focus:border-transparent"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                   >
                     <option value="featured">Featured</option>
                     <option value="price-low">Price: Low to High</option>
@@ -1052,26 +1429,96 @@ export default function Store() {
             addToCart(previewProduct.id);
             setPreviewProduct(null);
           }}
+          previewType={previewType}
+          onPreviewTypeChange={setPreviewType}
         />
       )}
     </div>
   );
 }
 
-// Product Preview Modal with rotating image animation
-function PreviewModal({ product, onClose, onAddToCart }: { product: any; onClose: () => void; onAddToCart: () => void; }) {
+// Product Preview Modal with rotating image animation and video support
+function PreviewModal({ product, onClose, onAddToCart, previewType, onPreviewTypeChange }: { 
+  product: any; 
+  onClose: () => void; 
+  onAddToCart: () => void;
+  previewType: 'image' | 'video';
+  onPreviewTypeChange: (type: 'image' | 'video') => void;
+}) {
+  const getProductVideo = (productName: string) => {
+    const videoMap: { [key: string]: string } = {
+      "Cat's Eye (Lehsunia) - Natural": "/assets/catseye.mp4",
+      "Cat's Eye Ring - Designer": "/assets/catseye2.mp4",
+      "Diamond - Premium Quality": "/assets/diamond.mp4",
+      "Diamond Ring - Wedding Collection": "/assets/diamondRing.mp4",
+      "Pearl (Moti) - Natural": "/assets/moti.mp4",
+      "Blue Sapphire (Neelam) - Premium Quality": "/assets/neelam.mp4",
+      "Blue Sapphire Ring - Luxury Collection": "/assets/neelam2.mp4"
+    };
+    return videoMap[productName] || null;
+  };
+
+  const videoPath = getProductVideo(product.name);
+  const hasVideo = !!videoPath;
+
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
       <div className="absolute inset-0 bg-black/60" onClick={onClose} />
       <div className="relative z-10 w-full max-w-3xl bg-white rounded-2xl shadow-2xl overflow-hidden">
         <div className="flex flex-col md:flex-row">
           <div className="md:w-1/2 p-6 flex items-center justify-center bg-gray-50">
-            <img
-              src={product.image}
-              alt={product.name}
-              className="w-full max-w-sm h-auto object-contain animate-[spin_12s_linear_infinite]"
-              style={{ animationDirection: 'reverse' }}
-            />
+            {previewType === 'image' ? (
+              <img
+                src={product.image}
+                alt={product.name}
+                className="w-full max-w-sm h-auto object-contain animate-[spin_12s_linear_infinite]"
+                style={{ animationDirection: 'reverse' }}
+              />
+            ) : hasVideo ? (
+              <video
+                src={videoPath}
+                controls
+                autoPlay
+                loop
+                muted
+                className="w-full max-w-sm h-auto object-contain rounded-lg"
+              >
+                Your browser does not support the video tag.
+              </video>
+            ) : (
+              <img
+                src={product.image}
+                alt={product.name}
+                className="w-full max-w-sm h-auto object-contain animate-[spin_12s_linear_infinite]"
+                style={{ animationDirection: 'reverse' }}
+              />
+            )}
+            
+            {/* Video/Image Toggle Buttons */}
+            {hasVideo && (
+              <div className="absolute top-4 right-4 flex gap-2">
+                <button
+                  onClick={() => onPreviewTypeChange('image')}
+                  className={`px-3 py-1 rounded-full text-sm font-medium transition-all duration-300 ${
+                    previewType === 'image' 
+                      ? 'bg-red-500 text-white' 
+                      : 'bg-white/80 text-gray-700 hover:bg-white'
+                  }`}
+                >
+                  Image
+                </button>
+                <button
+                  onClick={() => onPreviewTypeChange('video')}
+                  className={`px-3 py-1 rounded-full text-sm font-medium transition-all duration-300 ${
+                    previewType === 'video' 
+                      ? 'bg-red-500 text-white' 
+                      : 'bg-white/80 text-gray-700 hover:bg-white'
+                  }`}
+                >
+                  Video
+                </button>
+              </div>
+            )}
           </div>
           <div className="md:w-1/2 p-6">
             <h3 className="text-2xl font-bold text-gray-900 mb-2">{product.name}</h3>
@@ -1094,7 +1541,7 @@ function PreviewModal({ product, onClose, onAddToCart }: { product: any; onClose
             )}
             <div className="flex items-center gap-3">
               <Button className="bg-yellow-500 hover:bg-yellow-600 text-white" onClick={onAddToCart}>Add to Cart</Button>
-              <Link to={`/product/${product.id}`} className="inline-flex items-center px-4 py-2 border border-yellow-300 rounded-lg text-brown-900 hover:bg-yellow-50">View Details</Link>
+              <Link to={`/product/${product.id}`} className="inline-flex items-center px-4 py-2 border border-gray-300 rounded-lg text-brown-900 hover:bg-gray-50">View Details</Link>
               <button onClick={onClose} className="ml-auto text-gray-500 hover:text-gray-700">Close</button>
             </div>
           </div>
@@ -1200,7 +1647,7 @@ function ProductCard({
                   <div className="flex items-center gap-2">
                     <Button
                       onClick={() => onPreview(product)}
-                      className="bg-white text-brown-900 border border-yellow-300 hover:bg-yellow-50"
+                      className="bg-white text-brown-900 border border-gray-300 hover:bg-gray-50"
                     >
                       View
                     </Button>
@@ -1302,7 +1749,7 @@ function ProductCard({
           <div className="flex items-center gap-2">
             <Button
               onClick={() => onPreview(product)}
-              className="flex-1 bg-white text-brown-900 border border-yellow-300 hover:bg-yellow-50"
+              className="flex-1 bg-white text-brown-900 border border-gray-300 hover:bg-gray-50"
             >
               View
             </Button>

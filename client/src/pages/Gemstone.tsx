@@ -199,9 +199,9 @@ export default function Gemstones() {
           {GEMSTONES.map((g) => (
             <div
               key={g.key}
-              className="rounded-2xl border border-yellow-400 bg-white p-4 transition duration-300 hover:shadow-xl hover:-translate-y-0.5"
+              className="rounded-2xl border border-gray-300 bg-white p-4 transition-all duration-300 hover:shadow-deep-hover hover:-translate-y-2 hover:scale-105"
             >
-              <div className="aspect-[4/3] w-full overflow-hidden rounded-xl border border-yellow-300">
+              <div className="aspect-[4/3] w-full overflow-hidden rounded-xl border border-gray-200">
                 <img src={g.img} alt={g.name} className="h-full w-full object-cover" />
               </div>
               <div className="mt-4">
@@ -236,7 +236,7 @@ export default function Gemstones() {
       <Section className="pb-12">
         <h2 className={`text-3xl sm:text-4xl font-bold mb-6 ${gradHead}`}>Carat vs Ratti</h2>
         <div className="grid gap-6 md:grid-cols-2">
-          <div className="rounded-2xl border border-yellow-400 p-6 bg-white transition duration-300 hover:shadow-xl hover:-translate-y-0.5">
+          <div className="rounded-2xl border border-gray-300 p-6 bg-white transition-all duration-300 hover:shadow-deep-hover hover:-translate-y-2 hover:scale-105">
             <h3 className="text-xl font-semibold text-brown-900 mb-2">Understanding Measurements</h3>
             <p className="text-brown-800">
               Carat (Ct): The international unit of measurement for gemstones and diamonds.<br />
@@ -244,7 +244,7 @@ export default function Gemstones() {
             </p>
             <div className="mt-4 h-1 w-16 rounded-full bg-gradient-to-r from-yellow-300 to-yellow-500"></div>
           </div>
-          <div className="rounded-2xl border border-yellow-400 p-6 bg-white transition duration-300 hover:shadow-xl hover:-translate-y-0.5">
+          <div className="rounded-2xl border border-gray-300 p-6 bg-white transition-all duration-300 hover:shadow-deep-hover hover:-translate-y-2 hover:scale-105">
             <h3 className="text-xl font-semibold text-brown-900 mb-2">Why is this important?</h3>
             <p className="text-brown-800">
               Many gemstones in India are measured in Ratti, while internationally, they are measured in Carat.
@@ -266,7 +266,7 @@ export default function Gemstones() {
           <div>
             <div className="grid gap-4">
               {/* Card 1 */}
-              <div className="rounded-2xl bg-white p-6 transition duration-300 hover:shadow-xl hover:-translate-y-0.5">
+              <div className="rounded-2xl bg-white p-6 transition-all duration-300 hover:shadow-deep-hover hover:-translate-y-2 hover:scale-105">
                 <div className="flex items-start gap-3">
                   <div className="h-10 w-10 rounded-xl bg-yellow-100 text-yellow-700 flex items-center justify-center"><Zap className="w-5 h-5" /></div>
                   <div>
@@ -280,7 +280,7 @@ export default function Gemstones() {
               </div>
 
               {/* Card 2 */}
-              <div className="rounded-2xl bg-white p-6 transition duration-300 hover:shadow-xl hover:-translate-y-0.5">
+              <div className="rounded-2xl bg-white p-6 transition-all duration-300 hover:shadow-deep-hover hover:-translate-y-2 hover:scale-105">
                 <div className="flex items-start gap-3">
                   <div className="h-10 w-10 rounded-xl bg-yellow-100 text-yellow-700 flex items-center justify-center"><Shield className="w-5 h-5" /></div>
                   <div>
@@ -294,7 +294,7 @@ export default function Gemstones() {
               </div>
 
               {/* Card 3 */}
-              <div className="rounded-2xl bg-white p-6 transition duration-300 hover:shadow-xl hover:-translate-y-0.5">
+              <div className="rounded-2xl bg-white p-6 transition-all duration-300 hover:shadow-deep-hover hover:-translate-y-2 hover:scale-105">
                 <div className="flex items-start gap-3">
                   <div className="h-10 w-10 rounded-xl bg-yellow-100 text-yellow-700 flex items-center justify-center"><Sparkles className="w-5 h-5" /></div>
                   <div>
@@ -333,7 +333,7 @@ export default function Gemstones() {
 
       {/* CTA */}
       <Section className="py-16">
-        <div className="rounded-2xl border border-yellow-400 p-8 text-center bg-white transition-all duration-300 hover:shadow-xl hover:-translate-y-0.5">
+        <div className="rounded-2xl border border-gray-300 p-8 text-center bg-white transition-all duration-300 hover:shadow-deep-hover hover:-translate-y-2 hover:scale-105">
           <h3 className={`text-2xl sm:text-3xl font-bold ${gradHead}`}>Get your gemstone recommendation from our expert pandits!</h3>
           <p className="mt-2 text-brown-800">Personalized guidance based on birth details, goals, and current dasha/planetary period.</p>
           <div className="mt-5">
@@ -357,7 +357,7 @@ interface PriceCardProps {
 
 function PriceCard({ icon, title, text }: PriceCardProps) {
   return (
-    <div className="rounded-2xl border border-yellow-400 bg-white p-6 text-center transition duration-300 hover:shadow-xl hover:-translate-y-0.5">
+    <div className="rounded-2xl border border-gray-300 bg-white p-6 text-center transition-all duration-300 hover:shadow-deep-hover hover:-translate-y-2 hover:scale-105">
       <div className="mx-auto mb-3 h-12 w-12 rounded-2xl bg-yellow-100 text-yellow-700 flex items-center justify-center text-2xl">
         {icon}
       </div>

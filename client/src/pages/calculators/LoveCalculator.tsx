@@ -13,11 +13,78 @@ const Section = ({ children, className = "" }: SectionProps) => (
 export default function LoveCalculator() {
   const [name1, setName1] = useState("");
   const [name2, setName2] = useState("");
+  const [dob1, setDob1] = useState<string>("");
+  const [dob2, setDob2] = useState<string>("");
+  const [rashi1, setRashi1] = useState<string>("");
+  const [rashi2, setRashi2] = useState<string>("");
+  const [error, setError] = useState<string>("");
   const [score, setScore] = useState<number | null>(null);
 
+  const RASHI = [
+    "Aries", "Taurus", "Gemini", "Cancer", "Leo", "Virgo",
+    "Libra", "Scorpio", "Sagittarius", "Capricorn", "Aquarius", "Pisces",
+  ];
+
+  // Very simplified compatibility pairs (for demo purposes only)
+  const COMPATIBLE: Record<string, string[]> = {
+    Aries: ["Leo", "Sagittarius", "Gemini"],
+    Taurus: ["Virgo", "Capricorn", "Cancer"],
+    Gemini: ["Libra", "Aquarius", "Aries"],
+    Cancer: ["Scorpio", "Pisces", "Taurus"],
+    Leo: ["Aries", "Sagittarius", "Libra"],
+    Virgo: ["Taurus", "Capricorn", "Cancer"],
+    Libra: ["Gemini", "Aquarius", "Leo"],
+    Scorpio: ["Cancer", "Pisces", "Capricorn"],
+    Sagittarius: ["Aries", "Leo", "Aquarius"],
+    Capricorn: ["Taurus", "Virgo", "Scorpio"],
+    Aquarius: ["Gemini", "Libra", "Sagittarius"],
+    Pisces: ["Cancer", "Scorpio", "Capricorn"],
+  };
+
   const calculate = () => {
-    const s = (name1.trim().length + name2.trim().length) % 101; // placeholder logic
-    setScore(s);
+    setError("");
+
+    if (!name1.trim() || !name2.trim()) {
+      setError("Please enter both names.");
+      setScore(null);
+      return;
+    }
+    if (!dob1 || !dob2) {
+      setError("Please select both dates of birth.");
+      setScore(null);
+      return;
+    }
+    if (!rashi1 || !rashi2) {
+      setError("Please select both Rashis (zodiac signs).");
+      setScore(null);
+      return;
+    }
+
+    // Base from names
+    let total = (name1.trim().length + name2.trim().length) % 101;
+
+    // Add DOB numerology influence (sum of digits reduced)
+    const reduceNum = (s: string) =>
+      s.replace(/\D/g, "").split("").reduce((a, b) => a + Number(b), 0);
+    const n1 = reduceNum(dob1);
+    const n2 = reduceNum(dob2);
+    const dobInfluence = ((n1 % 9) + (n2 % 9)) % 10; // 0..9
+    total = Math.min(100, total + dobInfluence);
+
+    // Rashi compatibility influence
+    if (rashi1 === rashi2) {
+      total = Math.min(100, total + 10);
+    } else if (COMPATIBLE[rashi1]?.includes(rashi2)) {
+      total = Math.min(100, total + 15);
+    } else if (COMPATIBLE[rashi2]?.includes(rashi1)) {
+      total = Math.min(100, total + 12);
+    } else {
+      total = Math.max(0, total - 5);
+    }
+
+    // Gentle clamp
+    total = Math.max(0, Math.min(100, total));
+    setScore(Math.round(total));
   };
 
   return (
@@ -29,16 +96,87 @@ export default function LoveCalculator() {
       sidebar={<div><h3 className="font-semibold text-yellow-600 mb-2">Love Quote of the Day</h3><p className="text-sm text-brown-800">Your love will be a masterpiece, crafted with care and devotion.</p></div>}
     >
       <div className="grid gap-3 sm:grid-cols-2">
-        <input value={name1} onChange={e=>setName1(e.target.value)} placeholder="Your Name" className="rounded-md border p-3"/>
-        <input value={name2} onChange={e=>setName2(e.target.value)} placeholder="Partner Name" className="rounded-md border p-3"/>
+        <input
+          value={name1}
+          onChange={e=>setName1(e.target.value)}
+          placeholder="Your Name"
+          className="rounded-md border border-gray-300 p-3 focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300"
+        />
+        <input
+          value={name2}
+          onChange={e=>setName2(e.target.value)}
+          placeholder="Partner Name"
+          className="rounded-md border border-gray-300 p-3 focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300"
+        />
       </div>
-      <div className="mt-3 grid grid-cols-2 gap-2">
-        <button className="rounded-md border p-2">Male</button>
-        <button className="rounded-md border p-2">Female</button>
+
+      <div className="mt-3 grid gap-3 sm:grid-cols-2">
+        <div className="rounded-2xl p-3 bg-white/90 backdrop-blur-sm shadow-deep animate-shadow-pulse">
+          <label className="block text-sm font-medium text-brown-800 mb-1">Your Date of Birth</label>
+          <input
+            type="date"
+            value={dob1}
+            onChange={e=>setDob1(e.target.value)}
+            className="w-full rounded-md border border-gray-300 p-2 focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300"
+          />
+        </div>
+        <div className="rounded-2xl p-3 bg-white/90 backdrop-blur-sm shadow-deep animate-shadow-pulse">
+          <label className="block text-sm font-medium text-brown-800 mb-1">Partner Date of Birth</label>
+          <input
+            type="date"
+            value={dob2}
+            onChange={e=>setDob2(e.target.value)}
+            className="w-full rounded-md border border-gray-300 p-2 focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300"
+          />
+        </div>
       </div>
-      <button onClick={calculate} className="mt-4 rounded-md bg-yellow-500 px-6 py-2 font-semibold text-brown-900 hover:bg-yellow-400">Calculate Love %</button>
+
+      <div className="mt-3 grid gap-3 sm:grid-cols-2">
+        <div className="rounded-2xl p-3 bg-white/90 backdrop-blur-sm shadow-deep animate-shadow-float">
+          <label className="block text-sm font-medium text-brown-800 mb-1">Your Rashi (Zodiac)</label>
+          <select
+            value={rashi1}
+            onChange={e=>setRashi1(e.target.value)}
+            className="w-full rounded-md border border-gray-300 p-2 focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300"
+          >
+            <option value="">Select Rashi</option>
+            {RASHI.map(r => (
+              <option key={r} value={r}>{r}</option>
+            ))}
+          </select>
+        </div>
+        <div className="rounded-2xl p-3 bg-white/90 backdrop-blur-sm shadow-deep animate-shadow-float">
+          <label className="block text-sm font-medium text-brown-800 mb-1">Partner Rashi (Zodiac)</label>
+          <select
+            value={rashi2}
+            onChange={e=>setRashi2(e.target.value)}
+            className="w-full rounded-md border border-gray-300 p-2 focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300"
+          >
+            <option value="">Select Rashi</option>
+            {RASHI.map(r => (
+              <option key={r} value={r}>{r}</option>
+            ))}
+          </select>
+        </div>
+      </div>
+
+      {error && (
+        <div className="mt-3 rounded-md bg-red-50 text-red-700 px-3 py-2 border border-red-200 shadow-deep">
+          {error}
+        </div>
+      )}
+
+      <button
+        onClick={calculate}
+        className="mt-4 rounded-md bg-yellow-500 px-6 py-2 font-semibold text-brown-900 hover:bg-yellow-400 shadow-deep hover:shadow-deep-hover transition-all duration-300"
+      >
+        Calculate Love %
+      </button>
+
       {score !== null && (
-        <div className="mt-4 text-brown-900 font-semibold">Compatibility: {score}%</div>
+        <div className="mt-4 rounded-2xl p-4 bg-white/90 backdrop-blur-sm shadow-deep animate-shadow-glow text-brown-900 font-semibold">
+          Compatibility: {score}%
+        </div>
       )}
     </CalculatorLayout>
 

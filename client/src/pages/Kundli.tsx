@@ -2,6 +2,13 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import { Star, Sparkles, Gem, Circle, BarChart3, Home, Check, Moon, ArrowUp } from "lucide-react";
 
+interface Person {
+  name: string;
+  dateOfBirth: string;
+  timeOfBirth: string;
+  placeOfBirth: string;
+}
+
 // Gradient heading
 const gradHead =
   "inline-block bg-clip-text text-transparent bg-gradient-to-r from-yellow-500 via-yellow-600 to-amber-800";
@@ -26,6 +33,7 @@ interface KundliForm {
 }
 
 export default function Kundli() {
+  const [activeTab, setActiveTab] = useState<'kundli' | 'matching'>('kundli');
   const [formData, setFormData] = useState<KundliForm>({
     name: "",
     dateOfBirth: "",
@@ -37,6 +45,9 @@ export default function Kundli() {
   });
   const [isGenerating, setIsGenerating] = useState(false);
   const [kundliGenerated, setKundliGenerated] = useState(false);
+  const [boy, setBoy] = useState<Person>({ name: "", dateOfBirth: "", timeOfBirth: "", placeOfBirth: "" });
+  const [girl, setGirl] = useState<Person>({ name: "", dateOfBirth: "", timeOfBirth: "", placeOfBirth: "" });
+  const [score, setScore] = useState<number | null>(null);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
@@ -55,6 +66,17 @@ export default function Kundli() {
     
     setKundliGenerated(true);
     setIsGenerating(false);
+  };
+
+  const handleMatchingChange = (who: 'boy'|'girl', e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    who === 'boy' ? setBoy(prev => ({ ...prev, [name]: value })) : setGirl(prev => ({ ...prev, [name]: value }));
+  };
+
+  const calculateMatch = () => {
+    // placeholder gun milan style out of 36
+    const sum = (boy.name + girl.name).replace(/\s+/g, '').length + new Date(boy.dateOfBirth).getDate() + new Date(girl.dateOfBirth).getDate();
+    setScore(Math.min(36, Math.max(0, (sum % 37))));
   };
 
   const kundliData = {
@@ -109,16 +131,41 @@ export default function Kundli() {
       <Section className="pt-20 pb-12">
         <div className="text-center">
           <h1 className={`text-4xl sm:text-6xl font-extrabold mb-6 ${gradHead}`}>
-            Free Kundli Generation
+            Kundli & Matching
           </h1>
           <p className="text-xl text-brown-800 max-w-3xl mx-auto">
-            Generate your detailed birth chart (Kundli) for free. Get insights into your personality, 
-            career, relationships, and life path based on Vedic astrology.
+            Generate your detailed birth chart (Kundli) for free and check compatibility with your partner
           </p>
+        </div>
+        
+        {/* Tabs */}
+        <div className="flex justify-center mt-8">
+          <div className="flex bg-white/90 backdrop-blur-sm rounded-xl p-1 shadow-deep">
+            <button
+              onClick={() => setActiveTab('kundli')}
+              className={`px-6 py-3 rounded-lg font-semibold transition-all duration-300 ${
+                activeTab === 'kundli'
+                  ? 'bg-yellow-500 text-brown-900 shadow-sm'
+                  : 'text-brown-700 hover:text-yellow-600'
+              }`}
+            >
+              Free Kundli
+            </button>
+            <button
+              onClick={() => setActiveTab('matching')}
+              className={`px-6 py-3 rounded-lg font-semibold transition-all duration-300 ${
+                activeTab === 'matching'
+                  ? 'bg-yellow-500 text-brown-900 shadow-sm'
+                  : 'text-brown-700 hover:text-yellow-600'
+              }`}
+            >
+              Kundli Matching
+            </button>
+          </div>
         </div>
       </Section>
 
-      {!kundliGenerated ? (
+      {activeTab === 'kundli' && !kundliGenerated ? (
         /* Kundli Form */
         <Section className="pb-16">
           <div className="max-w-2xl mx-auto">
@@ -268,6 +315,70 @@ export default function Kundli() {
                 </button>
               </form>
             </div>
+          </div>
+        </Section>
+      ) : activeTab === 'matching' ? (
+        /* Kundli Matching Form */
+        <Section className="pb-16">
+          <div className="max-w-5xl mx-auto">
+            <div className="grid lg:grid-cols-2 gap-6">
+              {/* Boy's Detail */}
+              <div className="rounded-2xl border-2 border-yellow-300/60 p-6 bg-white/90 backdrop-blur-sm shadow-lg">
+                <h3 className="font-semibold text-brown-900 mb-4">BOY'S DETAIL</h3>
+                <div className="space-y-4">
+                  <div>
+                    <label className="block text-sm font-medium text-brown-900 mb-1">Boy's Name *</label>
+                    <input name="name" value={boy.name} onChange={(e)=>handleMatchingChange('boy',e)} placeholder="Enter name" className="w-full rounded-xl border border-yellow-400 p-3"/>
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-brown-900 mb-1">Date of Birth *</label>
+                    <input type="date" name="dateOfBirth" value={boy.dateOfBirth} onChange={(e)=>handleMatchingChange('boy',e)} className="w-full rounded-xl border border-yellow-400 p-3"/>
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-brown-900 mb-1">Time of Birth *</label>
+                    <input type="time" name="timeOfBirth" value={boy.timeOfBirth} onChange={(e)=>handleMatchingChange('boy',e)} className="w-full rounded-xl border border-yellow-400 p-3"/>
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-brown-900 mb-1">Place of Birth *</label>
+                    <input name="placeOfBirth" value={boy.placeOfBirth} onChange={(e)=>handleMatchingChange('boy',e)} placeholder="City, State, Country" className="w-full rounded-xl border border-yellow-400 p-3"/>
+                  </div>
+                </div>
+              </div>
+
+              {/* Girl's Detail */}
+              <div className="rounded-2xl border-2 border-yellow-300/60 p-6 bg-white/90 backdrop-blur-sm shadow-lg">
+                <h3 className="font-semibold text-brown-900 mb-4">GIRL'S DETAIL</h3>
+                <div className="space-y-4">
+                  <div>
+                    <label className="block text-sm font-medium text-brown-900 mb-1">Girl's Name *</label>
+                    <input name="name" value={girl.name} onChange={(e)=>handleMatchingChange('girl',e)} placeholder="Enter name" className="w-full rounded-xl border border-yellow-400 p-3"/>
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-brown-900 mb-1">Date of Birth *</label>
+                    <input type="date" name="dateOfBirth" value={girl.dateOfBirth} onChange={(e)=>handleMatchingChange('girl',e)} className="w-full rounded-xl border border-yellow-400 p-3"/>
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-brown-900 mb-1">Time of Birth *</label>
+                    <input type="time" name="timeOfBirth" value={girl.timeOfBirth} onChange={(e)=>handleMatchingChange('girl',e)} className="w-full rounded-xl border border-yellow-400 p-3"/>
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-brown-900 mb-1">Place of Birth *</label>
+                    <input name="placeOfBirth" value={girl.placeOfBirth} onChange={(e)=>handleMatchingChange('girl',e)} placeholder="City, State, Country" className="w-full rounded-xl border border-yellow-400 p-3"/>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div className="mt-6 flex justify-center">
+              <button onClick={calculateMatch} className="rounded-xl bg-yellow-500 px-6 py-3 text-brown-900 font-semibold shadow hover:bg-yellow-400 transition">Calculate Match</button>
+            </div>
+
+            {score !== null && (
+              <div className="mt-8 rounded-2xl border-2 border-yellow-300/60 p-6 bg-white/90 backdrop-blur-sm shadow-lg">
+                <h3 className={`text-2xl font-bold mb-2 ${gradHead}`}>Gun Milan Score: {score} / 36</h3>
+                <p className="text-brown-800">This is a quick overview for reference. For deeper understanding and remedies, consult our verified astrologers.</p>
+              </div>
+            )}
           </div>
         </Section>
       ) : (

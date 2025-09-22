@@ -108,17 +108,17 @@ export default function Astrologers() {
           <div className="text-center md:text-left">
             <h1 className={`text-3xl sm:text-4xl md:text-5xl font-extrabold pb-1 mb-6 ${gradHead}`}>Connect with Expert Astrologers</h1>
             <div className="grid gap-6 md:grid-cols-3 pt-6 mb-10">
-              <div className="rounded-2xl bg-white/90 backdrop-blur-sm border-2 border-yellow-300/60 p-6 shadow-lg hover:shadow-xl transition-all duration-300">
+              <div className="rounded-2xl bg-white/90 backdrop-blur-sm  p-6 shadow-deep hover:shadow-deep-hover transition-all duration-300-all duration-300">
                 <span className="text-yellow-700"><Gem className="w-5 h-5"/></span>
                 <p className="font-semibold">What We Offer</p>
                 <p>Premium guidance with certified experts.</p>
               </div>
-              <div className="rounded-2xl bg-white/90 backdrop-blur-sm border-2 border-yellow-300/60 p-6 shadow-lg hover:shadow-xl transition-all duration-300">
+              <div className="rounded-2xl bg-white/90 backdrop-blur-sm  p-6 shadow-deep hover:shadow-deep-hover transition-all duration-300-all duration-300">
                 <span className="text-yellow-700"><ShieldCheck className="w-5 h-5"/></span>
                 <p className="font-semibold">Our Assurance</p>
                 <p>24×7 availability anywhere.</p>
               </div>
-              <div className="rounded-2xl bg-white/90 backdrop-blur-sm border-2 border-yellow-300/60 p-6 shadow-lg hover:shadow-xl transition-all duration-300">
+              <div className="rounded-2xl bg-white/90 backdrop-blur-sm  p-6 shadow-deep hover:shadow-deep-hover transition-all duration-300-all duration-300">
                 <span className="text-yellow-700"><Stars className="w-5 h-5"/></span>
                 <p className="font-semibold">Our Vision</p>
                 <p>Personalized kundli & reports.</p>
@@ -144,17 +144,17 @@ export default function Astrologers() {
             value={q}
             onChange={(e)=>setQ(e.target.value)}
             placeholder="Search by name or skill..."
-            className="flex-1 rounded-md border-2 border-yellow-300/60 p-3 bg-white/90 backdrop-blur-sm shadow-lg"
+            className="flex-1 rounded-md  p-3 bg-white/90 backdrop-blur-sm shadow-deep"
           />
           <div className="flex flex-col sm:flex-row gap-2">
-            <select value={skill} onChange={(e)=>setSkill(e.target.value)} className="rounded-md border-2 border-yellow-300/60 p-2 bg-white/90 backdrop-blur-sm shadow-lg">
+            <select value={skill} onChange={(e)=>setSkill(e.target.value)} className="rounded-md  p-2 bg-white/90 backdrop-blur-sm shadow-deep">
               <option>All</option>
               <option>Palm Reading</option>
               <option>Numerology</option>
               <option>Tarot Reading</option>
               <option>Vedic Astrology</option>
             </select>
-            <select value={lang} onChange={(e)=>setLang(e.target.value)} className="rounded-md border-2 border-yellow-300/60 p-2 bg-white/90 backdrop-blur-sm shadow-lg">
+            <select value={lang} onChange={(e)=>setLang(e.target.value)} className="rounded-md  p-2 bg-white/90 backdrop-blur-sm shadow-deep">
               <option>All</option>
               <option>Hindi</option>
               <option>English</option>
@@ -162,7 +162,7 @@ export default function Astrologers() {
               <option>Tamil</option>
               <option>Gujarati</option>
             </select>
-            <select value={sort} onChange={(e)=>setSort(e.target.value)} className="rounded-md border-2 border-yellow-300/60 p-2 bg-white/90 backdrop-blur-sm shadow-lg">
+            <select value={sort} onChange={(e)=>setSort(e.target.value)} className="rounded-md  p-2 bg-white/90 backdrop-blur-sm shadow-deep">
               <option>Default</option>
               <option>Highest rate</option>
               <option>Lowest rate</option>
@@ -177,7 +177,7 @@ export default function Astrologers() {
             <button
               key={x}
               onClick={()=>quickFilter(x)}
-              className="rounded-full border border-yellow-400 px-3 py-1 text-sm hover:bg-yellow-50"
+              className="rounded-full border border-gray-300 px-3 py-1 text-sm hover:bg-gray-50"
             >
               {x}
             </button>
@@ -195,26 +195,26 @@ export default function Astrologers() {
 
       {/* Quick Booking */}
       <Section className="pb-8">
-        <div className="rounded-2xl border border-yellow-400 p-6 bg-white">
+        <div className="rounded-2xl border border-gray-300 p-6 bg-white">
           <h3 className={`text-xl font-bold mb-4 ${gradHead}`}>Quick Booking</h3>
           <div className="grid gap-4 md:grid-cols-3">
             <div className="text-center p-4 bg-yellow-50 rounded-xl">
               <MessageSquare className="w-8 h-8 text-blue-600 mx-auto mb-2" />
               <h4 className="font-semibold text-brown-900">Instant Chat</h4>
               <p className="text-sm text-brown-600">Start chatting immediately</p>
-              <p className="text-yellow-600 font-bold">From ₹10/min</p>
+              <p className="text-gray-700 font-bold">From ₹10/min</p>
             </div>
             <div className="text-center p-4 bg-yellow-50 rounded-xl">
-              <Phone className="w-8 h-8 text-yellow-600 mx-auto mb-2" />
+              <Phone className="w-8 h-8 text-gray-700 mx-auto mb-2" />
               <h4 className="font-semibold text-brown-900">Voice Call</h4>
               <p className="text-sm text-brown-600">Clear audio consultation</p>
-              <p className="text-yellow-600 font-bold">From ₹15/min</p>
+              <p className="text-gray-700 font-bold">From ₹15/min</p>
             </div>
             <div className="text-center p-4 bg-yellow-50 rounded-xl">
               <div className="text-3xl mb-2">🎥</div>
               <h4 className="font-semibold text-brown-900">Video Call</h4>
               <p className="text-sm text-brown-600">Face-to-face consultation</p>
-              <p className="text-yellow-600 font-bold">From ₹25/min</p>
+              <p className="text-gray-700 font-bold">From ₹25/min</p>
             </div>
           </div>
         </div>
@@ -252,13 +252,13 @@ interface AstroCardProps {
 
 function AstroCard({ a }: AstroCardProps) {
   return (
-    <div id={`astro-${a.id}`} className="rounded-2xl border border-yellow-400 p-5 bg-white hover:shadow-xl transition">
+    <div id={`astro-${a.id}`} className="rounded-2xl border border-gray-300 p-5 bg-white hover:shadow-deep-hover transition-all duration-300">
       <div className="flex items-center gap-4">
         <img src={a.img} alt={a.name} className="h-16 w-16 rounded-full object-cover" />
         <div className="flex-1">
           <div className="flex justify-between items-center">
             <h3 className="font-semibold">{a.name}</h3>
-            <div className="flex items-center gap-1"><Star className="w-4 h-4 text-yellow-500 fill-current" /><span className="text-yellow-600">{a.rating.toFixed(2)}</span></div>
+            <div className="flex items-center gap-1"><Star className="w-4 h-4 text-yellow-500 fill-current" /><span className="text-gray-700">{a.rating.toFixed(2)}</span></div>
           </div>
           <div className="flex flex-wrap gap-2 text-sm mt-1">
             {a.skills.map(s => (
@@ -273,8 +273,8 @@ function AstroCard({ a }: AstroCardProps) {
         Chat ₹{a.chat} / 5 min • Call ₹{a.call}/min
       </div>
       <div className="mt-3 flex gap-3">
-        <Link to={`/chat?astro=${a.id}`} className="flex-1 rounded-md bg-yellow-500 py-2 text-center text-brown-900 font-semibold hover:bg-yellow-400 transition">Chat • 3 min FREE</Link>
-        <Link to={`/calling?astro=${a.id}`} className="flex-1 rounded-md border border-yellow-400 py-2 text-center text-yellow-600 font-semibold hover:bg-yellow-50 transition">Call ₹{a.call}/min</Link>
+        <Link to={`/chat?astro=${a.id}`} className="flex-1 rounded-md bg-yellow-500 py-2 text-center text-brown-900 font-semibold hover:bg-yellow-400 transition-all duration-300">Chat • 3 min FREE</Link>
+        <Link to={`/calling?astro=${a.id}`} className="flex-1 rounded-md border border-gray-300 py-2 text-center text-gray-700 font-semibold hover:bg-gray-50 transition-all duration-300">Call ₹{a.call}/min</Link>
       </div>
     </div>
   );

@@ -88,7 +88,7 @@ export default function Home() {
                 </div>
                 {/* Image */}
                 <div className="flex justify-center md:justify-end">
-                  <img src="/assets/astrologer.png" alt="Expert Astrologer" className="w-full max-w-[260px] md:max-w-[320px] h-auto object-contain drop-shadow-lg" />
+                  <img src="/assets/astrologer.png" alt="Expert Astrologer" className="w-full max-w-[260px] md:max-w-[320px] h-auto object-contain drop-shadow-deep" />
                 </div>
               </div>
             </div>
@@ -114,7 +114,7 @@ export default function Home() {
                 </div>
                 {/* Image */}
                 <div className="flex justify-center md:justify-end">
-                  <img src="/assets/ladyastro.png" alt="Lady Astrologer" className="w-full max-w-[260px] md:max-w-[320px] h-auto object-contain drop-shadow-lg" />
+                  <img src="/assets/ladyastro.png" alt="Lady Astrologer" className="w-full max-w-[260px] md:max-w-[320px] h-auto object-contain drop-shadow-deep" />
                 </div>
               </div>
             </div>
@@ -122,27 +122,68 @@ export default function Home() {
         </Swiper>
       </Section>
 
-
       {/* Why Astrology - Long Form Content */}
       
       {/* Quick Actions under banner */}
-      <Section className="pb-8">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
-          {[
-            { label: "Chat with Astrologer", to: "/chat", icon: <MessageSquare className="w-6 h-6" /> },
-            { label: "Talk to Astrologer", to: "/chat", icon: <PhoneCall className="w-6 h-6" /> },
-            { label: "Astromall Shop", to: "/store", icon: <ShoppingBag className="w-6 h-6" /> },
-            { label: "Book A Puja", to: "/services", icon: <Sparkles className="w-6 h-6" /> },
-          ].map((x) => (
-            <Link
-              key={x.label}
-              to={x.to}
-              className="rounded-2xl bg-white/90 backdrop-blur-sm border-2 border-yellow-300/60 p-6 shadow-lg hover:shadow-2xl hover:border-yellow-400/80 transition flex items-center gap-4"
-            >
-              <span className="h-12 w-12 flex items-center justify-center rounded-xl bg-yellow-100 text-yellow-700 shadow-sm">{x.icon}</span>
-              <span className="font-semibold text-brown-900">{x.label}</span>
-            </Link>
-          ))}
+      <Section className="pb-12">
+        <div className="max-w-4xl mx-auto">
+          <div className="grid grid-cols-1 gap-6">
+            {[
+              { 
+                label: "Chat with Astrologer", 
+                to: "/chat", 
+                icon: <MessageSquare className="w-8 h-8" />,
+                description: "Get instant guidance from expert astrologers",
+                color: "from-blue-500 to-blue-600"
+              },
+              { 
+                label: "Talk to Astrologer", 
+                to: "/chat", 
+                icon: <PhoneCall className="w-8 h-8" />,
+                description: "Voice call consultation with experienced astrologers",
+                color: "from-green-500 to-green-600"
+              },
+              { 
+                label: "Astromall Shop", 
+                to: "/store", 
+                icon: <ShoppingBag className="w-8 h-8" />,
+                description: "Premium Rudraksha beads and certified gemstones",
+                color: "from-purple-500 to-purple-600"
+              },
+              { 
+                label: "Book A Puja", 
+                to: "/puja-booking", 
+                icon: <Sparkles className="w-8 h-8" />,
+                description: "Sacred rituals and spiritual ceremonies",
+                color: "from-orange-500 to-orange-600"
+              },
+            ].map((x) => (
+              <Link
+                key={x.label}
+                to={x.to}
+                className="group relative overflow-hidden rounded-3xl bg-white/95 backdrop-blur-sm p-8 shadow-deep hover:shadow-deep-hover transition-all duration-500 hover:scale-[1.02] border border-gray-100"
+              >
+                <div className="flex items-center gap-6">
+                  <div className={`h-16 w-16 flex items-center justify-center rounded-2xl bg-gradient-to-r ${x.color} text-white shadow-lg group-hover:scale-110 transition-transform duration-300`}>
+                    {x.icon}
+                  </div>
+                  <div className="flex-1">
+                    <h3 className="text-xl font-bold text-brown-900 group-hover:text-brown-700 transition-colors">
+                      {x.label}
+                    </h3>
+                    <p className="text-brown-600 mt-1 group-hover:text-brown-500 transition-colors">
+                      {x.description}
+                    </p>
+                  </div>
+                  <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                    <ArrowRight className="w-6 h-6 text-brown-400" />
+                  </div>
+                </div>
+                {/* Hover effect background */}
+                <div className="absolute inset-0 bg-gradient-to-r from-yellow-50/50 to-amber-50/50 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-3xl"></div>
+              </Link>
+            ))}
+          </div>
         </div>
       </Section>
 
@@ -170,13 +211,13 @@ export default function Home() {
               </Link>
               <Link
                 to="/store"
-                className="inline-flex items-center justify-center rounded-xl bg-transparent border-2 border-yellow-400 px-6 py-3 text-yellow-600 font-semibold shadow hover:bg-yellow-50 transition"
+                className="inline-flex items-center justify-center rounded-xl bg-transparent border-2 border-yellow-400 px-6 py-3 text-gray-700 font-semibold shadow hover:bg-gray-50 transition"
               >
                 Shop Astro Products
               </Link>
               <Link
                 to="/chat"
-                className="inline-flex items-center justify-center rounded-xl border border-brown-300 px-6 py-3 text-yellow-600 font-semibold hover:bg-brown-50 transition"
+                className="inline-flex items-center justify-center rounded-xl border border-gray-300 px-6 py-3 text-gray-700 font-semibold hover:bg-gray-50 transition"
               >
                 Start Chat ₹1/min
               </Link>
@@ -208,12 +249,12 @@ export default function Home() {
           ].map((c) => (
             <div
               key={c.title}
-              className="group relative rounded-2xl border-2 border-yellow-300/60 p-6 bg-white/90 backdrop-blur-sm transition-all duration-300 hover:scale-[1.03] hover:shadow-2xl hover:border-yellow-400/80"
+              className="group relative rounded-2xl p-6 bg-white/90 backdrop-blur-sm shadow-deep hover:shadow-deep-hover transition-all duration-300 hover:scale-105 animate-shadow-float"
             >
               <div className="absolute -top-5 -left-5 h-12 w-12 rounded-xl bg-yellow-100 text-yellow-700 flex items-center justify-center shadow-sm">
                 {c.icon}
               </div>
-              <h3 className="font-semibold text-yellow-600 mb-2 text-lg">{c.title}</h3>
+              <h3 className="font-semibold text-gray-700 mb-2 text-lg">{c.title}</h3>
               <p className="text-brown-800">{c.text}</p>
               <div className="mt-4 h-1 w-20 bg-gradient-to-r from-yellow-400 to-brown-400 rounded-full"></div>
             </div>
@@ -240,14 +281,15 @@ export default function Home() {
           ].map((c) => (
             <div
               key={c.title}
-              className="rounded-2xl border-2 border-yellow-300/60 p-7 bg-white/90 backdrop-blur-sm shadow-lg transition duration-300 hover:-translate-y-1 hover:shadow-2xl hover:border-yellow-400/80"
+              className="rounded-2xl p-7 bg-white/90 backdrop-blur-sm shadow-deep hover:shadow-deep-hover transition-all duration-300 hover:-translate-y-2 hover:scale-105"
+              style={{ boxShadow: '0 10px 25px -5px rgba(0, 0, 0, 0.3), 0 10px 10px -5px rgba(0, 0, 0, 0.1), 0 0 0 1px rgba(0, 0, 0, 0.05)' }}
             >
               <div className="flex items-start gap-4">
                 <div className="h-12 w-12 rounded-2xl bg-yellow-100 text-yellow-700 flex items-center justify-center shadow">
                   {c.icon}
                 </div>
                 <div>
-                  <h3 className="font-semibold text-yellow-600 mb-2 text-xl">{c.title}</h3>
+                  <h3 className="font-semibold text-gray-700 mb-2 text-xl">{c.title}</h3>
                   <p className="text-brown-800">{c.text}</p>
                 </div>
               </div>
@@ -256,101 +298,34 @@ export default function Home() {
         </div>
       </Section>
 
-      {/* Choose Your Perfect Astrologer */}
-      <Section className="py-16">
-        
-        <h2
-          className={`text-3xl sm:text-4xl font-bold text-center mb-8 ${gradHead}`}
-        >
-          Choose Your Perfect Astrologer
-        </h2>
-        <p className=" text-brown-700 mb-2">
-          Connect with certified astrologers specializing in various fields of
-          astrology and divination
-        </p>
-
-        {/* Search + Filters */}
-        <div className="rounded-2xl p-4 bg-white/90 backdrop-blur-sm border-2 border-yellow-300/60 shadow-lg">
-          <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
-            <div className="flex-1">
-              <input
-                type="text"
-                placeholder="Search by name, specialty, or language..."
-                className="w-full rounded-md border border-yellow-500 p-3"
-              />
-              <div className="mt-3 flex flex-wrap gap-2">
-                {[
-                  "Available Now",
-                  "Under ₹20/min",
-                  "Top Rated",
-                  "Relationship Expert",
-                  "Career Guidance",
-                ].map((x) => (
-                  <button
-                    key={x}
-                    className="rounded-full border border-yellow-500 px-3 py-1 text-sm text-brown-800 hover:bg-brown-50"
-                  >
-                    {x}
-                  </button>
-                ))}
-              </div>
-            </div>
-
-            <div className="flex gap-3">
-              <select className="rounded-md border border-yellow-500 p-2">
-                <option>Specialty</option>
-                <option>Palm Reading</option>
-                <option>Numerology</option>
-                <option>Tarot Reading</option>
-                <option>Vedic Astrology</option>
-              </select>
-              <select className="rounded-md border border-yellow-500 p-2">
-                <option>Language</option>
-                <option>Hindi</option>
-                <option>English</option>
-                <option>Bengali</option>
-                <option>Tamil</option>
-              </select>
-              <select className="rounded-md border border-yellow-500 p-2">
-                <option>Sort by</option>
-                <option>Highest Rate</option>
-                <option>Lowest Rate</option>
-                <option>Price: Low to High</option>
-                <option>Price: High to Low</option>
-              </select>
-            </div>
-          </div>
-        </div>
-
         {/* Astrologer Cards */}
        <Section className="py-12">
         <div className="flex items-center justify-between mb-6">
-          <h2 className={`text-3xl sm:text-4xl font-bold ${gradHead}`}>Choose Your Best Astrologer</h2>
-          <Link to="/astrologers" className="text-yellow-700 font-semibold hover:underline">View all</Link>
+          <h2 className={`text-3xl sm:text-4xl font-bold ${gradHead}`}>Chat with Expert Astrologers</h2>
+          <Link to="/chat" className="text-yellow-700 font-semibold hover:underline">View all</Link>
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {ASTROLOGERS.slice(0,3).map((a) => (
-            <div key={a.id} className="rounded-2xl border-2 border-yellow-300/60 p-5 bg-white/90 backdrop-blur-sm shadow-lg hover:shadow-2xl transition">
+            <div key={a.id} className="rounded-2xl p-5 bg-white/90 backdrop-blur-sm shadow-deep hover:shadow-deep-hover transition-all duration-300 hover:scale-105 animate-shadow-deep">
               <div className="flex items-center gap-4">
-                <Link to={`/astrologers?select=${a.id}`} className="shrink-0">
+                <Link to={`/chat?astro=${a.id}`} className="shrink-0">
                   <img src={a.img} alt={a.name} className="h-16 w-16 rounded-full object-cover border-2 border-yellow-500" />
                 </Link>
                 <div className="flex-1">
                   <div className="flex items-center justify-between">
-                    <Link to={`/astrologers?select=${a.id}`} className="font-semibold text-brown-900 hover:underline">{a.name}</Link>
-                    <div className="flex items-center gap-1"><Star className="w-4 h-4 text-yellow-500 fill-current" /><span className="text-yellow-600">{a.rating.toFixed(1)}</span></div>
+                    <Link to={`/chat?astro=${a.id}`} className="font-semibold text-brown-900 hover:underline">{a.name}</Link>
+                    <div className="flex items-center gap-1"><Star className="w-4 h-4 text-yellow-500 fill-current" /><span className="text-gray-700">{a.rating.toFixed(1)}</span></div>
                   </div>
                   <p className="text-sm text-brown-700">{a.skills[0]}</p>
                 </div>
               </div>
               <div className="mt-3 flex gap-3">
                 <Link to={`/chat?astro=${a.id}`} className="flex-1 rounded-md bg-yellow-500 py-2 text-center text-brown-900 font-semibold hover:bg-yellow-400 transition">Chat • 3 min FREE</Link>
-                <Link to={`/calling?astro=${a.id}`} className="flex-1 rounded-md border border-yellow-400 py-2 text-center text-yellow-600 font-semibold hover:bg-yellow-50 transition">Call</Link>
+                <Link to={`/calling?astro=${a.id}`} className="flex-1 rounded-md border border-gray-300 py-2 text-center text-gray-700 font-semibold hover:bg-gray-50 transition">Call</Link>
               </div>
             </div>
           ))}
         </div>
-      </Section>
       </Section>
 
       {/* Choose Your Sign */}
@@ -364,12 +339,12 @@ export default function Home() {
             <Link
               key={sign}
               to={`/zodiac/${sign.toLowerCase()}`}
-              className="group rounded-2xl border-2 border-yellow-300/60 p-4 bg-white/90 backdrop-blur-sm shadow-lg transition-transform duration-300 hover:scale-[1.03] hover:shadow-2xl hover:border-yellow-400/80"
+              className="group rounded-2xl p-4 bg-white/90 backdrop-blur-sm shadow-deep hover:shadow-deep-hover transition-all duration-300 hover:scale-105 animate-shadow-pulse"
             >
               <div className="h-16 flex items-center justify-center">
                 <img src={`/images/zodiac/${sign.toLowerCase()}.png`} alt={sign} className="h-12 w-12 object-contain"/>
               </div>
-              <p className="mt-3 text-center font-semibold text-brown-900 group-hover:text-yellow-600">{sign}</p>
+              <p className="mt-3 text-center font-semibold text-brown-900 group-hover:text-gray-700">{sign}</p>
             </Link>
           ))}
         </div>
@@ -389,7 +364,7 @@ export default function Home() {
           ].map((c, i) => (
             <div
               key={c.name}
-              className="rounded-2xl border-2 border-yellow-300/60 p-6 bg-white/90 backdrop-blur-sm shadow-lg transition duration-300 hover:shadow-2xl hover:-translate-y-1 hover:border-yellow-400/80"
+              className="rounded-2xl p-6 bg-white/90 backdrop-blur-sm shadow-deep hover:shadow-deep-hover transition-all duration-300 hover:-translate-y-2 hover:scale-105 animate-shadow-float"
             >
               <p className="text-brown-800">
                 “Wonderful insights and accurate guidance. The gemstone
@@ -459,7 +434,7 @@ export default function Home() {
           ].map((product, index) => (
             <div
               key={index}
-              className="rounded-2xl border-2 border-yellow-300/60 p-4 bg-white/90 backdrop-blur-sm shadow-lg transition duration-300 hover:shadow-2xl hover:-translate-y-1 hover:border-yellow-400/80"
+              className="rounded-2xl p-4 bg-white/90 backdrop-blur-sm shadow-deep hover:shadow-deep-hover transition-all duration-300 hover:-translate-y-2 hover:scale-105 animate-shadow-glow"
             >
               <div className="relative mb-4">
                 <img
@@ -490,7 +465,7 @@ export default function Home() {
         <div className="text-center mt-8">
           <Link
             to="/store"
-            className="inline-flex items-center rounded-xl bg-transparent border-2 border-yellow-400 px-6 py-3 text-yellow-600 font-semibold shadow hover:bg-yellow-50 transition"
+            className="inline-flex items-center rounded-xl bg-transparent border-2 border-yellow-400 px-6 py-3 text-gray-700 font-semibold shadow hover:bg-gray-50 transition"
           >
             View All Products
           </Link>
@@ -501,7 +476,7 @@ export default function Home() {
 
       {/* Footer CTA */}
       <Section className="py-16">
-        <div className="rounded-2xl border-2 border-yellow-300/60 p-8 text-center bg-white/90 backdrop-blur-sm shadow-lg transition duration-300 hover:shadow-2xl hover:border-yellow-400/80">
+        <div className="rounded-2xl p-8 text-center bg-white/90 backdrop-blur-sm shadow-deep hover:shadow-deep-hover transition-all duration-300 hover:scale-105 animate-shadow-deep">
           <h3 className={`text-2xl sm:text-3xl font-bold ${gradHead}`}>Ready to get guidance?</h3>
           <p className="mt-2 text-brown-800">Start a chat with certified astrologers anytime, anywhere.</p>
           <div className="mt-5">
