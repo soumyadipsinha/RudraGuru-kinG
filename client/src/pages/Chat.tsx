@@ -28,6 +28,7 @@ export default function Chat() {
   const location = useLocation();
   const params = new URLSearchParams(location.search);
   const astroId = params.get('astro');
+  const selectedAstrologer = ASTROLOGERS.find(a => a.id === Number(astroId || 0));
   const [messages, setMessages] = useState<Message[]>([
     {
       id: 1,
@@ -141,7 +142,7 @@ export default function Chat() {
           <h1 className={`text-3xl sm:text-5xl font-extrabold ${gradHead}`}>Chat with Astrologer</h1>
           <div className="flex items-center gap-3">
             <div className="text-sm text-brown-600">
-              Rate: ₹11 / 5 min • Balance: ₹500
+              Rate: ₹{selectedAstrologer?.chat ?? 11} / 5 min • Balance: ₹500
             </div>
             <button className="px-3 py-1 bg-transparent border border-yellow-400 text-yellow-700 rounded-full text-sm">
               Online
@@ -155,7 +156,7 @@ export default function Chat() {
         <Section className="pb-6">
           <div className="grid gap-5 md:grid-cols-2">
             {ASTROLOGERS.slice(0,4).map((a) => (
-              <div key={a.id} className="rounded-2xl border-2 border-yellow-300/60 p-5 bg-white/90 backdrop-blur-sm shadow-lg flex items-center gap-4">
+              <div key={a.id} className="rounded-2xl p-5 bg-white/90 backdrop-blur-sm shadow-deep flex items-center gap-4">
                 <img src={a.img} alt={a.name} className="h-16 w-16 rounded-full object-cover border-2 border-yellow-500" />
                 <div className="flex-1">
                   <div className="flex items-center justify-between">
@@ -196,7 +197,7 @@ export default function Chat() {
 
           {/* Free Chat Banner */}
           <Section className="pb-0">
-        <div className={`rounded-2xl p-4 mb-4 ${isFreeOver ? 'bg-red-50 border border-red-200' : 'bg-transparent border border-yellow-200'}`}>
+        <div className={`rounded-2xl p-4 mb-4 ${isFreeOver ? 'bg-red-50 shadow-sm' : 'bg-yellow-50 shadow-sm'}`}>
           {isFreeOver ? (
             <div className="flex items-center justify-between">
               <p className="text-red-700 font-semibold">Free 3 minutes ended. Standard charges apply: ₹11 / 5 min.</p>
@@ -215,37 +216,37 @@ export default function Chat() {
         <div className="grid gap-6 lg:grid-cols-3">
           {/* Astrologer Info */}
           <div className="lg:col-span-1">
-            <div className="rounded-2xl border border-yellow-400 bg-white p-6 sticky top-24">
+            <div className="rounded-2xl bg-white p-6 sticky top-24 shadow-deep">
               <div className="text-center mb-6">
                 <img
-                  src="https://avatar-placeholder.iran.liara.run/public/4"
-                  alt="Astrologer"
-                  className="w-20 h-20 rounded-full mx-auto mb-4 border-4 border-yellow-400"
+                  src={selectedAstrologer?.img || "https://avatar-placeholder.iran.liara.run/public/4"}
+                  alt={selectedAstrologer?.name || "Astrologer"}
+                  className="w-20 h-20 rounded-full mx-auto mb-4 border-4 border-yellow-400 object-cover"
                 />
-                <h3 className="text-xl font-bold text-brown-900">{astroId ? `Astrologer #${astroId}` : 'Astrologer'}</h3>
-                <p className="text-brown-600">Vedic Astrology Expert</p>
+                <h3 className="text-xl font-bold text-brown-900">{selectedAstrologer?.name || 'Astrologer'}</h3>
+                <p className="text-brown-600">{selectedAstrologer?.skills?.[0] || 'Vedic Astrology Expert'}</p>
                 <div className="flex items-center justify-center gap-1 mt-2">
                   <div className="flex"><Star className="w-4 h-4 text-yellow-500 fill-current" /><Star className="w-4 h-4 text-yellow-500 fill-current" /><Star className="w-4 h-4 text-yellow-500 fill-current" /><Star className="w-4 h-4 text-yellow-500 fill-current" /><Star className="w-4 h-4 text-yellow-500 fill-current" /></div>
-                  <span className="text-brown-600 text-sm">(4.9)</span>
+                  <span className="text-brown-600 text-sm">({selectedAstrologer?.rating?.toFixed(1) || '4.9'})</span>
                 </div>
               </div>
 
               <div className="space-y-4">
-                <div className="flex justify-between items-center p-3 bg-yellow-50 rounded-xl">
+                <div className="flex justify-between items-center p-3 bg-yellow-50 rounded-xl shadow-sm">
                   <span className="text-brown-700">Chat Rate</span>
-                  <span className="font-semibold text-brown-900">₹11 / 5 min</span>
+                  <span className="font-semibold text-brown-900">₹{selectedAstrologer?.chat ?? 11} / 5 min</span>
                 </div>
-                <div className="flex justify-between items-center p-3 bg-yellow-50 rounded-xl">
+                <div className="flex justify-between items-center p-3 bg-yellow-50 rounded-xl shadow-sm">
                   <span className="text-brown-700">Call Rate</span>
-                  <span className="font-semibold text-brown-900">₹25/min</span>
+                  <span className="font-semibold text-brown-900">₹{selectedAstrologer?.call ?? 25}/min</span>
                 </div>
-                <div className="flex justify-between items-center p-3 bg-yellow-50 rounded-xl">
+                <div className="flex justify-between items-center p-3 bg-yellow-50 rounded-xl shadow-sm">
                   <span className="text-brown-700">Experience</span>
-                  <span className="font-semibold text-brown-900">15+ years</span>
+                  <span className="font-semibold text-brown-900">{selectedAstrologer?.skills?.find(s=>s.toLowerCase().includes('experience'))?.replace('Experience: ','') || '15+ years'}</span>
                 </div>
-                <div className="flex justify-between items-center p-3 bg-yellow-50 rounded-xl">
+                <div className="flex justify-between items-center p-3 bg-yellow-50 rounded-xl shadow-sm">
                   <span className="text-brown-700">Languages</span>
-                  <span className="font-semibold text-brown-900">Hindi, English</span>
+                  <span className="font-semibold text-brown-900">{selectedAstrologer?.langs?.join(', ') || 'Hindi, English'}</span>
                 </div>
               </div>
 
@@ -261,7 +262,7 @@ export default function Chat() {
                 >
                   {isCallActive ? `Call Active ${formatTime(callDuration)}` : "Start Voice Call"}
                 </button>
-                <button className="w-full py-3 rounded-xl border border-yellow-400 text-yellow-600 font-semibold hover:bg-yellow-50 transition">
+                <button className="w-full py-3 rounded-xl bg-white text-yellow-600 font-semibold shadow-sm hover:bg-yellow-50 transition">
                   Video Call
                 </button>
               </div>
@@ -277,13 +278,13 @@ export default function Chat() {
 
           {/* Chat Area */}
           <div className="lg:col-span-2">
-            <div className="rounded-2xl border border-yellow-400 bg-white h-[600px] flex flex-col">
+            <div className="rounded-2xl bg-white h-[600px] flex flex-col shadow-deep">
               {/* Chat Header */}
-              <div className="p-4 border-b border-yellow-200 bg-yellow-50 rounded-t-2xl">
+              <div className="p-4 bg-yellow-50 rounded-t-2xl shadow-sm">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-3">
                     <div className="w-3 h-3 bg-yellow-500 rounded-full"></div>
-                    <span className="font-semibold text-brown-900">{astroId ? `Astrologer #${astroId}` : 'Astrologer'}</span>
+                    <span className="font-semibold text-brown-900">{selectedAstrologer?.name || 'Astrologer'}</span>
                     <span className="text-brown-600 text-sm">is online</span>
                   </div>
                   <div className="text-sm text-brown-600">
@@ -327,7 +328,7 @@ export default function Chat() {
               </div>
 
               {/* Message Input */}
-              <div className="p-4 border-t border-yellow-200">
+              <div className="p-4">
                 <div className="flex gap-3">
                   <input
                     type="text"
@@ -335,7 +336,7 @@ export default function Chat() {
                     onChange={(e) => setNewMessage(e.target.value)}
                     onKeyPress={handleKeyPress}
                     placeholder="Type your message..."
-                    className="flex-1 rounded-xl border border-yellow-400 p-3 focus:ring-2 focus:ring-yellow-500 focus:border-transparent"
+                    className="flex-1 rounded-xl bg-white p-3 shadow-sm focus:ring-2 focus:ring-yellow-500 focus:border-transparent"
                   />
                   <button
                     onClick={handleSendMessage}

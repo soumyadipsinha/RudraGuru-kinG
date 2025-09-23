@@ -16,6 +16,7 @@ import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import VerifyOtp from "./pages/VerifyOtp";
 import AboutUs from "./pages/AboutUs";
+import CaratToRattiCalculator from "./pages/CaratToRattiCalculator";
 import Store from "./pages/Store";
 import ProductDetail from "./pages/ProductDetail";
 import Checkout from "./pages/Checkout";
@@ -37,6 +38,8 @@ import AdminDashboard from "./pages/admin/AdminDashboard";
 import AdminAstrologers from "./pages/admin/AdminAstrologers";
 import AdminProducts from "./pages/admin/AdminProducts";
 import AdminNotifications from "./pages/admin/AdminNotifications";
+import AdminPoojas from "./pages/admin/AdminPoojas";
+import Poojas from "./pages/Poojas";
 import WeeklyHoroscope from "./pages/WeeklyHoroscope";
 import MonthlyHoroscope from "./pages/MonthlyHoroscope";
 import YearlyHoroscope from "./pages/YearlyHoroscope";
@@ -71,6 +74,7 @@ const App = () => {
           <Route path="/talk-to-astrologer" element={<RequireAuth><TalkToAstrologer/></RequireAuth>} />
           <Route path="/calling" element={<RequireAuth><CallingPage/></RequireAuth>} />
           <Route path="/horoscope" element={<RequireAuth><Horoscope/></RequireAuth>} />
+          <Route path="/horoscope/:sign" element={<RequireAuth><Horoscope/></RequireAuth>} />
           <Route path="/horoscope/weekly" element={<RequireAuth><WeeklyHoroscope/></RequireAuth>} />
           <Route path="/horoscope/monthly" element={<RequireAuth><MonthlyHoroscope/></RequireAuth>} />
           <Route path="/horoscope/yearly" element={<RequireAuth><YearlyHoroscope/></RequireAuth>} />
@@ -79,6 +83,7 @@ const App = () => {
           <Route path="/verify-otp" element={<VerifyOtp/>} />
           <Route path="/signup" element={<Signup/>} />
           <Route path="/about" element={<RequireAuth><AboutUs/></RequireAuth>} />
+          <Route path="/carat-to-ratti-calculator" element={<CaratToRattiCalculator/>} />
           <Route path="/calculators" element={<RequireAuth><CalculatorsIndex/></RequireAuth>} />
           <Route path="/calculators/love" element={<RequireAuth><LoveCalculator/></RequireAuth>} />
           <Route path="/calculators/numerology" element={<RequireAuth><NumerologyCalculator/></RequireAuth>} />
@@ -86,6 +91,7 @@ const App = () => {
           <Route path="/calculators/mangal-dosha" element={<RequireAuth><MangalDoshaCalculator/></RequireAuth>} />
           <Route path="/calculators/lucky-name-number" element={<RequireAuth><LuckyNameNumberCalculator/></RequireAuth>} />
           <Route path="/puja-booking" element={<RequireAuth><PujaBooking/></RequireAuth>} />
+          <Route path="/poojas" element={<Poojas/>} />
         </Route>
 
         {/* Admin Routes */}
@@ -95,6 +101,7 @@ const App = () => {
           <Route path="astrologers" element={<AdminAstrologers/>} />
           <Route path="products" element={<AdminProducts/>} />
           <Route path="notifications" element={<AdminNotifications/>} />
+          <Route path="poojas" element={<AdminPoojas/>} />
         </Route>
 
         {/* Astrologer Routes */}

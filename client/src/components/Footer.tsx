@@ -4,7 +4,7 @@ import { Facebook, Instagram, Linkedin, Youtube, Mail, Headphones, Gift } from "
 
 export default function Footer() {
   return (
-    <footer className="bg-gray-800 text-white rounded-4xl">
+    <footer className="bg-gray-800 text-white rounded-t-4xl">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-12">
         {/* Company Branding Section */}
         <div className="mb-8 pb-8 border-b border-gray-700">
@@ -50,6 +50,7 @@ export default function Footer() {
             <h4 className="text-yellow-400 font-semibold mb-4 underline">Astromall & Services</h4>
             <ul className="space-y-2 text-sm">
               <li><Link to="/store" className="text-gray-300 hover:text-yellow-400">Astromall</Link></li>
+              <li><Link to="/carat-to-ratti-calculator" className="text-gray-300 hover:text-yellow-400">Carat to Ratti Calculator</Link></li>
               <li><Link to="/store" className="text-gray-300 hover:text-yellow-400">Today Panchang</Link></li>
               <li><Link to="/astrologers" className="text-gray-300 hover:text-yellow-400">Live Astrologers</Link></li>
               <li><Link to="/kundli" className="text-gray-300 hover:text-yellow-400">Free Kundli</Link></li>
@@ -126,8 +127,34 @@ export default function Footer() {
         </div>
       </div>
 
+      {/* Newsletter Section */}
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 pb-8">
+        <div className="mt-4 pt-6 border-t border-gray-700">
+          <div className="max-w-2xl mx-auto text-center">
+            <h4 className="text-yellow-400 font-semibold">Newsletter</h4>
+            <p className="text-sm text-gray-300 mt-2">Sign up to our newsletter to receive exclusive offers.</p>
+            <form className="mt-4 flex flex-col sm:flex-row gap-3 justify-center" onSubmit={(e) => e.preventDefault()}>
+              <label htmlFor="newsletter-email" className="sr-only">E-mail</label>
+              <input
+                id="newsletter-email"
+                type="email"
+                required
+                placeholder="E-mail"
+                className="w-full sm:w-auto min-w-0 sm:min-w-[280px] px-4 py-2 rounded-md bg-gray-900 text-white placeholder-gray-400 border border-gray-700 focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:border-transparent"
+              />
+              <button
+                type="submit"
+                className="inline-flex items-center justify-center px-5 py-2 rounded-md bg-yellow-500 text-black font-semibold hover:bg-yellow-400 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-yellow-500 focus:ring-offset-gray-800"
+              >
+                Subscribe
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+
       {/* Bottom bar with rounded corners */}
-      <div className="bg-gray-900 rounded-b-3xl">
+      <div className="bg-gray-900">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-4">
           <p className="text-center text-sm text-gray-400">
             © {new Date().getFullYear()} RUDRAGURU. All rights reserved.

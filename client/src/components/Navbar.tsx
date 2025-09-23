@@ -108,7 +108,7 @@ export default function Navbar() {
     <header
       className={[
         "fixed top-0 inset-x-0 z-50 transition-all duration-300",
-        "bg-white/98 backdrop-blur-lg shadow-deep border-b-2 border-red-100",
+        "bg-white/98 backdrop-blur-lg shadow-deep",
       ].join(" ")}
     >
       {/* Top Row - AstroTalk Style */}
@@ -162,8 +162,8 @@ export default function Navbar() {
                 </svg>
               </button>
               {activeDropdown === 'services' && (
-                <div className="absolute top-full left-0 mt-2 w-64 bg-white/98 backdrop-blur-lg rounded-xl shadow-deep-hover border border-red-100 py-2 z-50 animate-fade-in">
-                  <div className="px-4 py-2 border-b border-red-100">
+                <div className="absolute top-full left-0 mt-2 w-64 bg-white/98 backdrop-blur-lg rounded-xl shadow-deep-hover py-2 z-50 animate-fade-in">
+                  <div className="px-4 py-2">
                     <span className="text-sm font-semibold text-red-600">Calculators</span>
                   </div>
                   <Link to="/calculators" onClick={handleMenuItemClick} className="block px-4 py-2 text-brown-700 hover:bg-red-50 hover:text-red-600 transition-all duration-300">All Calculators</Link>
@@ -173,7 +173,7 @@ export default function Navbar() {
                   <Link to="/calculators/mangal-dosha" onClick={handleMenuItemClick} className="block px-4 py-2 text-brown-700 hover:bg-red-50 hover:text-red-600 transition-all duration-300">Mangal Dosha</Link>
                   <Link to="/calculators/lucky-name-number" onClick={handleMenuItemClick} className="block px-4 py-2 text-brown-700 hover:bg-red-50 hover:text-red-600 transition-all duration-300">Lucky Name/Number</Link>
                   
-                  <div className="px-4 py-2 border-b border-red-100 mt-2">
+                  <div className="px-4 py-2 mt-2">
                     <span className="text-sm font-semibold text-red-600">Horoscopes</span>
                   </div>
                   <Link to="/horoscope" onClick={handleMenuItemClick} className="block px-4 py-2 text-brown-700 hover:bg-red-50 hover:text-red-600 transition-all duration-300">Daily Horoscope</Link>
@@ -205,7 +205,7 @@ export default function Navbar() {
                 </svg>
               </button>
               {activeDropdown === 'language' && (
-                <div className="absolute top-full left-0 mt-2 w-32 bg-white/98 backdrop-blur-lg rounded-xl shadow-deep-hover border border-red-100 py-2 z-50 animate-fade-in">
+                <div className="absolute top-full left-0 mt-2 w-32 bg-white/98 backdrop-blur-lg rounded-xl shadow-deep-hover py-2 z-50 animate-fade-in">
                   <button onClick={handleMenuItemClick} className="block w-full text-left px-4 py-2 text-brown-700 hover:bg-red-50 hover:text-red-600 transition-all duration-300">English</button>
                   <button onClick={handleMenuItemClick} className="block w-full text-left px-4 py-2 text-brown-700 hover:bg-red-50 hover:text-red-600 transition-all duration-300">हिंदी</button>
                   <button onClick={handleMenuItemClick} className="block w-full text-left px-4 py-2 text-brown-700 hover:bg-red-50 hover:text-red-600 transition-all duration-300">বাংলা</button>
@@ -229,8 +229,8 @@ export default function Navbar() {
               
               {/* Notification Dropdown */}
               {showNotifications && (
-                <div className="absolute top-full right-0 mt-2 w-80 bg-white/98 backdrop-blur-lg rounded-xl shadow-deep-hover border border-gray-200 py-2 z-50 animate-fade-in">
-                  <div className="px-4 py-2 border-b border-gray-200">
+                <div className="absolute top-full right-0 mt-2 w-80 bg-white/98 backdrop-blur-lg rounded-xl shadow-deep-hover py-2 z-50 animate-fade-in">
+                  <div className="px-4 py-2">
                     <div className="flex items-center justify-between">
                       <h3 className="text-sm font-semibold text-brown-900">Notifications</h3>
                       {unreadCount > 0 && (
@@ -269,7 +269,7 @@ export default function Navbar() {
                       </div>
                     ))}
                   </div>
-                  <div className="px-4 py-2 border-t border-gray-200">
+                  <div className="px-4 py-2">
                     <Link
                       to="/notifications"
                       onClick={() => setShowNotifications(false)}
@@ -314,8 +314,8 @@ export default function Navbar() {
               
               {/* Mobile Notification Dropdown */}
               {showNotifications && (
-                <div className="absolute top-full right-0 mt-2 w-72 bg-white/98 backdrop-blur-lg rounded-xl shadow-deep-hover border border-gray-200 py-2 z-50 animate-fade-in">
-                  <div className="px-4 py-2 border-b border-gray-200">
+                <div className="absolute top-full right-0 mt-2 w-72 bg-white/98 backdrop-blur-lg rounded-xl shadow-deep-hover py-2 z-50 animate-fade-in">
+                  <div className="px-4 py-2">
                     <div className="flex items-center justify-between">
                       <h3 className="text-sm font-semibold text-brown-900">Notifications</h3>
                       {unreadCount > 0 && (
@@ -354,7 +354,7 @@ export default function Navbar() {
                       </div>
                     ))}
                   </div>
-                  <div className="px-4 py-2 border-t border-gray-200">
+                  <div className="px-4 py-2">
                     <Link
                       to="/notifications"
                       onClick={() => setShowNotifications(false)}
@@ -385,15 +385,15 @@ export default function Navbar() {
             
             {/* Mobile Dropdown Menu */}
             {activeDropdown === 'mobile' && (
-              <div className="absolute top-full right-0 mt-2 w-72 bg-white/95 backdrop-blur-md rounded-xl shadow-deep-hover border border-gray-200 py-2 z-50 max-h-96 overflow-y-auto">
-                <div className="px-4 py-2 border-b border-gray-200">
+              <div className="absolute top-full right-0 mt-2 w-72 bg-white/95 backdrop-blur-md rounded-xl shadow-deep-hover py-2 z-50 max-h-96 overflow-y-auto">
+                <div className="px-4 py-2">
                   <span className="text-sm font-semibold text-blue-600">Main Menu</span>
                 </div>
                 <Link to="/kundli" onClick={handleMenuItemClick} className="block px-4 py-3 text-brown-700 hover:bg-gray-50 hover:text-blue-600 transition-all duration-300">Kundli</Link>
                 <Link to="/chat" onClick={handleMenuItemClick} className="block px-4 py-3 text-brown-700 hover:bg-gray-50 hover:text-blue-600 transition-all duration-300">Chat with Astrologer</Link>
                 <Link to="/store" onClick={handleMenuItemClick} className="block px-4 py-3 text-brown-700 hover:bg-gray-50 hover:text-blue-600 transition-all duration-300">RUDRAGURU Store</Link>
                 <Link to="/about" onClick={handleMenuItemClick} className="block px-4 py-3 text-brown-700 hover:bg-gray-50 hover:text-blue-600 transition-all duration-300">About Us</Link>
-                <div className="px-4 py-2 border-b border-gray-200 mt-2">
+                <div className="px-4 py-2 mt-2">
                   <span className="text-sm font-semibold text-blue-600">Our Services</span>
                 </div>
                 <Link to="/horoscope" onClick={handleMenuItemClick} className="block px-4 py-3 text-brown-700 hover:bg-gray-50 hover:text-blue-600 transition-all duration-300">Daily Horoscope</Link>
@@ -406,12 +406,12 @@ export default function Navbar() {
                 <Link to="/calculators/rashi" onClick={handleMenuItemClick} className="block px-4 py-3 text-brown-700 hover:bg-gray-50 hover:text-blue-600 transition-all duration-300">Rashi (Zodiac)</Link>
                 <Link to="/calculators/mangal-dosha" onClick={handleMenuItemClick} className="block px-4 py-3 text-brown-700 hover:bg-gray-50 hover:text-blue-600 transition-all duration-300">Mangal Dosha</Link>
                 <Link to="/calculators/lucky-name-number" onClick={handleMenuItemClick} className="block px-4 py-3 text-brown-700 hover:bg-gray-50 hover:text-blue-600 transition-all duration-300">Lucky Name/Number</Link>
-                <div className="px-4 py-2 border-b border-gray-200 mt-2">
+                <div className="px-4 py-2 mt-2">
                   <span className="text-sm font-semibold text-blue-600">Products</span>
                 </div>
                 <Link to="/gemstones" onClick={handleMenuItemClick} className="block px-4 py-3 text-brown-700 hover:bg-gray-50 hover:text-blue-600 transition-all duration-300">Gemstones</Link>
                 <Link to="/store" onClick={handleMenuItemClick} className="block px-4 py-3 text-brown-700 hover:bg-gray-50 hover:text-blue-600 transition-all duration-300">All Products</Link>
-                <div className="px-4 py-2 border-b border-gray-200 mt-2">
+                <div className="px-4 py-2 mt-2">
                   <span className="text-sm font-semibold text-blue-600">Account</span>
                 </div>
                 <Link to="/login" onClick={handleMenuItemClick} className="block px-4 py-3 text-brown-700 hover:bg-gray-50 hover:text-blue-600 transition-all duration-300">Login</Link>

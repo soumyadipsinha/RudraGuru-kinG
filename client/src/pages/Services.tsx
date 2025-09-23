@@ -92,23 +92,23 @@ export default function Services() {
       {/* Free Kundli */}
       <Section className="py-12">
         <h2 className={`text-3xl sm:text-4xl font-bold mb-6 ${gradHead}`}>Free Kundli</h2>
-        <div className="rounded-2xl border border-yellow-400 p-6 bg-white shadow-sm transition-all duration-300 hover:shadow-xl hover:-translate-y-0.5">
+        <div className="rounded-2xl p-6 bg-white shadow-deep transition-all duration-300 hover:shadow-xl hover:-translate-y-0.5">
           <div className="grid md:grid-cols-2 gap-4">
             <div className="space-y-2">
               <label className="text-sm text-brown-700">Full Name</label>
-              <input type="text" className="w-full rounded-md border border-brown-300 p-3" placeholder="Enter your name" />
+              <input type="text" className="w-full rounded-md bg-white p-3 shadow-sm" placeholder="Enter your name" />
             </div>
             <div className="space-y-2">
               <label className="text-sm text-brown-700">Date of Birth</label>
-              <input type="date" className="w-full rounded-md border border-brown-300 p-3" />
+              <input type="date" className="w-full rounded-md bg-white p-3 shadow-sm" />
             </div>
             <div className="space-y-2">
               <label className="text-sm text-brown-700">Time of Birth</label>
-              <input type="time" className="w-full rounded-md border border-brown-300 p-3" />
+              <input type="time" className="w-full rounded-md bg-white p-3 shadow-sm" />
             </div>
             <div className="space-y-2">
               <label className="text-sm text-brown-700">Place of Birth</label>
-              <input type="text" className="w-full rounded-md border border-brown-300 p-3" placeholder="City, Country" />
+              <input type="text" className="w-full rounded-md bg-white p-3 shadow-sm" placeholder="City, Country" />
             </div>
           </div>
           <div className="mt-5">
@@ -131,18 +131,18 @@ export default function Services() {
           ].map((c) => (
             <div
               key={c.title}
-              className="rounded-2xl border border-yellow-400 p-6 bg-white shadow-sm transition-all duration-300 hover:shadow-xl hover:-translate-y-0.5"
+              className="rounded-2xl p-6 bg-white shadow-deep transition-all duration-300 hover:shadow-xl hover:-translate-y-0.5"
             >
               <div className="flex items-start justify-between">
                 <h3 className="text-2xl font-semibold text-brown-900">{c.title}</h3>
                 <span className="text-xs rounded-full bg-brown-50 border border-brown-200 px-3 py-1 text-brown-700">{c.range}</span>
               </div>
               <p className="mt-3 text-brown-800">{c.text}</p>
-              <div className="mt-4 flex gap-2">
-                <Link to="/horoscope/daily" className="rounded-full border border-brown-300 px-3 py-1 text-sm text-brown-800 hover:bg-brown-50">Daily</Link>
-                <Link to="/horoscope/weekly" className="rounded-full border border-brown-300 px-3 py-1 text-sm text-brown-800 hover:bg-brown-50">Weekly</Link>
-                <Link to="/horoscope/monthly" className="rounded-full border border-brown-300 px-3 py-1 text-sm text-brown-800 hover:bg-brown-50">Monthly</Link>
-              </div>
+            <div className="mt-4 flex gap-2">
+              <Link to="/horoscope/daily" className="rounded-full px-3 py-1 text-sm text-brown-800 bg-white shadow-sm hover:bg-brown-50">Daily</Link>
+              <Link to="/horoscope/weekly" className="rounded-full px-3 py-1 text-sm text-brown-800 bg-white shadow-sm hover:bg-brown-50">Weekly</Link>
+              <Link to="/horoscope/monthly" className="rounded-full px-3 py-1 text-sm text-brown-800 bg-white shadow-sm hover:bg-brown-50">Monthly</Link>
+            </div>
             </div>
           ))}
         </div>
@@ -154,7 +154,7 @@ export default function Services() {
 
         <div className="grid md:grid-cols-2 gap-6">
           {/* Boy's Details */}
-          <div className="rounded-2xl border border-yellow-400 p-6 bg-white shadow-sm transition-all duration-300 hover:shadow-xl hover:-translate-y-0.5">
+          <div className="rounded-2xl p-6 bg-white shadow-deep transition-all duration-300 hover:shadow-xl hover:-translate-y-0.5">
             <div className="mb-4">
               <span className="inline-block rounded-full bg-yellow-500 px-4 py-1 text-brown-900 font-semibold">Boy's Detail</span>
             </div>
@@ -179,7 +179,7 @@ export default function Services() {
           </div>
 
           {/* Girl's Details */}
-          <div className="rounded-2xl border border-yellow-400 p-6 bg-white shadow-sm transition-all duration-300 hover:shadow-xl hover:-translate-y-0.5">
+          <div className="rounded-2xl p-6 bg-white shadow-deep transition-all duration-300 hover:shadow-xl hover:-translate-y-0.5">
             <div className="mb-4">
               <span className="inline-block rounded-full bg-yellow-500 px-4 py-1 text-brown-900 font-semibold">Girl's Detail</span>
             </div>
@@ -295,7 +295,7 @@ export default function Services() {
           </div>
 
           {/* Right: Designed reference table */}
-          <div className="rounded-2xl border border-yellow-400 p-6 bg-white shadow-sm transition-all duration-300 hover:shadow-xl hover:-translate-y-0.5">
+        <div className="rounded-2xl p-6 bg-white shadow-deep transition-all duration-300 hover:shadow-xl hover:-translate-y-0.5">
             <h3 className={`text-xl font-bold mb-4 ${gradHead}`}>Substitutes, Finger & Day (Reference)</h3>
 
             <div className="overflow-x-auto rounded-xl border border-yellow-300">
