@@ -151,17 +151,7 @@ const pujas: Puja[] = [
     image: "/assets/give me vastu puja pic with panditji.jpg",
     category: "Special Puja"
   },
-  {
-    id: 12,
-    name: "Sundarkand Path",
-    hindiName: "सुंदरकांड पाठ",
-    description: "Hanuman Chalisa and Sundarkand recitation is performed for problem resolution.",
-    duration: "2 hours",
-    price: 1501,
-    benefits: ["Problem Resolution", "Mental Peace", "Devotion Enhancement", "Blessings"],
-    image: "/assets/serviceLogo.png",
-    category: "Path-Puja"
-  }
+ 
 ];
 
 const priests: Priest[] = [
