@@ -252,9 +252,9 @@ export default function Home() {
       {/* Why Astrology - Long Form Content */}
       
       {/* Quick Actions under banner */}
-      <Section className="pb-12">
-        <div className="max-w-4xl mx-auto">
-          <div className="grid grid-cols-1 gap-6">
+      <Section className="pb-8">
+        <div className="max-w-6xl mx-auto">
+          <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4">
             {[
               { 
                 label: "Chat with Astrologer", 
@@ -288,28 +288,41 @@ export default function Home() {
               <Link
                 key={x.label}
                 to={x.to}
-                className="group relative overflow-hidden rounded-3xl bg-white/95 backdrop-blur-sm p-8 shadow-deep hover:shadow-deep-hover transition-all duration-500 hover:scale-[1.02] border border-gray-100"
+                className="group relative overflow-hidden rounded-xl bg-white p-4 shadow hover:shadow-md transition-all duration-300 border border-gray-100"
               >
-                <div className="flex items-center gap-6">
-                  <div className={`h-16 w-16 flex items-center justify-center rounded-2xl bg-gradient-to-r ${x.color} text-white shadow-lg group-hover:scale-110 transition-transform duration-300`}>
+                <div className="flex items-center gap-3">
+                  <div className={`h-10 w-10 flex items-center justify-center rounded-lg bg-gradient-to-r ${x.color} text-white shadow-sm group-hover:scale-105 transition-transform duration-200`}>
                     {x.icon}
                   </div>
-                  <div className="flex-1">
-                    <h3 className="text-xl font-bold text-brown-900 group-hover:text-brown-700 transition-colors">
+                  <div className="flex-1 min-w-0">
+                    <h3 className="text-sm font-semibold text-brown-900 truncate group-hover:text-brown-700 transition-colors">
                       {x.label}
                     </h3>
-                    <p className="text-brown-600 mt-1 group-hover:text-brown-500 transition-colors">
+                    <p className="hidden lg:block text-xs text-brown-600 mt-0.5 group-hover:text-brown-500 transition-colors line-clamp-2">
                       {x.description}
                     </p>
                   </div>
-                  <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                    <ArrowRight className="w-6 h-6 text-brown-400" />
+                  <div className="hidden sm:block opacity-60 group-hover:opacity-100 transition-opacity duration-200">
+                    <ArrowRight className="w-5 h-5 text-brown-400" />
                   </div>
                 </div>
                 {/* Hover effect background */}
-                <div className="absolute inset-0 bg-gradient-to-r from-yellow-50/50 to-amber-50/50 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-3xl"></div>
+                <div className="pointer-events-none absolute inset-0 bg-gradient-to-r from-yellow-50/50 to-amber-50/50 opacity-0 group-hover:opacity-100 transition-opacity duration-200 rounded-xl"></div>
               </Link>
             ))}
+          </div>
+        </div>
+      </Section>
+
+      {/* Link to Puja Booking page CTA */}
+      <Section className="py-16">
+        <div className="rounded-2xl p-8 text-center bg-white/90 backdrop-blur-sm shadow-deep">
+          <h3 className={`text-2xl sm:text-3xl font-bold ${gradHead}`}>Book a Puja with Pandit Ji</h3>
+          <p className="mt-2 text-brown-800">Explore all puja options and schedule with our experts.</p>
+          <div className="mt-5">
+            <Link to="/puja-booking" className="inline-flex items-center rounded-xl bg-yellow-500 px-6 py-3 text-brown-900 font-semibold shadow hover:bg-yellow-400">
+              Go to Puja Booking
+            </Link>
           </div>
         </div>
       </Section>
@@ -521,13 +534,13 @@ export default function Home() {
               ].map((gem, index) => (
                 <div key={index} className="flex-shrink-0 w-40">
                   <div className="group rounded-2xl p-4 bg-white/95 backdrop-blur-sm shadow-deep hover:shadow-deep-hover transition-all duration-500 hover:scale-110 hover:-translate-y-2">
-                    <div className="relative mb-4">
+                    <div className="relative mb-4 flex items-center justify-center">
                       <img
                         src={gem.image}
                         alt={gem.name}
-                        className="w-full h-28 object-cover rounded-xl shadow-lg group-hover:shadow-xl transition-all duration-300"
+                        className="w-28 h-28 object-cover rounded-full shadow-lg group-hover:shadow-xl transition-all duration-300 mx-auto"
                       />
-                      <div className="absolute inset-0 rounded-xl bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                      <div className="absolute w-28 h-28 rounded-full bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                     </div>
                     <h4 className="font-bold text-brown-900 text-center text-sm group-hover:text-yellow-700 transition-colors duration-300">{gem.name}</h4>
                   </div>
@@ -568,13 +581,13 @@ export default function Home() {
               ].map((rudraksha, index) => (
                 <div key={index} className="flex-shrink-0 w-40">
                   <div className="group rounded-2xl p-4 bg-white/95 backdrop-blur-sm shadow-deep hover:shadow-deep-hover transition-all duration-500 hover:scale-110 hover:-translate-y-2">
-                    <div className="relative mb-4">
+                    <div className="relative mb-4 flex items-center justify-center">
                       <img
                         src={rudraksha.image}
                         alt={rudraksha.name}
-                        className="w-full h-28 object-cover rounded-xl shadow-lg group-hover:shadow-xl transition-all duration-300"
+                        className="w-28 h-28 object-cover rounded-full shadow-lg group-hover:shadow-xl transition-all duration-300 mx-auto"
                       />
-                      <div className="absolute inset-0 rounded-xl bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                      <div className="absolute w-28 h-28 rounded-full bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                     </div>
                     <h4 className="font-bold text-brown-900 text-center text-sm group-hover:text-yellow-700 transition-colors duration-300">{rudraksha.name}</h4>
                   </div>
@@ -611,13 +624,13 @@ export default function Home() {
               ].map((bracelet, index) => (
                 <div key={index} className="flex-shrink-0 w-40">
                   <div className="group rounded-2xl p-4 bg-white/95 backdrop-blur-sm shadow-deep hover:shadow-deep-hover transition-all duration-500 hover:scale-110 hover:-translate-y-2">
-                    <div className="relative mb-4">
+                    <div className="relative mb-4 flex items-center justify-center">
                       <img
                         src={bracelet.image}
                         alt={bracelet.name}
-                        className="w-full h-28 object-cover rounded-xl shadow-lg group-hover:shadow-xl transition-all duration-300"
+                        className="w-28 h-28 object-cover rounded-full shadow-lg group-hover:shadow-xl transition-all duration-300 mx-auto"
                       />
-                      <div className="absolute inset-0 rounded-xl bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                      <div className="absolute w-28 h-28 rounded-full bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                     </div>
                     <h4 className="font-bold text-brown-900 text-center text-sm group-hover:text-yellow-700 transition-colors duration-300">{bracelet.name}</h4>
                   </div>
@@ -717,7 +730,7 @@ export default function Home() {
                 <img
                   src={product.image}
                   alt={product.name}
-                  className="w-full h-32 object-cover rounded-lg"
+                  className="w-full h-32 object-cover rounded-2xl"
                 />
                 <div className="absolute top-2 left-2 bg-red-500 text-white text-xs px-2 py-1 rounded-full">
                   {product.discount}

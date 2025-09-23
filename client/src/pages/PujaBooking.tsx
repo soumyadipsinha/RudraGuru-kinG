@@ -1,6 +1,10 @@
 import { useState } from 'react';
-import { Calendar, Clock, MapPin, Phone, User, Mail, Star, ChevronDown, Check } from 'lucide-react';
+import { Calendar as CalendarIcon, Clock, MapPin, Phone, User, Mail, Star, ChevronDown, Check } from 'lucide-react';
 import { Button } from '../components/ui/button';
+import { Popover, PopoverTrigger, PopoverContent } from '../components/ui/popover';
+import { Calendar } from '../components/ui/calendar';
+import { Label } from '../components/ui/label';
+import { Input } from '../components/ui/input';
 
 interface Puja {
   id: number;
@@ -34,7 +38,7 @@ const pujas: Puja[] = [
     duration: "1-2 hours",
     price: 1100,
     benefits: ["Obstacle Removal", "Success Achievement", "Wisdom Enhancement", "Auspiciousness"],
-    image: "/assets/serviceLogo.png",
+    image: "/assets/give  me ganesh puja picture by panditji.jpg",
     category: "Regular Puja"
   },
   {
@@ -45,7 +49,7 @@ const pujas: Puja[] = [
     duration: "2-3 hours",
     price: 2100,
     benefits: ["Wish Fulfillment", "Prosperity", "Family Happiness", "Religious Merit"],
-    image: "/assets/serviceLogo.png",
+    image: "/assets/satyanarayan puja with panditji.jpg",
     category: "Vrat Puja"
   },
   {
@@ -56,7 +60,7 @@ const pujas: Puja[] = [
     duration: "1-2 hours",
     price: 1501,
     benefits: ["Wealth Gain", "Prosperity", "Business Growth", "Home Peace"],
-    image: "/assets/serviceLogo.png",
+    image: "/assets/give me lakshmi puja pic with pandit ji.jpg",
     category: "Regular Puja"
   },
   {
@@ -67,7 +71,7 @@ const pujas: Puja[] = [
     duration: "2-3 hours",
     price: 2501,
     benefits: ["Power Gain", "Protection", "Liberation from Evil", "Victory Achievement"],
-    image: "/assets/serviceLogo.png",
+    image: "/assets/give me durga puja pic from pandit ji.jpg",
     category: "Goddess Puja"
   },
   {
@@ -78,7 +82,7 @@ const pujas: Puja[] = [
     duration: "1-2 hours",
     price: 1801,
     benefits: ["Spiritual Advancement", "Mental Peace", "Well-being", "Path to Salvation"],
-    image: "/assets/serviceLogo.png",
+    image: "/assets/give me shivratri pic with panditji.jpg",
     category: "Regular Puja"
   },
   {
@@ -89,7 +93,7 @@ const pujas: Puja[] = [
     duration: "1 hour",
     price: 1001,
     benefits: ["Strength Enhancement", "Courage", "Devotion", "Problem Resolution"],
-    image: "/assets/serviceLogo.png",
+    image: "/assets/hanuman puja pic with panditji.jpg",
     category: "Regular Puja"
   },
   {
@@ -100,7 +104,7 @@ const pujas: Puja[] = [
     duration: "2-3 hours",
     price: 3501,
     benefits: ["Planetary Defect Removal", "Good Fortune", "Health Benefits", "Career Advancement"],
-    image: "/assets/serviceLogo.png",
+    image: "/assets/give me nabagrahaa puja pic with panditji.jpg",
     category: "Special Puja"
   },
   {
@@ -122,7 +126,7 @@ const pujas: Puja[] = [
     duration: "3-4 hours",
     price: 5101,
     benefits: ["Sin Destruction", "Salvation Achievement", "Health Benefits", "Spiritual Purification"],
-    image: "/assets/serviceLogo.png",
+    image: "/assets/rudravishek pic with panditji.jpg",
     category: "Special Puja"
   },
   {
@@ -133,7 +137,7 @@ const pujas: Puja[] = [
     duration: "2-3 hours",
     price: 3001,
     benefits: ["Home Purification", "Vastu Defect Removal", "Prosperity", "Auspicious Beginning"],
-    image: "/assets/serviceLogo.png",
+    image: "/assets/give me grihaprabesh puja pic.jpg",
     category: "Ritual Puja"
   },
   {
@@ -144,7 +148,7 @@ const pujas: Puja[] = [
     duration: "3-4 hours",
     price: 4001,
     benefits: ["Vastu Defect Removal", "Peace", "Prosperity", "Positive Energy"],
-    image: "/assets/serviceLogo.png",
+    image: "/assets/give me vastu puja pic with panditji.jpg",
     category: "Special Puja"
   },
   {
@@ -288,7 +292,7 @@ const PujaBooking = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div className="flex justify-between items-center mb-8">
           {[
-            { step: 1, title: "Choose Puja", icon: <Calendar className="w-5 h-5" /> },
+            { step: 1, title: "Choose Puja", icon: <CalendarIcon className="w-5 h-5" /> },
             { step: 2, title: "Select Pandit", icon: <User className="w-5 h-5" /> },
             { step: 3, title: "Fill Details", icon: <Mail className="w-5 h-5" /> },
             { step: 4, title: "Complete Booking", icon: <Check className="w-5 h-5" /> }
@@ -346,9 +350,9 @@ const PujaBooking = () => {
                 {filteredPujas.map((puja) => (
                   <div
                     key={puja.id}
-                    onClick={() => handlePujaSelect(puja)}
-                    className="bg-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 cursor-pointer border border-red-100 hover:border-red-300"
+                    className="bg-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 border border-red-100 hover:border-red-300"
                   >
+                    <img src={puja.image} alt={puja.name} className="w-full h-40 object-cover rounded-t-xl" />
                     <div className="p-6">
                       <div className="flex justify-between items-start mb-4">
                         <div>
@@ -379,6 +383,13 @@ const PujaBooking = () => {
                             </span>
                           ))}
                         </div>
+                      </div>
+
+                      <div className="mt-5 flex gap-3">
+                        <Button className="bg-red-600 hover:bg-red-700 text-white" onClick={() => handlePujaSelect(puja)}>
+                          View Details
+                        </Button>
+                        <QuickBook />
                       </div>
                     </div>
                   </div>
@@ -683,3 +694,52 @@ const PujaBooking = () => {
 };
 
 export default PujaBooking;
+
+function QuickBook() {
+  const [open, setOpen] = useState(false);
+  const [date, setDate] = useState<Date | undefined>(undefined);
+  const [time, setTime] = useState<string>("10:30:00");
+
+  return (
+    <Popover open={open} onOpenChange={setOpen}>
+      <PopoverTrigger asChild>
+        <Button variant="outline" className="whitespace-nowrap">
+          Quick Book
+        </Button>
+      </PopoverTrigger>
+      <PopoverContent className="w-auto overflow-hidden p-4" align="end">
+        <div className="flex gap-4">
+          <div className="flex flex-col gap-3">
+            <Label htmlFor="qb-date" className="px-1">Date</Label>
+            <Calendar
+              mode="single"
+              selected={date}
+              captionLayout="dropdown"
+              onSelect={(d) => setDate(d)}
+            />
+          </div>
+          <div className="flex flex-col gap-3">
+            <Label htmlFor="qb-time" className="px-1">Time</Label>
+            <Input
+              type="time"
+              id="qb-time"
+              step="60"
+              value={time}
+              onChange={(e) => setTime(e.target.value)}
+              className="bg-background"
+            />
+            <Button
+              className="mt-auto"
+              onClick={() => {
+                setOpen(false);
+                alert(`Puja booked on ${date ? date.toLocaleDateString() : "[select date]"} at ${time}`);
+              }}
+            >
+              Confirm
+            </Button>
+          </div>
+        </div>
+      </PopoverContent>
+    </Popover>
+  );
+}

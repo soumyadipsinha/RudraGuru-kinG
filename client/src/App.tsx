@@ -38,6 +38,8 @@ import AdminDashboard from "./pages/admin/AdminDashboard";
 import AdminAstrologers from "./pages/admin/AdminAstrologers";
 import AdminProducts from "./pages/admin/AdminProducts";
 import AdminNotifications from "./pages/admin/AdminNotifications";
+import AdminPoojas from "./pages/admin/AdminPoojas";
+import Poojas from "./pages/Poojas";
 import WeeklyHoroscope from "./pages/WeeklyHoroscope";
 import MonthlyHoroscope from "./pages/MonthlyHoroscope";
 import YearlyHoroscope from "./pages/YearlyHoroscope";
@@ -89,6 +91,7 @@ const App = () => {
           <Route path="/calculators/mangal-dosha" element={<RequireAuth><MangalDoshaCalculator/></RequireAuth>} />
           <Route path="/calculators/lucky-name-number" element={<RequireAuth><LuckyNameNumberCalculator/></RequireAuth>} />
           <Route path="/puja-booking" element={<RequireAuth><PujaBooking/></RequireAuth>} />
+          <Route path="/poojas" element={<Poojas/>} />
         </Route>
 
         {/* Admin Routes */}
@@ -98,6 +101,7 @@ const App = () => {
           <Route path="astrologers" element={<AdminAstrologers/>} />
           <Route path="products" element={<AdminProducts/>} />
           <Route path="notifications" element={<AdminNotifications/>} />
+          <Route path="poojas" element={<AdminPoojas/>} />
         </Route>
 
         {/* Astrologer Routes */}
