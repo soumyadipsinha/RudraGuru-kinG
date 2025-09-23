@@ -1124,6 +1124,7 @@ export default function Store() {
   const [showFilters, setShowFilters] = useState(false);
   const [cart, setCart] = useState<CartItem[]>([]);
   const [showCart, setShowCart] = useState(false);
+  const [isCartPage, setIsCartPage] = useState(false);
   const [wishlist, setWishlist] = useState<number[]>([]);
   const [previewProduct, setPreviewProduct] = useState<any | null>(null);
   const [previewType, setPreviewType] = useState<'image' | 'video'>('image');
@@ -1217,6 +1218,109 @@ export default function Store() {
     }, 0);
   };
 
+  const getTaxAmount = (subtotal: number) => {
+    const taxRate = 0.18; // 18% GST
+    return Math.round(subtotal * taxRate);
+  };
+
+  // Render Full Page Cart when toggled
+  if (isCartPage) {
+    const subtotal = getTotalPrice();
+    const shipping = 0;
+    const tax = getTaxAmount(subtotal);
+    const total = subtotal + shipping + tax;
+
+    return (
+      <div className="min-h-screen bg-transparent">
+        <div className="bg-white shadow-sm border-b">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 pt-20">
+            <div className="flex items-center justify-between">
+              <h1 className="text-2xl sm:text-3xl font-bold text-gray-900">Your Shopping Cart</h1>
+              <div className="flex items-center gap-3">
+                <Link to="#" onClick={(e)=>{e.preventDefault(); setIsCartPage(false);}} className="text-sm text-gray-600 hover:text-yellow-600">Continue Shopping</Link>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+          {cart.length === 0 ? (
+            <div className="text-center py-16 bg-white rounded-lg border">
+              <ShoppingCart className="w-16 h-16 text-gray-300 mx-auto mb-4" />
+              <h2 className="text-xl font-semibold mb-2">Your cart is empty</h2>
+              <p className="text-gray-600 mb-6">Add items to proceed to checkout.</p>
+              <button onClick={()=>setIsCartPage(false)} className="px-4 py-2 rounded-lg border text-brown-900 hover:bg-gray-50">Browse Products</button>
+            </div>
+          ) : (
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+              {/* Left: Cart Items */}
+              <div className="lg:col-span-2 space-y-4">
+                {cart.map(item => {
+                  const product = products.find(p => p.id === item.id);
+                  if (!product) return null;
+                  const lineTotal = product.price * item.quantity;
+                  return (
+                    <div key={item.id} className="bg-white border rounded-lg p-4 flex gap-4">
+                      <img src={product.image} alt={product.name} className="w-24 h-24 object-cover rounded" />
+                      <div className="flex-1">
+                        <div className="flex items-start justify-between gap-3">
+                          <div>
+                            <h3 className="font-semibold text-gray-900 line-clamp-2">{product.name}</h3>
+                            <p className="text-sm text-gray-600 mt-1">₹{product.price.toLocaleString()} each</p>
+                          </div>
+                          <button onClick={()=>removeFromCart(item.id)} className="text-red-500 hover:text-red-700 p-1"><X className="w-4 h-4"/></button>
+                        </div>
+                        <div className="mt-3 flex items-center justify-between">
+                          <div className="flex items-center gap-2">
+                            <button onClick={()=>updateQuantity(item.id, item.quantity - 1)} className="p-1 rounded bg-gray-100 hover:bg-gray-200"><Minus className="w-4 h-4"/></button>
+                            <span className="px-3 py-1 bg-yellow-100 text-yellow-800 rounded-full text-sm font-medium">{item.quantity}</span>
+                            <button onClick={()=>updateQuantity(item.id, item.quantity + 1)} className="p-1 rounded bg-gray-100 hover:bg-gray-200"><Plus className="w-4 h-4"/></button>
+                          </div>
+                          <div className="text-right">
+                            <span className="text-sm text-gray-600">Total</span>
+                            <div className="text-base font-semibold">₹{lineTotal.toLocaleString()}</div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+
+              {/* Right: Order Summary */}
+              <div className="lg:col-span-1">
+                <div className="bg-white border rounded-lg p-6 sticky top-24">
+                  <h2 className="text-lg font-semibold mb-4">Order Summary</h2>
+                  <div className="space-y-3 text-sm">
+                    <div className="flex justify-between">
+                      <span className="text-gray-600">Items ({getTotalCartItems()})</span>
+                      <span className="font-medium">₹{subtotal.toLocaleString()}</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-gray-600">Shipping</span>
+                      <span className="font-medium text-green-600">Free</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-gray-600">Tax</span>
+                      <span className="font-medium">₹{tax.toLocaleString()}</span>
+                    </div>
+                    <div className="border-t pt-3 flex justify-between text-base">
+                      <span className="font-semibold">Total</span>
+                      <span className="font-bold">₹{total.toLocaleString()}</span>
+                    </div>
+                  </div>
+                  <Link to="/checkout" className="block mt-6">
+                    <Button className="w-full bg-yellow-500 hover:bg-yellow-600 text-white">Proceed to Checkout</Button>
+                  </Link>
+                </div>
+              </div>
+            </div>
+          )}
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="min-h-screen bg-transparent">
       {/* Header */}
@@ -1229,7 +1333,7 @@ export default function Store() {
             </div>
             <div className="flex items-center gap-4">
               <button
-                onClick={() => setShowCart(true)}
+                onClick={() => setIsCartPage(true)}
                 className="relative p-2 text-gray-600 hover:text-yellow-600 transition-colors"
               >
                 <ShoppingCart className="w-6 h-6" />
