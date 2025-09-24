@@ -1,6 +1,7 @@
-import { Link } from "react-router-dom";
-import { useEffect, useRef } from "react";
-import { MessageSquare, PhoneCall, ShoppingBag, Sparkles, Gem, ShieldCheck, Stars, ArrowRight, Video, Clock3, FileText, Star } from "lucide-react";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import { products as catalog } from "../lib/products";
+import { useEffect, useRef, useState } from "react";
+import { MessageSquare, PhoneCall, ShoppingBag, Sparkles, Gem, ShieldCheck, Stars, ArrowRight, ArrowLeft, Video, Clock3, FileText, Star } from "lucide-react";
 import { ASTROLOGERS } from "../data/astrologers";
 // Images are served from Vite public folder
 import { Swiper, SwiperSlide } from 'swiper/react';
@@ -44,9 +45,92 @@ const ZODIAC_SVG_MAP: Record<string, string> = {
 const getZodiacAsset = (sign: string) => ZODIAC_SVG_MAP[sign] || `/assets/${sign.toLowerCase()}.svg`;
 
 export default function Home() {
+  const location = useLocation();
+  const navigate = useNavigate();
   const gemstonesRef = useRef<HTMLDivElement>(null);
   const rudrakshaRef = useRef<HTMLDivElement>(null);
   const braceletsRef = useRef<HTMLDivElement>(null);
+  const [previewItem, setPreviewItem] = useState<{ name: string; image: string } | null>(null);
+  
+  // Resolve a catalog product id for a given preview item name
+  const resolveProductId = (name: string | undefined | null) => {
+    if (!name) return undefined;
+    const n = name.toLowerCase();
+    // Common keyword mappings from Home preview names → product names
+    const keyword =
+      n.includes('yellow sapphire') ? 'yellow sapphire' :
+      n.includes('blue sapphire') ? 'blue sapphire' :
+      n.includes('ruby') ? 'ruby' :
+      n.includes("emerald") ? 'emerald' :
+      n.includes('red coral') ? 'red coral' :
+      n.includes("hessonite") ? 'hessonite' :
+      n.includes("cat's eye") || n.includes('cat eye') ? "cat's eye" :
+      n.includes('opal') ? 'opal' :
+      n.includes('5 mukhi') ? '5 mukhi' :
+      n.includes('7 chakra') ? '7 chakra' :
+      n.includes('lava') ? 'lava' :
+      n.includes('agate') ? 'agate' :
+      n.includes('obsidian') ? 'obsidian' :
+      n.includes('turquoise') ? 'turquoise' :
+      n.includes('opalite') ? 'opalite' :
+      undefined;
+
+    if (!keyword) return undefined;
+    const match = catalog.find(p => p.name.toLowerCase().includes(keyword));
+    return match?.id;
+  };
+
+  const renderStars = (rating: number, idSeed: string) => {
+    const fullStars = Math.floor(rating);
+    const hasHalf = rating - fullStars >= 0.5;
+    const total = 5;
+    const emptyStars = total - fullStars - (hasHalf ? 1 : 0);
+    const clipId = `starClip-${idSeed}`;
+
+    const StarSVG = (
+      <svg viewBox="0 0 24 24" width="16" height="16" className="inline-block">
+        <path fill="currentColor" d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
+      </svg>
+    );
+
+    const FullStar = () => (
+      <span className="text-yellow-500" aria-hidden>
+        {StarSVG}
+      </span>
+    );
+
+    const EmptyStar = () => (
+      <span className="text-yellow-300" aria-hidden>
+        {StarSVG}
+      </span>
+    );
+
+    const HalfStar = () => (
+      <span className="relative inline-block" aria-hidden>
+        <svg viewBox="0 0 24 24" width="16" height="16" className="block">
+          <defs>
+            <clipPath id={clipId}>
+              <rect x="0" y="0" width="12" height="24" />
+            </clipPath>
+          </defs>
+          <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" fill="currentColor" className="text-yellow-300" />
+          <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" fill="currentColor" className="text-yellow-500" clipPath={`url(#${clipId})`} />
+        </svg>
+      </span>
+    );
+
+    return (
+      <div className="flex items-center gap-0.5" aria-label={`${rating} out of 5 stars`} title={`${rating} out of 5 stars`}>
+        {Array.from({ length: fullStars }).map((_, i) => (
+          <FullStar key={`full-${idSeed}-${i}`} />
+        ))}
+        {hasHalf && <HalfStar />}
+        {Array.from({ length: emptyStars }).map((_, i) => (
+          <EmptyStar key={`empty-${idSeed}-${i}`} />
+        ))}
+      </div>
+    );
+  };
 
   useEffect(() => {
     const handleWheel = (e: WheelEvent, container: HTMLDivElement) => {
@@ -56,18 +140,65 @@ export default function Home() {
       }
     };
 
+    const enableDragScroll = (container: HTMLDivElement) => {
+      let isDragging = false;
+      let startX = 0;
+      let startScrollLeft = 0;
+
+      const onMouseDown = (e: MouseEvent) => {
+        isDragging = true;
+        startX = e.pageX - container.offsetLeft;
+        startScrollLeft = container.scrollLeft;
+        container.classList.add('cursor-grabbing');
+      };
+
+      const onMouseLeave = () => {
+        isDragging = false;
+        container.classList.remove('cursor-grabbing');
+      };
+
+      const onMouseUp = () => {
+        isDragging = false;
+        container.classList.remove('cursor-grabbing');
+      };
+
+      const onMouseMove = (e: MouseEvent) => {
+        if (!isDragging) return;
+        e.preventDefault();
+        const x = e.pageX - container.offsetLeft;
+        const walk = (x - startX) * 1; // drag speed multiplier
+        container.scrollLeft = startScrollLeft - walk;
+      };
+
+      container.addEventListener('mousedown', onMouseDown);
+      container.addEventListener('mouseleave', onMouseLeave);
+      container.addEventListener('mouseup', onMouseUp);
+      container.addEventListener('mousemove', onMouseMove);
+
+      return () => {
+        container.removeEventListener('mousedown', onMouseDown);
+        container.removeEventListener('mouseleave', onMouseLeave);
+        container.removeEventListener('mouseup', onMouseUp);
+        container.removeEventListener('mousemove', onMouseMove);
+      };
+    };
+
     const gemstonesContainer = gemstonesRef.current;
     const rudrakshaContainer = rudrakshaRef.current;
     const braceletsContainer = braceletsRef.current;
 
+    let cleanupDragFns: Array<() => void> = [];
     if (gemstonesContainer) {
       gemstonesContainer.addEventListener('wheel', (e) => handleWheel(e, gemstonesContainer), { passive: false });
+      cleanupDragFns.push(enableDragScroll(gemstonesContainer));
     }
     if (rudrakshaContainer) {
       rudrakshaContainer.addEventListener('wheel', (e) => handleWheel(e, rudrakshaContainer), { passive: false });
+      cleanupDragFns.push(enableDragScroll(rudrakshaContainer));
     }
     if (braceletsContainer) {
       braceletsContainer.addEventListener('wheel', (e) => handleWheel(e, braceletsContainer), { passive: false });
+      cleanupDragFns.push(enableDragScroll(braceletsContainer));
     }
 
     return () => {
@@ -80,8 +211,51 @@ export default function Home() {
       if (braceletsContainer) {
         braceletsContainer.removeEventListener('wheel', (e) => handleWheel(e, braceletsContainer));
       }
+      cleanupDragFns.forEach((fn) => fn && fn());
     };
   }, []);
+
+  // Open preview from URL (?preview=Item%20Name)
+  useEffect(() => {
+    const params = new URLSearchParams(location.search);
+    const previewName = params.get('preview');
+    if (!previewName) return;
+
+    // Known items across sections (keep in sync with render lists)
+    const gemstones = [
+      { name: "Blue Sapphire", image: "/assets/blueSapphire.jpg" },
+      { name: "Yellow Sapphire", image: "/assets/sapphire-yellow.png" },
+      { name: "Emerald", image: "/assets/emerald.webp" },
+      { name: "Ruby", image: "/assets/ruby.png" },
+      { name: "Diamond", image: "/assets/heera.png" },
+      { name: "Red Coral", image: "/assets/redCoral.png" },
+      { name: "Cat's Eye", image: "/assets/catEye.png" },
+      { name: "Hessonite", image: "/assets/hessonite.png" },
+      { name: "Opal", image: "/assets/opal.png" },
+      { name: "Turquoise", image: "/assets/turquoise.png" },
+    ];
+    const rudrakshas = [
+      { name: "5 Mukhi Rudraksha", image: "/assets/5mukhi.webp" },
+      { name: "10 Mukhi Rudraksha", image: "/assets/10mukh2.jpg" },
+      { name: "Gauri Shankar", image: "/assets/GouriShankar2.jpg" },
+      { name: "Rudraksha Mala", image: "/assets/5mukhisilverrudrakhshamala.webp" },
+      { name: "Crystal Rudraksha", image: "/assets/rudrakhsacrystal.webp" },
+      { name: "Mini Crystal Tree", image: "/assets/Rudraksha Mini Crystal Tree.jpg" },
+      { name: "Original 5 Mukhi", image: "/assets/Original 5 Mukhi Rudraksha Mala 108+1 Beads (Lab Certified) Wood Necklace.jpg" },
+    ];
+    const bracelets = [
+      { name: "7 Chakra Bracelet", image: "/assets/7chakra.webp" },
+      { name: "Lava Stone Bracelet", image: "/assets/7chakralava.webp" },
+      { name: "Agate Bracelet", image: "/assets/7charaagate.webp" },
+      { name: "Pirate Bracelet", image: "/assets/piratebracelate.jpg" },
+      { name: "Premium Bracelet", image: "/assets/bracelate1.jpg" },
+    ];
+    const all = [...gemstones, ...rudrakshas, ...bracelets];
+    const found = all.find(x => x.name.toLowerCase() === previewName.toLowerCase());
+    if (found) {
+      setPreviewItem(found);
+    }
+  }, [location.search]);
 
   // Auto-scroll functionality
   useEffect(() => {
@@ -533,7 +707,7 @@ export default function Home() {
                 { name: "Turquoise", image: "/assets/turquoise.png" }
               ].map((gem, index) => (
                 <div key={index} className="flex-shrink-0 w-40">
-                  <div className="group rounded-2xl p-4 bg-white/95 backdrop-blur-sm shadow-deep hover:shadow-deep-hover transition-all duration-500 hover:scale-110 hover:-translate-y-2">
+                  <button type="button" onClick={() => { setPreviewItem(gem); navigate(`?preview=${encodeURIComponent(gem.name)}`); }} className="w-full text-left group rounded-2xl p-4 bg-white/95 backdrop-blur-sm shadow-deep hover:shadow-deep-hover transition-all duration-500 hover:scale-110 hover:-translate-y-2 cursor-pointer">
                     <div className="relative mb-4 flex items-center justify-center">
                       <img
                         src={gem.image}
@@ -543,10 +717,29 @@ export default function Home() {
                       <div className="absolute w-28 h-28 rounded-full bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                     </div>
                     <h4 className="font-bold text-brown-900 text-center text-sm group-hover:text-yellow-700 transition-colors duration-300">{gem.name}</h4>
-                  </div>
+                  </button>
                 </div>
               ))}
             </div>
+            {/* Scroll Controls */}
+            <button
+              aria-label="Scroll left"
+              type="button"
+              onMouseDown={(e) => e.preventDefault()}
+              onClick={() => gemstonesRef.current && gemstonesRef.current.scrollBy({ left: -300, behavior: 'smooth' })}
+              className="hidden sm:flex absolute left-2 top-1/2 -translate-y-1/2 z-20 h-8 w-8 items-center justify-center rounded-full bg-white/95 shadow-lg hover:bg-white active:scale-95"
+            >
+              <ArrowLeft className="w-4 h-4" />
+            </button>
+            <button
+              aria-label="Scroll right"
+              type="button"
+              onMouseDown={(e) => e.preventDefault()}
+              onClick={() => gemstonesRef.current && gemstonesRef.current.scrollBy({ left: 300, behavior: 'smooth' })}
+              className="hidden sm:flex absolute right-2 top-1/2 -translate-y-1/2 z-20 h-8 w-8 items-center justify-center rounded-full bg-white/95 shadow-lg hover:bg-white active:scale-95"
+            >
+              <ArrowRight className="w-4 h-4" />
+            </button>
           </div>
         </div>
 
@@ -580,7 +773,7 @@ export default function Home() {
                 { name: "Original 5 Mukhi", image: "/assets/Original 5 Mukhi Rudraksha Mala 108+1 Beads (Lab Certified) Wood Necklace.jpg" }
               ].map((rudraksha, index) => (
                 <div key={index} className="flex-shrink-0 w-40">
-                  <div className="group rounded-2xl p-4 bg-white/95 backdrop-blur-sm shadow-deep hover:shadow-deep-hover transition-all duration-500 hover:scale-110 hover:-translate-y-2">
+                  <button type="button" onClick={() => { setPreviewItem(rudraksha); navigate(`?preview=${encodeURIComponent(rudraksha.name)}`); }} className="w-full text-left group rounded-2xl p-4 bg-white/95 backdrop-blur-sm shadow-deep hover:shadow-deep-hover transition-all duration-500 hover:scale-110 hover:-translate-y-2 cursor-pointer">
                     <div className="relative mb-4 flex items-center justify-center">
                       <img
                         src={rudraksha.image}
@@ -590,10 +783,29 @@ export default function Home() {
                       <div className="absolute w-28 h-28 rounded-full bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                     </div>
                     <h4 className="font-bold text-brown-900 text-center text-sm group-hover:text-yellow-700 transition-colors duration-300">{rudraksha.name}</h4>
-                  </div>
+                  </button>
                 </div>
               ))}
             </div>
+            {/* Scroll Controls */}
+            <button
+              aria-label="Scroll left"
+              type="button"
+              onMouseDown={(e) => e.preventDefault()}
+              onClick={() => rudrakshaRef.current && rudrakshaRef.current.scrollBy({ left: -300, behavior: 'smooth' })}
+              className="hidden sm:flex absolute left-2 top-1/2 -translate-y-1/2 z-20 h-8 w-8 items-center justify-center rounded-full bg-white/95 shadow-lg hover:bg-white active:scale-95"
+            >
+              <ArrowLeft className="w-4 h-4" />
+            </button>
+            <button
+              aria-label="Scroll right"
+              type="button"
+              onMouseDown={(e) => e.preventDefault()}
+              onClick={() => rudrakshaRef.current && rudrakshaRef.current.scrollBy({ left: 300, behavior: 'smooth' })}
+              className="hidden sm:flex absolute right-2 top-1/2 -translate-y-1/2 z-20 h-8 w-8 items-center justify-center rounded-full bg-white/95 shadow-lg hover:bg-white active:scale-95"
+            >
+              <ArrowRight className="w-4 h-4" />
+            </button>
           </div>
         </div>
 
@@ -616,14 +828,14 @@ export default function Home() {
                 { name: "Pirate Bracelet", image: "/assets/piratebracelate.jpg" },
                 { name: "Premium Bracelet", image: "/assets/bracelate1.jpg" },
                 // Duplicate for seamless loop
-                { name: "7 Chakra Bracelet", image: "/assets/7chakra.webp" },
-                { name: "Lava Stone Bracelet", image: "/assets/7chakralava.webp" },
-                { name: "Agate Bracelet", image: "/assets/7charaagate.webp" },
+               
+              
+            
                 { name: "Pirate Bracelet", image: "/assets/piratebracelate.jpg" },
                 { name: "Premium Bracelet", image: "/assets/bracelate1.jpg" }
               ].map((bracelet, index) => (
                 <div key={index} className="flex-shrink-0 w-40">
-                  <div className="group rounded-2xl p-4 bg-white/95 backdrop-blur-sm shadow-deep hover:shadow-deep-hover transition-all duration-500 hover:scale-110 hover:-translate-y-2">
+                  <button type="button" onClick={() => { setPreviewItem(bracelet); navigate(`?preview=${encodeURIComponent(bracelet.name)}`); }} className="w-full text-left group rounded-2xl p-4 bg-white/95 backdrop-blur-sm shadow-deep hover:shadow-deep-hover transition-all duration-500 hover:scale-110 hover:-translate-y-2 cursor-pointer">
                     <div className="relative mb-4 flex items-center justify-center">
                       <img
                         src={bracelet.image}
@@ -633,13 +845,62 @@ export default function Home() {
                       <div className="absolute w-28 h-28 rounded-full bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                     </div>
                     <h4 className="font-bold text-brown-900 text-center text-sm group-hover:text-yellow-700 transition-colors duration-300">{bracelet.name}</h4>
-                  </div>
+                  </button>
                 </div>
               ))}
             </div>
+            {/* Scroll Controls */}
+            <button
+              aria-label="Scroll left"
+              type="button"
+              onMouseDown={(e) => e.preventDefault()}
+              onClick={() => braceletsRef.current && braceletsRef.current.scrollBy({ left: -300, behavior: 'smooth' })}
+              className="hidden sm:flex absolute left-2 top-1/2 -translate-y-1/2 z-20 h-8 w-8 items-center justify-center rounded-full bg-white/95 shadow-lg hover:bg-white active:scale-95"
+            >
+              <ArrowLeft className="w-4 h-4" />
+            </button>
+            <button
+              aria-label="Scroll right"
+              type="button"
+              onMouseDown={(e) => e.preventDefault()}
+              onClick={() => braceletsRef.current && braceletsRef.current.scrollBy({ left: 300, behavior: 'smooth' })}
+              className="hidden sm:flex absolute right-2 top-1/2 -translate-y-1/2 z-20 h-8 w-8 items-center justify-center rounded-full bg-white/95 shadow-lg hover:bg-white active:scale-95"
+            >
+              <ArrowRight className="w-4 h-4" />
+            </button>
           </div>
         </div>
       </Section>
+
+      {/* Quick Preview Modal */}
+      {previewItem && (
+        <div className="fixed inset-0 z-[60] flex items-center justify-center">
+          <button aria-label="Close preview" onClick={() => { setPreviewItem(null); navigate(location.pathname, { replace: true }); }} className="absolute inset-0 bg-black/50" />
+          <div className="relative z-[61] w-11/12 max-w-md rounded-2xl bg-white p-6 shadow-deep">
+            <div className="flex items-center gap-4">
+              <img src={previewItem.image} alt={previewItem.name} className="h-20 w-20 rounded-full object-cover border-2 border-yellow-400" />
+              <div>
+                <h3 className="text-xl font-bold text-brown-900">{previewItem.name}</h3>
+                <p className="text-brown-700 text-sm">Explore details and purchase from our store.</p>
+              </div>
+            </div>
+            <div className="mt-4">
+              <img src={previewItem.image} alt={previewItem.name} className="w-full h-56 object-contain rounded-xl bg-yellow-50" />
+            </div>
+             <div className="mt-6 flex gap-2 justify-end">
+              <button onClick={() => { setPreviewItem(null); navigate(location.pathname, { replace: true }); }} className="rounded-lg border border-gray-300 px-3 py-1.5 text-sm text-gray-700 font-semibold hover:bg-gray-50">Close</button>
+              {(() => {
+                const id = resolveProductId(previewItem?.name);
+                const to = id ? `/product/${id}` : `/store?product=${encodeURIComponent(previewItem?.name || '')}`;
+                return (
+                  <Link to={to} className="rounded-lg bg-black/80 px-3 py-1.5 text-sm text-white font-semibold hover:bg-black/70">View Details</Link>
+                );
+              })()}
+              <Link to="/store" className="rounded-lg bg-yellow-500 px-3 py-1.5 text-sm text-brown-900 font-semibold hover:bg-yellow-400">Go to RUDRAGURU Store</Link>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Testimonials */}
       <Section className="py-16">
@@ -648,28 +909,45 @@ export default function Home() {
         </h2>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
           {[
-            { name: "Anita Sharma", city: "Delhi, IN" },
-            { name: "Rohit Verma", city: "Mumbai, IN" },
-            { name: "Sonal Patel", city: "Ahmedabad, IN" },
-          ].map((c, i) => (
+            {
+              name: "Anita Sharma",
+              city: "Delhi, IN",
+              text: "Quality bahut achcha hai James Bond suggest achcha Kiya Hai aur mujhe bahut achcha service mila hai",
+              image: "/assets/testimonial1.jpg",
+              rating: 5,
+            },
+            {
+              name: "Rohit Verma",
+              city: "Mumbai, IN",
+              text: "Astrologer ki service bahut acchi hai jab Bhi mujhe kuchh problem hota hai guidance mila hai, gemstone quality very good",
+              image: "/assets/testimonial2.jpg",
+              rating: 4,
+            },
+            {
+              name: "Soumen Patel",
+              city: "Kolkata, IN",
+              text: "Gemstone ki quality bahut acchi hai Money magnet bracelet bhi Gift me mila hai thank you Rudhra Guru",
+              image: "/assets/testimonial3.jpg",
+              rating: 4.5,
+            },
+          ].map((t) => (
             <div
-              key={c.name}
+              key={t.name}
               className="rounded-2xl p-6 bg-white/90 backdrop-blur-sm shadow-deep hover:shadow-deep-hover transition-all duration-300 hover:-translate-y-2 hover:scale-105 animate-shadow-float"
             >
-              <p className="text-brown-800">
-                “Wonderful insights and accurate guidance. The gemstone
-                recommendation truly helped.”
-              </p>
+              <p className="text-brown-800">“{t.text}”</p>
               <div className="mt-4 flex items-center gap-3">
                 <img
-                  src={`https://randomuser.me/api/portraits/lego/${i + 1}.jpg`}
-                  alt="Client"
+                  src={t.image}
+                  alt={t.name}
                   className="h-10 w-10 rounded-full object-cover"
                 />
                 <div>
-                  <p className="text-sm font-bold text-yellow-700">{c.name}</p>
-                  <p className="text-xs text-brown-700">{c.city}</p>
-                  <div className="flex text-sm"><Star className="w-4 h-4 text-yellow-500 fill-current" /><Star className="w-4 h-4 text-yellow-500 fill-current" /><Star className="w-4 h-4 text-yellow-500 fill-current" /><Star className="w-4 h-4 text-yellow-500 fill-current" /><Star className="w-4 h-4 text-yellow-500 fill-current" /></div>
+                  <p className="text-sm font-bold text-yellow-700">{t.name}</p>
+                  <p className="text-xs text-brown-700">{t.city}</p>
+                  <div className="mt-1">
+                    {renderStars(t.rating, t.name.replace(/\s+/g, "-"))}
+                  </div>
                 </div>
               </div>
             </div>

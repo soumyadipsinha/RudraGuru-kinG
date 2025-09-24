@@ -281,7 +281,10 @@ export default function Services() {
             <div className="mt-5 grid sm:grid-cols-2 gap-4">
               <input className="rounded-md border border-brown-300 p-3" placeholder="Full Name" />
               <input type="date" className="rounded-md border border-brown-300 p-3" />
-              <input type="time" className="rounded-md border border-brown-300 p-3" />
+              <div>
+                <input type="time" className="w-full rounded-md border border-brown-300 p-3" />
+                {/* AM/PM hint appears when filled; wire up if needed */}
+              </div>
               <input className="rounded-md border border-brown-300 p-3" placeholder="Place of Birth" />
             </div>
 

@@ -45,9 +45,20 @@ export default function Kundli() {
   });
   const [isGenerating, setIsGenerating] = useState(false);
   const [kundliGenerated, setKundliGenerated] = useState(false);
+  const [timeHour, setTimeHour] = useState<string>("");
+  const [timeMinute, setTimeMinute] = useState<string>("");
+  const [timeMeridiem, setTimeMeridiem] = useState<'AM' | 'PM' | ''>("");
   const [boy, setBoy] = useState<Person>({ name: "", dateOfBirth: "", timeOfBirth: "", placeOfBirth: "" });
   const [girl, setGirl] = useState<Person>({ name: "", dateOfBirth: "", timeOfBirth: "", placeOfBirth: "" });
   const [score, setScore] = useState<number | null>(null);
+
+  const meridiem = (t: string) => {
+    if (!t) return "";
+    const [hh] = t.split(":");
+    const h = parseInt(hh, 10);
+    if (isNaN(h)) return "";
+    return h >= 12 ? "PM" : "AM";
+  };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
@@ -60,6 +71,14 @@ export default function Kundli() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsGenerating(true);
+
+    // Build 24h time from hour/minute + AM/PM
+    if (timeHour && timeMinute && timeMeridiem) {
+      const h = parseInt(timeHour, 10) % 12 + (timeMeridiem === 'PM' ? 12 : 0);
+      const hh = String(h).padStart(2, '0');
+      const mm = String(parseInt(timeMinute, 10) || 0).padStart(2, '0');
+      setFormData(prev => ({ ...prev, timeOfBirth: `${hh}:${mm}` }));
+    }
     
     // Simulate API call
     await new Promise(resolve => setTimeout(resolve, 3000));
@@ -83,30 +102,113 @@ export default function Kundli() {
     zodiacSign: "Aries",
     moonSign: "Taurus",
     risingSign: "Gemini",
-    planetaryPositions: [
-      { planet: "Sun", sign: "Aries", house: "1st", degree: "15°" },
-      { planet: "Moon", sign: "Taurus", house: "2nd", degree: "8°" },
-      { planet: "Mars", sign: "Leo", house: "5th", degree: "22°" },
-      { planet: "Mercury", sign: "Pisces", house: "12th", degree: "3°" },
-      { planet: "Jupiter", sign: "Sagittarius", house: "9th", degree: "18°" },
-      { planet: "Venus", sign: "Aquarius", house: "11th", degree: "25°" },
-      { planet: "Saturn", sign: "Capricorn", house: "10th", degree: "12°" }
-    ],
-    houses: [
-      { house: "1st House", sign: "Aries", meaning: "Personality, Appearance" },
-      { house: "2nd House", sign: "Taurus", meaning: "Wealth, Family" },
-      { house: "3rd House", sign: "Gemini", meaning: "Communication, Siblings" },
-      { house: "4th House", sign: "Cancer", meaning: "Home, Mother" },
-      { house: "5th House", sign: "Leo", meaning: "Children, Creativity" },
-      { house: "6th House", sign: "Virgo", meaning: "Health, Service" },
-      { house: "7th House", sign: "Libra", meaning: "Marriage, Partnership" },
-      { house: "8th House", sign: "Scorpio", meaning: "Transformation, Occult" },
-      { house: "9th House", sign: "Sagittarius", meaning: "Higher Learning, Philosophy" },
-      { house: "10th House", sign: "Capricorn", meaning: "Career, Father" },
-      { house: "11th House", sign: "Aquarius", meaning: "Friends, Gains" },
-      { house: "12th House", sign: "Pisces", meaning: "Spirituality, Losses" }
-    ]
+    planetaryPositions: [],
+    houses: []
   };
+
+  // Ethiopian calendar formatting (tries Intl Ethiopic calendar, falls back to ISO)
+  const formatEthiopianDate = (isoDate: string) => {
+    if (!isoDate) return "";
+    try {
+      const date = new Date(isoDate);
+      const fmt = new Intl.DateTimeFormat('am-ET-u-ca-ethiopic', {
+        year: 'numeric', month: 'long', day: 'numeric'
+      } as Intl.DateTimeFormatOptions);
+      const out = fmt.format(date);
+      return out;
+    } catch {
+      return isoDate; // fallback
+    }
+  };
+
+  // Gemstone recommendation based on zodiac sign
+  const getGemstoneRecommendation = (sign: string) => {
+    const map: Record<string, { name: string; image: string; desc: string }> = {
+      Aries: { name: 'Red Coral (Moonga)', image: '/assets/redCoral.png', desc: 'Boosts courage and vitality for Mars-ruled Aries.' },
+      Taurus: { name: 'Emerald (Panna)', image: '/assets/emerald.webp', desc: 'Enhances stability, communication, and growth.' },
+      Gemini: { name: 'Emerald (Panna)', image: '/assets/emerald.webp', desc: 'Supports intellect and expression for Mercury-ruled Gemini.' },
+      Cancer: { name: 'Pearl (Moti)', image: '/assets/pearl.jpg', desc: 'Calms emotions and nurtures Moon-ruled natives.' },
+      Leo: { name: 'Ruby (Manik)', image: '/assets/ruby.png', desc: 'Strengthens Sun energy, leadership, and confidence.' },
+      Virgo: { name: 'Emerald (Panna)', image: '/assets/emerald.webp', desc: 'Aids analytical ability and clarity.' },
+      Libra: { name: 'Diamond (Heera)', image: '/assets/heera.png', desc: 'Improves harmony, relationships, and Venus energy.' },
+      Scorpio: { name: 'Red Coral (Moonga)', image: '/assets/redCoral.png', desc: 'Empowers Mars energy and resilience.' },
+      Sagittarius: { name: 'Yellow Sapphire (Pukhraj)', image: '/assets/sapphire-yellow.png', desc: 'Supports wisdom, prosperity, and Jupiter blessings.' },
+      Capricorn: { name: 'Blue Sapphire (Neelam)', image: '/assets/sapphire-blue.png', desc: 'Enhances discipline, focus, and Saturn support.' },
+      Aquarius: { name: 'Blue Sapphire (Neelam)', image: '/assets/sapphire-blue.png', desc: 'Aids innovation, discipline, and Saturn guidance.' },
+      Pisces: { name: 'Yellow Sapphire (Pukhraj)', image: '/assets/sapphire-yellow.png', desc: 'Bolsters spiritual growth and Jupiter energy.' },
+    };
+    return map[sign] || map['Aries'];
+  };
+
+  // Western Sun Sign calculation from birth date
+  const getSunSign = (isoDate: string): string => {
+    if (!isoDate) return "";
+    const d = new Date(isoDate + 'T00:00:00');
+    if (Number.isNaN(d.getTime())) return "";
+    const m = d.getUTCMonth() + 1; // 1-12
+    const day = d.getUTCDate();
+    // Date ranges (inclusive) for Western zodiac (approximate)
+    if ((m === 3 && day >= 21) || (m === 4 && day <= 19)) return "Aries";
+    if ((m === 4 && day >= 20) || (m === 5 && day <= 20)) return "Taurus";
+    if ((m === 5 && day >= 21) || (m === 6 && day <= 20)) return "Gemini";
+    if ((m === 6 && day >= 21) || (m === 7 && day <= 22)) return "Cancer";
+    if ((m === 7 && day >= 23) || (m === 8 && day <= 22)) return "Leo";
+    if ((m === 8 && day >= 23) || (m === 9 && day <= 22)) return "Virgo";
+    if ((m === 9 && day >= 23) || (m === 10 && day <= 22)) return "Libra";
+    if ((m === 10 && day >= 23) || (m === 11 && day <= 21)) return "Scorpio";
+    if ((m === 11 && day >= 22) || (m === 12 && day <= 21)) return "Sagittarius";
+    if ((m === 12 && day >= 22) || (m === 1 && day <= 19)) return "Capricorn";
+    if ((m === 1 && day >= 20) || (m === 2 && day <= 18)) return "Aquarius";
+    return "Pisces"; // (Feb 19–Mar 20)
+  };
+
+  // Map zodiac names to public assets as provided in /assets
+  const ZODIAC_SVG_MAP: Record<string, string> = {
+    Aries: "/assets/areies.svg",
+    Taurus: "/assets/tauras.svg",
+    Gemini: "/assets/gemini.svg",
+    Cancer: "/assets/cancer.svg",
+    Leo: "/assets/leo.svg",
+    Virgo: "/assets/virgo.svg",
+    Libra: "/assets/libra.svg",
+    Scorpio: "/assets/scorpio.svg",
+    Sagittarius: "/assets/sagittarius.svg",
+    Capricorn: "/assets/capricorn.svg",
+    Aquarius: "/assets/aquarius.svg",
+    Pisces: "/assets/pisces.svg",
+  };
+
+  const getZodiacAsset = (sign: string) => ZODIAC_SVG_MAP[sign] || `/assets/${sign.toLowerCase()}.svg`;
+
+  // Title case for location
+  const toTitleCase = (s: string) => s.replace(/\w\S*/g, (txt) => txt.charAt(0).toUpperCase() + txt.slice(1).toLowerCase());
+
+  // Build consistent positions and houses from inputs
+  const sun = getSunSign(formData.dateOfBirth) || kundliData.zodiacSign;
+  const computedHouses = [
+    { house: "1st House", sign: kundliData.risingSign, meaning: "Personality, Appearance" },
+    { house: "2nd House", sign: "Taurus", meaning: "Wealth, Family" },
+    { house: "3rd House", sign: "Gemini", meaning: "Communication, Siblings" },
+    { house: "4th House", sign: "Cancer", meaning: "Home, Mother" },
+    { house: "5th House", sign: "Leo", meaning: "Children, Creativity" },
+    { house: "6th House", sign: "Virgo", meaning: "Health, Service" },
+    { house: "7th House", sign: "Libra", meaning: "Marriage, Partnership" },
+    { house: "8th House", sign: "Scorpio", meaning: "Transformation, Occult" },
+    { house: "9th House", sign: "Sagittarius", meaning: "Higher Learning, Philosophy" },
+    { house: "10th House", sign: "Capricorn", meaning: "Career, Father" },
+    { house: "11th House", sign: "Aquarius", meaning: "Friends, Gains" },
+    { house: "12th House", sign: "Pisces", meaning: "Spirituality, Losses" }
+  ];
+
+  const computedPositions = [
+    { planet: "Sun", sign: sun, house: "—", degree: "" },
+    { planet: "Moon", sign: kundliData.moonSign, house: "—", degree: "" },
+    { planet: "Mars", sign: "Leo", house: "—", degree: "" },
+    { planet: "Mercury", sign: sun, house: "—", degree: "" },
+    { planet: "Jupiter", sign: "Sagittarius", house: "—", degree: "" },
+    { planet: "Venus", sign: "Capricorn", house: "—", degree: "" },
+    { planet: "Saturn", sign: "Aquarius", house: "—", degree: "" }
+  ];
 
   return (
     <main className="relative bg-transparent overflow-hidden">
@@ -204,18 +306,46 @@ export default function Kundli() {
                     />
                   </div>
                   <div>
-                    <label htmlFor="timeOfBirth" className="block text-sm font-medium text-brown-900 mb-2">
+                    <label className="block text-sm font-medium text-brown-900 mb-2">
                       Time of Birth *
                     </label>
-                    <input
-                      type="time"
-                      id="timeOfBirth"
-                      name="timeOfBirth"
-                      value={formData.timeOfBirth}
-                      onChange={handleInputChange}
-                      className="w-full rounded-xl border border-yellow-400 p-3 focus:ring-2 focus:ring-yellow-500 focus:border-transparent"
-                      required
-                    />
+                    <div className="grid grid-cols-[1fr_1fr_auto] gap-2 items-center">
+                      <input
+                        type="number"
+                        inputMode="numeric"
+                        min={1}
+                        max={12}
+                        placeholder="HH"
+                        value={timeHour}
+                        onChange={(e)=>setTimeHour(e.target.value)}
+                        className="w-full rounded-xl border border-yellow-400 p-3 focus:ring-2 focus:ring-yellow-500 focus:border-transparent"
+                        required
+                      />
+                      <input
+                        type="number"
+                        inputMode="numeric"
+                        min={0}
+                        max={59}
+                        placeholder="MM"
+                        value={timeMinute}
+                        onChange={(e)=>setTimeMinute(e.target.value)}
+                        className="w-full rounded-xl border border-yellow-400 p-3 focus:ring-2 focus:ring-yellow-500 focus:border-transparent"
+                        required
+                      />
+                      <select
+                        value={timeMeridiem}
+                        onChange={(e)=>setTimeMeridiem(e.target.value as 'AM'|'PM')}
+                        className="rounded-xl border border-yellow-400 p-3 focus:ring-2 focus:ring-yellow-500 focus:border-transparent"
+                        required
+                      >
+                        <option value="">AM/PM</option>
+                        <option value="AM">AM</option>
+                        <option value="PM">PM</option>
+                      </select>
+                    </div>
+                    {timeHour && timeMinute && timeMeridiem && (
+                      <p className="mt-1 text-xs font-medium text-brown-700">{`${timeHour}:${String(parseInt(timeMinute||'0',10)).padStart(2,'0')} ${timeMeridiem}`}</p>
+                    )}
                   </div>
                 </div>
 
@@ -336,7 +466,13 @@ export default function Kundli() {
                   </div>
                   <div>
                     <label className="block text-sm font-medium text-brown-900 mb-1">Time of Birth *</label>
-                    <input type="time" name="timeOfBirth" value={boy.timeOfBirth} onChange={(e)=>handleMatchingChange('boy',e)} className="w-full rounded-xl bg-white p-3 shadow-sm"/>
+                    <div className="flex gap-2">
+                      <input type="time" name="timeOfBirth" value={boy.timeOfBirth} onChange={(e)=>handleMatchingChange('boy',e)} className="w-full rounded-xl bg-white p-3 shadow-sm"/>
+                      <select className="rounded-xl bg-white p-3 shadow-sm border border-gray-200">
+                        <option>AM</option>
+                        <option>PM</option>
+                      </select>
+                    </div>
                   </div>
                   <div>
                     <label className="block text-sm font-medium text-brown-900 mb-1">Place of Birth *</label>
@@ -359,7 +495,13 @@ export default function Kundli() {
                   </div>
                   <div>
                     <label className="block text-sm font-medium text-brown-900 mb-1">Time of Birth *</label>
-                    <input type="time" name="timeOfBirth" value={girl.timeOfBirth} onChange={(e)=>handleMatchingChange('girl',e)} className="w-full rounded-xl bg-white p-3 shadow-sm"/>
+                    <div className="flex gap-2">
+                      <input type="time" name="timeOfBirth" value={girl.timeOfBirth} onChange={(e)=>handleMatchingChange('girl',e)} className="w-full rounded-xl bg-white p-3 shadow-sm"/>
+                      <select className="rounded-xl bg-white p-3 shadow-sm border border-gray-200">
+                        <option>AM</option>
+                        <option>PM</option>
+                      </select>
+                    </div>
                   </div>
                   <div>
                     <label className="block text-sm font-medium text-brown-900 mb-1">Place of Birth *</label>
@@ -397,9 +539,13 @@ export default function Kundli() {
             {/* Basic Information */}
             <div className="grid gap-6 md:grid-cols-3 mb-8">
               <div className="rounded-2xl bg-white p-6 text-center shadow-deep">
-                <div className="text-3xl mb-2">♈</div>
-                <h3 className="font-bold text-brown-900">Zodiac Sign</h3>
-                <p className="text-brown-600">{kundliData.zodiacSign}</p>
+                {(() => { const sun = getSunSign(formData.dateOfBirth) || kundliData.zodiacSign; return (
+                  <>
+                    <img src={getZodiacAsset(sun)} alt={sun} className="h-16 w-16 mx-auto mb-2 object-contain" />
+                    <h3 className="font-bold text-brown-900">Zodiac Sign</h3>
+                    <p className="text-brown-600">{sun}</p>
+                  </>
+                ); })()}
               </div>
               <div className="rounded-2xl bg-white p-6 text-center shadow-deep">
                 <Moon className="w-8 h-8 text-blue-500 mx-auto mb-2" />
@@ -413,11 +559,28 @@ export default function Kundli() {
               </div>
             </div>
 
+      {/* Birth Details (Ethiopian calendar display) */}
+      <div className="rounded-2xl bg-white p-6 text-center shadow-deep mb-8">
+        <h3 className="font-bold text-brown-900 mb-2">Birth Details (Ethiopian Calendar)</h3>
+              <p className="text-brown-700 text-sm">
+          {formatEthiopianDate(formData.dateOfBirth)} • {formData.placeOfBirth ? toTitleCase(formData.placeOfBirth) : '—'} • {(() => {
+            const [hStr, mStr] = (formData.timeOfBirth||'').split(':');
+            if (!hStr) return '—';
+            const h = parseInt(hStr, 10);
+            const m = parseInt(mStr||'0', 10);
+            const mer = h >= 12 ? 'PM' : 'AM';
+            const hh = ((h % 12) || 12).toString().padStart(2,'0');
+            const mm = m.toString().padStart(2,'0');
+            return `${hh}:${mm} ${mer}`;
+          })()}
+        </p>
+      </div>
+
             {/* Planetary Positions */}
             <div className="rounded-2xl bg-white p-8 mb-8 shadow-deep">
               <h3 className={`text-2xl font-bold mb-6 ${gradHead}`}>Planetary Positions</h3>
               <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-                {kundliData.planetaryPositions.map((planet, index) => (
+                {(computedPositions.length ? computedPositions : kundliData.planetaryPositions).map((planet, index) => (
                   <div key={index} className="p-4 bg-yellow-50 rounded-xl">
                     <div className="flex justify-between items-center">
                       <div>
@@ -435,7 +598,7 @@ export default function Kundli() {
             <div className="rounded-2xl bg-white p-8 mb-8 shadow-deep">
               <h3 className={`text-2xl font-bold mb-6 ${gradHead}`}>Houses Analysis</h3>
               <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-                {kundliData.houses.map((house, index) => (
+                {(computedHouses.length ? computedHouses : kundliData.houses).map((house, index) => (
                   <div key={index} className="p-4 bg-yellow-50 rounded-xl">
                     <h4 className="font-semibold text-brown-900 mb-1">{house.house}</h4>
                     <p className="text-brown-600 text-sm mb-2">{house.sign}</p>
@@ -445,7 +608,20 @@ export default function Kundli() {
               </div>
             </div>
 
-            {/* Actions */}
+      {/* Gemstone Recommendation */}
+      <div className="rounded-2xl bg-white p-6 mb-8 shadow-deep flex items-center gap-4">
+        {(() => { const sun = getSunSign(formData.dateOfBirth) || kundliData.zodiacSign; const rec = getGemstoneRecommendation(sun); return (
+          <>
+            <img src={rec.image} alt={rec.name} className="h-16 w-16 rounded-full object-cover border-2 border-yellow-400" />
+            <div>
+              <h3 className={`text-xl font-bold ${gradHead}`}>Recommended Gemstone: {rec.name}</h3>
+              <p className="text-brown-700 text-sm">{rec.desc}</p>
+            </div>
+          </>
+        ); })()}
+      </div>
+
+      {/* Actions */}
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <button className="px-6 py-3 bg-yellow-500 text-brown-900 rounded-xl font-semibold hover:bg-yellow-400 transition">
                 Download PDF

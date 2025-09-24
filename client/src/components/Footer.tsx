@@ -71,7 +71,7 @@ export default function Footer() {
 
           {/* Right Column - Corporate Info */}
           <div>
-            <h4 className="text-yellow-400 font-semibold mb-4 underline">Corporate Info</h4>
+            <h4 className="text-yellow-400 font-semibold mb-4 underline">Corporate Info & Support</h4>
             <ul className="space-y-2 text-sm">
               <li><Link to="/refund" className="text-gray-300 hover:text-yellow-400">Refund & Cancellation Policy</Link></li>
               <li><Link to="/terms" className="text-gray-300 hover:text-yellow-400">Terms & Conditions</Link></li>

@@ -366,22 +366,34 @@ export default function Schedule() {
                   <option value={editingSlot.day}>{editingSlot.day}</option>
                 </select>
               </div>
-              <div className="grid grid-cols-2 gap-4">
+                <div className="grid grid-cols-2 gap-4">
                 <div>
                   <label className="block text-sm font-medium text-brown-700 mb-1">Start Time</label>
-                  <input
-                    type="time"
-                    defaultValue={editingSlot.startTime}
-                    className="w-full p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500 focus:border-transparent"
-                  />
+                  <div className="flex gap-2">
+                    <input
+                      type="time"
+                      defaultValue={editingSlot.startTime}
+                      className="w-full p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500 focus:border-transparent"
+                    />
+                    <select className="p-2 border border-gray-300 rounded-lg">
+                      <option>AM</option>
+                      <option>PM</option>
+                    </select>
+                  </div>
                 </div>
                 <div>
                   <label className="block text-sm font-medium text-brown-700 mb-1">End Time</label>
-                  <input
-                    type="time"
-                    defaultValue={editingSlot.endTime}
-                    className="w-full p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500 focus:border-transparent"
-                  />
+                  <div className="flex gap-2">
+                    <input
+                      type="time"
+                      defaultValue={editingSlot.endTime}
+                      className="w-full p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500 focus:border-transparent"
+                    />
+                    <select className="p-2 border border-gray-300 rounded-lg">
+                      <option>AM</option>
+                      <option>PM</option>
+                    </select>
+                  </div>
                 </div>
               </div>
               <div>
@@ -428,17 +440,29 @@ export default function Schedule() {
               <div className="grid grid-cols-2 gap-4">
                 <div>
                   <label className="block text-sm font-medium text-brown-700 mb-1">Start Time</label>
+                <div className="flex gap-2">
                   <input
                     type="time"
                     className="w-full p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500 focus:border-transparent"
                   />
+                  <select className="p-2 border border-gray-300 rounded-lg">
+                    <option>AM</option>
+                    <option>PM</option>
+                  </select>
+                </div>
                 </div>
                 <div>
                   <label className="block text-sm font-medium text-brown-700 mb-1">End Time</label>
+                <div className="flex gap-2">
                   <input
                     type="time"
                     className="w-full p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500 focus:border-transparent"
                   />
+                  <select className="p-2 border border-gray-300 rounded-lg">
+                    <option>AM</option>
+                    <option>PM</option>
+                  </select>
+                </div>
                 </div>
               </div>
               <div>

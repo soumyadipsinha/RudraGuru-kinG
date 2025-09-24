@@ -112,7 +112,7 @@ export default function Navbar() {
       ].join(" ")}
     >
       {/* Top Row - AstroTalk Style */}
-      <nav className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <nav className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-7">
         <div className="h-16 sm:h-18 flex items-center justify-between">
           {/* Logo */}
           <Link to="/" className="flex items-center group">

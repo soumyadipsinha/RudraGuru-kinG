@@ -69,6 +69,9 @@ export default function KundliMatching() {
                 <div>
                   <label className="block text-sm font-medium text-brown-900 mb-1">Time of Birth *</label>
                   <input type="time" name="timeOfBirth" value={boy.timeOfBirth} onChange={(e)=>handleChange('boy',e)} className="w-full rounded-xl border border-yellow-400 p-3"/>
+                  {boy.timeOfBirth && (
+                    <p className="mt-1 text-xs font-medium text-brown-700">{parseInt(boy.timeOfBirth.split(':')[0]) >= 12 ? 'PM' : 'AM'}</p>
+                  )}
                 </div>
                 <div>
                   <label className="block text-sm font-medium text-brown-900 mb-1">Place of Birth *</label>
@@ -92,6 +95,9 @@ export default function KundliMatching() {
                 <div>
                   <label className="block text-sm font-medium text-brown-900 mb-1">Time of Birth *</label>
                   <input type="time" name="timeOfBirth" value={girl.timeOfBirth} onChange={(e)=>handleChange('girl',e)} className="w-full rounded-xl border border-yellow-400 p-3"/>
+                  {girl.timeOfBirth && (
+                    <p className="mt-1 text-xs font-medium text-brown-700">{parseInt(girl.timeOfBirth.split(':')[0]) >= 12 ? 'PM' : 'AM'}</p>
+                  )}
                 </div>
                 <div>
                   <label className="block text-sm font-medium text-brown-900 mb-1">Place of Birth *</label>

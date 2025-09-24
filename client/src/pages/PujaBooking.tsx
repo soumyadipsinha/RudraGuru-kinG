@@ -115,7 +115,7 @@ const pujas: Puja[] = [
     duration: "2 hours",
     price: 2001,
     benefits: ["Enemy Destruction", "Power Gain", "Protection", "Justice Achievement"],
-    image: "/assets/serviceLogo.png",
+    image: "/assets/kali.jpg",
     category: "Goddess Puja"
   },
   {
@@ -340,7 +340,7 @@ const PujaBooking = () => {
                 {filteredPujas.map((puja) => (
                   <div
                     key={puja.id}
-                    className="bg-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 border border-red-100 hover:border-red-300"
+                    className="bg-white rounded-2xl shadow-deep hover:shadow-deep-hover transition-all duration-300"
                   >
                     <img src={puja.image} alt={puja.name} className="w-full h-40 object-cover rounded-t-xl" />
                     <div className="p-6">
@@ -392,7 +392,7 @@ const PujaBooking = () => {
         {/* Step 2: Select Priest */}
         {currentStep === 2 && selectedPuja && (
           <div>
-            <div className="bg-white rounded-xl shadow-lg p-6 mb-8">
+              <div className="bg-white rounded-2xl shadow-deep p-6 mb-8">
               <h3 className="text-xl font-semibold mb-4">Selected Puja</h3>
               <div className="flex items-center gap-4">
                 <div>
@@ -415,7 +415,7 @@ const PujaBooking = () => {
                 <div
                   key={priest.id}
                   onClick={() => handlePriestSelect(priest)}
-                  className="bg-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 cursor-pointer border border-red-100 hover:border-red-300"
+                  className="bg-white rounded-2xl shadow-deep hover:shadow-deep-hover transition-all duration-300 cursor-pointer"
                 >
                   <div className="p-6">
                     <div className="flex items-start gap-4">
@@ -464,9 +464,9 @@ const PujaBooking = () => {
         {/* Step 3: Fill Details */}
         {currentStep === 3 && selectedPuja && selectedPriest && (
           <div>
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
               {/* Booking Form */}
-              <div className="bg-white rounded-xl shadow-lg p-6">
+              <div className="bg-white rounded-2xl shadow-deep p-6">
                 <h3 className="text-xl font-semibold mb-6">Booking Details</h3>
                 
                 <div className="space-y-4">
@@ -546,6 +546,9 @@ const PujaBooking = () => {
                         onChange={(e) => setBookingDetails({...bookingDetails, time: e.target.value})}
                         className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-red-500"
                       />
+                      {bookingDetails.time && (
+                        <p className="mt-1 text-xs font-medium text-gray-700">{parseInt(bookingDetails.time.split(':')[0]) >= 12 ? 'PM' : 'AM'}</p>
+                      )}
                     </div>
                   </div>
                   
@@ -573,7 +576,7 @@ const PujaBooking = () => {
               </div>
 
               {/* Booking Summary */}
-              <div className="bg-white rounded-xl shadow-lg p-6 h-fit">
+              <div className="bg-white rounded-2xl shadow-deep p-6 h-fit">
                 <h3 className="text-xl font-semibold mb-6">Booking Summary</h3>
                 
                 <div className="space-y-4">
