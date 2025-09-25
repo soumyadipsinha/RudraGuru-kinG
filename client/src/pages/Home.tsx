@@ -628,7 +628,7 @@ export default function Home() {
                 <div className="flex-1">
                   <div className="flex items-center justify-between">
                     <Link to={`/chat?astro=${a.id}`} className="font-semibold text-brown-900 hover:underline">{a.name}</Link>
-                    <div className="flex items-center gap-1"><Star className="w-4 h-4 text-yellow-500 fill-current" /><span className="text-gray-700">{a.rating.toFixed(1)}</span></div>
+                    <div className="flex items-center gap-1"><Star className="w-4 h-4 text-yellow-500 fill-current" /><span className="text-gray-700">{a.rating ? a.rating.toFixed(1) : "—"}</span></div>
                   </div>
                   <p className="text-sm text-brown-700">{a.skills[0]}</p>
                 </div>
@@ -746,7 +746,7 @@ export default function Home() {
         {/* Rudraksha Section */}
         <div className="mb-12">
           <h3 className="text-2xl font-bold text-brown-900 mb-6 flex items-center gap-3">
-            <Sparkles className="w-6 h-6 text-yellow-600" />
+            <Sparkles className="w-4 h-4 text-yellow-600" />
             Sacred Rudraksha Beads
           </h3>
           <div className="relative overflow-hidden">
@@ -910,10 +910,10 @@ export default function Home() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
           {[
             {
-              name: "Anita Sharma",
+              name: "Amit Sharma",
               city: "Delhi, IN",
-              text: "Quality bahut achcha hai James Bond suggest achcha Kiya Hai aur mujhe bahut achcha service mila hai",
-              image: "/assets/testimonial1.jpg",
+              text: "Quality bahut achcha hai James Stone suggest achcha Kiya Hai aur mujhe bahut achcha service mila hai",
+               image: "/assets/testimonial1.jpg",
               rating: 5,
             },
             {

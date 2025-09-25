@@ -123,16 +123,16 @@ export default function AstrologerDashboard() {
   return (
     <div className="space-y-6">
       {/* Header */}
-      <div className="flex justify-between items-center">
+      <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4 mb-6">
         <div>
-          <h1 className={`text-3xl font-bold ${gradHead}`}>Dashboard</h1>
-          <p className="text-brown-600 mt-1">Welcome back, Acharya Pradeep Shastri</p>
+          <h1 className={`text-2xl sm:text-3xl font-bold ${gradHead}`}>Dashboard</h1>
+          <p className="text-brown-600 mt-1 text-sm sm:text-base">Welcome back, Acharya Pradeep Shastri</p>
         </div>
-        <div className="flex gap-3">
+        <div className="flex flex-col sm:flex-row gap-3">
           <select
             value={timeRange}
             onChange={(e) => setTimeRange(e.target.value)}
-            className="rounded-lg border border-gray-300 px-3 py-2 text-sm focus:ring-2 focus:ring-yellow-500 focus:border-transparent"
+            className="rounded-lg border border-gray-300 px-3 py-2 text-sm focus:ring-2 focus:ring-yellow-500 focus:border-transparent w-full sm:w-auto"
           >
             <option value="today">Today</option>
             <option value="week">This Week</option>
@@ -141,28 +141,29 @@ export default function AstrologerDashboard() {
           </select>
           <Link
             to="/astrologer/contacts"
-            className="inline-flex items-center gap-2 rounded-lg bg-yellow-500 px-4 py-2 text-brown-900 font-semibold hover:bg-yellow-400 transition"
+            className="inline-flex items-center justify-center gap-2 rounded-lg bg-yellow-500 px-4 py-2 text-brown-900 font-semibold hover:bg-yellow-400 transition text-sm sm:text-base"
           >
             <Users className="w-4 h-4" />
-            View All Contacts
+            <span className="hidden sm:inline">View All Contacts</span>
+            <span className="sm:hidden">Contacts</span>
           </Link>
         </div>
       </div>
 
       {/* Stats Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
         {stats.map((stat, index) => (
-          <div key={index} className="bg-white rounded-xl p-6 shadow-sm border border-gray-100">
+          <div key={index} className="bg-white rounded-xl p-4 sm:p-6 shadow-sm border border-gray-100">
             <div className="flex items-center justify-between">
-              <div>
-                <p className="text-sm font-medium text-brown-600">{stat.title}</p>
-                <p className="text-2xl font-bold text-brown-900 mt-1">{stat.value}</p>
-                <p className="text-sm text-green-600 mt-1 flex items-center gap-1">
+              <div className="flex-1 min-w-0">
+                <p className="text-xs sm:text-sm font-medium text-brown-600 truncate">{stat.title}</p>
+                <p className="text-xl sm:text-2xl font-bold text-brown-900 mt-1">{stat.value}</p>
+                <p className="text-xs sm:text-sm text-green-600 mt-1 flex items-center gap-1">
                   <TrendingUp className="w-3 h-3" />
-                  {stat.change} from last period
+                  <span className="truncate">{stat.change} from last period</span>
                 </p>
               </div>
-              <div className={`p-3 rounded-lg ${stat.color}`}>
+              <div className={`p-2 sm:p-3 rounded-lg ${stat.color} flex-shrink-0 ml-3`}>
                 {stat.icon}
               </div>
             </div>
@@ -170,38 +171,38 @@ export default function AstrologerDashboard() {
         ))}
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6">
         {/* Recent Contacts */}
-        <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-100">
+        <div className="bg-white rounded-xl p-4 sm:p-6 shadow-sm border border-gray-100">
           <div className="flex items-center justify-between mb-4">
-            <h2 className="text-lg font-semibold text-brown-900">Recent Contacts</h2>
-            <Link to="/astrologer/contacts" className="text-yellow-600 hover:text-yellow-700 text-sm font-medium">
+            <h2 className="text-base sm:text-lg font-semibold text-brown-900">Recent Contacts</h2>
+            <Link to="/astrologer/contacts" className="text-yellow-600 hover:text-yellow-700 text-xs sm:text-sm font-medium">
               View All
             </Link>
           </div>
           <div className="space-y-3">
             {recentContacts.map((contact) => (
               <div key={contact.id} className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
-                <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 bg-yellow-100 rounded-full flex items-center justify-center">
-                    <span className="text-yellow-700 font-semibold text-sm">
+                <div className="flex items-center gap-3 min-w-0 flex-1">
+                  <div className="w-8 h-8 sm:w-10 sm:h-10 bg-yellow-100 rounded-full flex items-center justify-center flex-shrink-0">
+                    <span className="text-yellow-700 font-semibold text-xs sm:text-sm">
                       {contact.name.split(' ').map(n => n[0]).join('')}
                     </span>
                   </div>
-                  <div>
-                    <p className="font-medium text-brown-900">{contact.name}</p>
-                    <p className="text-sm text-brown-600 flex items-center gap-1">
+                  <div className="min-w-0 flex-1">
+                    <p className="font-medium text-brown-900 text-sm sm:text-base truncate">{contact.name}</p>
+                    <p className="text-xs sm:text-sm text-brown-600 flex items-center gap-1">
                       {contact.type === 'Chat' ? <MessageSquare className="w-3 h-3" /> : <Phone className="w-3 h-3" />}
-                      {contact.type} • {contact.duration} • {contact.time}
+                      <span className="truncate">{contact.type} • {contact.duration} • {contact.time}</span>
                     </p>
                   </div>
                 </div>
-                <div className="text-right">
+                <div className="text-right flex-shrink-0 ml-2">
                   <div className="flex items-center gap-1">
-                    <Star className="w-4 h-4 text-yellow-500 fill-current" />
-                    <span className="text-sm font-medium text-brown-900">{contact.rating}</span>
+                    <Star className="w-3 h-3 sm:w-4 sm:h-4 text-yellow-500 fill-current" />
+                    <span className="text-xs sm:text-sm font-medium text-brown-900">{contact.rating}</span>
                   </div>
-                  <p className="text-sm font-semibold text-green-600">{contact.amount}</p>
+                  <p className="text-xs sm:text-sm font-semibold text-green-600">{contact.amount}</p>
                 </div>
               </div>
             ))}
@@ -209,31 +210,31 @@ export default function AstrologerDashboard() {
         </div>
 
         {/* Upcoming Sessions */}
-        <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-100">
+        <div className="bg-white rounded-xl p-4 sm:p-6 shadow-sm border border-gray-100">
           <div className="flex items-center justify-between mb-4">
-            <h2 className="text-lg font-semibold text-brown-900">Upcoming Sessions</h2>
-            <Link to="/astrologer/schedule" className="text-yellow-600 hover:text-yellow-700 text-sm font-medium">
+            <h2 className="text-base sm:text-lg font-semibold text-brown-900">Upcoming Sessions</h2>
+            <Link to="/astrologer/schedule" className="text-yellow-600 hover:text-yellow-700 text-xs sm:text-sm font-medium">
               Manage Schedule
             </Link>
           </div>
           <div className="space-y-3">
             {upcomingSessions.map((session) => (
               <div key={session.id} className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
-                <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center">
-                    <span className="text-blue-700 font-semibold text-sm">
+                <div className="flex items-center gap-3 min-w-0 flex-1">
+                  <div className="w-8 h-8 sm:w-10 sm:h-10 bg-blue-100 rounded-full flex items-center justify-center flex-shrink-0">
+                    <span className="text-blue-700 font-semibold text-xs sm:text-sm">
                       {session.name.split(' ').map(n => n[0]).join('')}
                     </span>
                   </div>
-                  <div>
-                    <p className="font-medium text-brown-900">{session.name}</p>
-                    <p className="text-sm text-brown-600 flex items-center gap-1">
+                  <div className="min-w-0 flex-1">
+                    <p className="font-medium text-brown-900 text-sm sm:text-base truncate">{session.name}</p>
+                    <p className="text-xs sm:text-sm text-brown-600 flex items-center gap-1">
                       {session.type === 'Chat' ? <MessageSquare className="w-3 h-3" /> : <Phone className="w-3 h-3" />}
-                      {session.type} • {session.time}
+                      <span className="truncate">{session.type} • {session.time}</span>
                     </p>
                   </div>
                 </div>
-                <span className={`px-2 py-1 rounded-full text-xs font-medium ${
+                <span className={`px-2 py-1 rounded-full text-xs font-medium flex-shrink-0 ml-2 ${
                   session.status === 'Confirmed' 
                     ? 'bg-green-100 text-green-700' 
                     : 'bg-yellow-100 text-yellow-700'
@@ -247,37 +248,37 @@ export default function AstrologerDashboard() {
       </div>
 
       {/* Quick Actions */}
-      <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-100">
-        <h2 className="text-lg font-semibold text-brown-900 mb-4">Quick Actions</h2>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+      <div className="bg-white rounded-xl p-4 sm:p-6 shadow-sm border border-gray-100">
+        <h2 className="text-base sm:text-lg font-semibold text-brown-900 mb-4">Quick Actions</h2>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
           <Link
             to="/astrologer/contacts"
-            className="flex items-center gap-3 p-4 border border-gray-200 rounded-lg hover:bg-yellow-50 hover:border-yellow-300 transition"
+            className="flex items-center gap-3 p-3 sm:p-4 border border-gray-200 rounded-lg hover:bg-yellow-50 hover:border-yellow-300 transition"
           >
-            <Users className="w-6 h-6 text-blue-600" />
-            <div>
-              <p className="font-medium text-brown-900">View All Contacts</p>
-              <p className="text-sm text-brown-600">See complete contact history</p>
+            <Users className="w-5 h-5 sm:w-6 sm:h-6 text-blue-600 flex-shrink-0" />
+            <div className="min-w-0 flex-1">
+              <p className="font-medium text-brown-900 text-sm sm:text-base">View All Contacts</p>
+              <p className="text-xs sm:text-sm text-brown-600 line-clamp-2">See complete contact history</p>
             </div>
           </Link>
           <Link
             to="/astrologer/schedule"
-            className="flex items-center gap-3 p-4 border border-gray-200 rounded-lg hover:bg-yellow-50 hover:border-yellow-300 transition"
+            className="flex items-center gap-3 p-3 sm:p-4 border border-gray-200 rounded-lg hover:bg-yellow-50 hover:border-yellow-300 transition"
           >
-            <Calendar className="w-6 h-6 text-green-600" />
-            <div>
-              <p className="font-medium text-brown-900">Manage Schedule</p>
-              <p className="text-sm text-brown-600">Set availability and appointments</p>
+            <Calendar className="w-5 h-5 sm:w-6 sm:h-6 text-green-600 flex-shrink-0" />
+            <div className="min-w-0 flex-1">
+              <p className="font-medium text-brown-900 text-sm sm:text-base">Manage Schedule</p>
+              <p className="text-xs sm:text-sm text-brown-600 line-clamp-2">Set availability and appointments</p>
             </div>
           </Link>
           <Link
             to="/astrologer/settings"
-            className="flex items-center gap-3 p-4 border border-gray-200 rounded-lg hover:bg-yellow-50 hover:border-yellow-300 transition"
+            className="flex items-center gap-3 p-3 sm:p-4 border border-gray-200 rounded-lg hover:bg-yellow-50 hover:border-yellow-300 transition sm:col-span-2 lg:col-span-1"
           >
-            <Activity className="w-6 h-6 text-purple-600" />
-            <div>
-              <p className="font-medium text-brown-900">Update Profile</p>
-              <p className="text-sm text-brown-600">Manage your profile and rates</p>
+            <Activity className="w-5 h-5 sm:w-6 sm:h-6 text-purple-600 flex-shrink-0" />
+            <div className="min-w-0 flex-1">
+              <p className="font-medium text-brown-900 text-sm sm:text-base">Update Profile</p>
+              <p className="text-xs sm:text-sm text-brown-600 line-clamp-2">Manage your profile and rates</p>
             </div>
           </Link>
         </div>

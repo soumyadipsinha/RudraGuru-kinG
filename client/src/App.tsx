@@ -38,6 +38,7 @@ import AdminDashboard from "./pages/admin/AdminDashboard";
 import AdminAstrologers from "./pages/admin/AdminAstrologers";
 import AdminProducts from "./pages/admin/AdminProducts";
 import AdminNotifications from "./pages/admin/AdminNotifications";
+import AdminReviews from "./pages/admin/AdminReviews";
 import AdminPoojas from "./pages/admin/AdminPoojas";
 import Poojas from "./pages/Poojas";
 import WeeklyHoroscope from "./pages/WeeklyHoroscope";
@@ -101,6 +102,7 @@ const App = () => {
           <Route path="astrologers" element={<AdminAstrologers/>} />
           <Route path="products" element={<AdminProducts/>} />
           <Route path="notifications" element={<AdminNotifications/>} />
+          <Route path="reviews" element={<AdminReviews/>} />
           <Route path="poojas" element={<AdminPoojas/>} />
         </Route>
 

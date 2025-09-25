@@ -35,7 +35,7 @@ interface ProductForm {
   originalPrice: string;
   category: "gemstones" | "rudraksha" | "bracelets" | "mala";
   subcategory: string;
-  image: string | null;
+  images: string[];
   description: string;
   benefits: string;
   weight?: string;
@@ -55,7 +55,7 @@ export default function AdminProducts() {
     originalPrice: "",
     category: "gemstones",
     subcategory: "rashi-ratna",
-    image: null,
+    images: [],
     description: "",
     benefits: "",
     weight: "",
@@ -73,15 +73,22 @@ export default function AdminProducts() {
   const [showExisting, setShowExisting] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
-  const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>, index: number) => {
     const file = e.target.files?.[0];
     if (file) {
       const reader = new FileReader();
       reader.onload = (event) => {
-        setForm({ ...form, image: event.target?.result as string });
+        const newImages = [...form.images];
+        newImages[index] = event.target?.result as string;
+        setForm({ ...form, images: newImages });
       };
       reader.readAsDataURL(file);
     }
+  };
+
+  const removeImage = (index: number) => {
+    const newImages = form.images.filter((_, i) => i !== index);
+    setForm({ ...form, images: newImages });
   };
 
   const handleAdd = (e: React.FormEvent) => {
@@ -100,7 +107,7 @@ export default function AdminProducts() {
       originalPrice: "",
       category: "gemstones",
       subcategory: "rashi-ratna",
-      image: null,
+      images: [],
       description: "",
       benefits: "",
       weight: "",
@@ -112,7 +119,6 @@ export default function AdminProducts() {
       material: "",
       inStock: true
     });
-    if (fileInputRef.current) fileInputRef.current.value = '';
   };
 
   const handleEdit = (product: ProductForm) => {
@@ -270,36 +276,53 @@ export default function AdminProducts() {
           </div>
           
           <div className="sm:col-span-2">
-            <label className="block text-sm font-medium text-gray-700 mb-1">Product Image</label>
-            <div className="flex items-center gap-4">
-              <input
-                ref={fileInputRef}
-                type="file"
-                accept="image/*"
-                onChange={handleImageUpload}
-                className="hidden"
-              />
-              <button
-                type="button"
-                onClick={() => fileInputRef.current?.click()}
-                className="flex items-center gap-2 px-4 py-2 border border-gray-300 rounded-md hover:bg-gray-50 transition-all duration-300"
-              >
-                <Upload className="w-4 h-4" />
-                Upload Image
-              </button>
-              {form.image && (
-                <div className="flex items-center gap-2">
-                  <img src={form.image} alt="Preview" className="w-16 h-16 rounded-lg object-cover" />
-                  <button
-                    type="button"
-                    onClick={() => setForm({ ...form, image: null })}
-                    className="text-red-500 hover:text-red-700"
+            <label className="block text-sm font-medium text-gray-700 mb-3">Product Images (Upload 3-4 images)</label>
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
+              {[0, 1, 2, 3].map((index) => (
+                <div key={index} className="relative">
+                  <input
+                    type="file"
+                    accept="image/*"
+                    onChange={(e) => handleImageUpload(e, index)}
+                    className="hidden"
+                    id={`image-upload-${index}`}
+                  />
+                  <label
+                    htmlFor={`image-upload-${index}`}
+                    className="flex flex-col items-center justify-center w-full h-32 border-2 border-dashed border-gray-300 rounded-lg cursor-pointer hover:bg-gray-50 transition-colors"
                   >
-                    <X className="w-4 h-4" />
-                  </button>
+                    {form.images[index] ? (
+                      <div className="relative w-full h-full">
+                        <img
+                          src={form.images[index]}
+                          alt={`Product image ${index + 1}`}
+                          className="w-full h-full object-cover rounded-lg"
+                        />
+                        <button
+                          type="button"
+                          onClick={(e) => {
+                            e.preventDefault();
+                            removeImage(index);
+                          }}
+                          className="absolute -top-2 -right-2 bg-red-500 text-white rounded-full p-1 hover:bg-red-600 transition-colors"
+                        >
+                          <X className="w-3 h-3" />
+                        </button>
+                      </div>
+                    ) : (
+                      <div className="text-center">
+                        <Upload className="w-6 h-6 text-gray-400 mx-auto mb-2" />
+                        <p className="text-xs text-gray-500">Image {index + 1}</p>
+                        <p className="text-xs text-gray-400">Click to upload</p>
+                      </div>
+                    )}
+                  </label>
                 </div>
-              )}
+              ))}
             </div>
+            <p className="text-xs text-gray-500 mt-2">
+              Upload 3-4 high-quality images showing different angles of the product
+            </p>
           </div>
           
           <div className="sm:col-span-2">
@@ -360,23 +383,39 @@ export default function AdminProducts() {
                 </div>
               ) : (
                 <>
-                  <div className="flex items-center gap-4 mb-4">
-                    {product.image ? (
-                      <img src={product.image} alt={product.name} className="w-16 h-16 rounded-lg object-cover" />
-                    ) : (
-                      <div className="w-16 h-16 rounded-lg bg-gray-200 flex items-center justify-center">
-                        <Package className="w-8 h-8 text-gray-400" />
+                  <div className="mb-4">
+                    <div className="flex items-center gap-3 mb-3">
+                      <div className="flex -space-x-2">
+                        {product.images.length > 0 ? (
+                          product.images.slice(0, 3).map((image, imgIndex) => (
+                            <img
+                              key={imgIndex}
+                              src={image}
+                              alt={`${product.name} ${imgIndex + 1}`}
+                              className="w-12 h-12 rounded-lg object-cover border-2 border-white shadow-sm"
+                            />
+                          ))
+                        ) : (
+                          <div className="w-12 h-12 rounded-lg bg-gray-200 flex items-center justify-center border-2 border-white">
+                            <Package className="w-6 h-6 text-gray-400" />
+                          </div>
+                        )}
+                        {product.images.length > 3 && (
+                          <div className="w-12 h-12 rounded-lg bg-gray-100 flex items-center justify-center border-2 border-white">
+                            <span className="text-xs font-medium text-gray-600">+{product.images.length - 3}</span>
+                          </div>
+                        )}
                       </div>
-                    )}
-                    <div className="flex-1">
-                      <h3 className="font-semibold text-gray-900">{product.name}</h3>
-                      <div className="flex items-center gap-2">
-                        <span className="text-xs bg-yellow-100 text-yellow-700 px-2 py-1 rounded-full">
-                          {getCategoryLabel(product.category)}
-                        </span>
-                        <span className={`text-xs px-2 py-1 rounded-full ${product.inStock ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'}`}>
-                          {product.inStock ? 'In Stock' : 'Out of Stock'}
-                        </span>
+                      <div className="flex-1">
+                        <h3 className="font-semibold text-gray-900">{product.name}</h3>
+                        <div className="flex items-center gap-2 mt-1">
+                          <span className="text-xs bg-yellow-100 text-yellow-700 px-2 py-1 rounded-full">
+                            {getCategoryLabel(product.category)}
+                          </span>
+                          <span className={`text-xs px-2 py-1 rounded-full ${product.inStock ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'}`}>
+                            {product.inStock ? 'In Stock' : 'Out of Stock'}
+                          </span>
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -424,17 +463,25 @@ export default function AdminProducts() {
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {existingProducts.slice(0, 12).map((product) => (
               <div key={product.id} className="rounded-2xl p-6 bg-white/90 backdrop-blur-sm shadow-deep hover:shadow-deep-hover transition-all duration-300 hover:scale-105">
-                <div className="flex items-center gap-4 mb-4">
-                  <img src={product.image} alt={product.name} className="w-16 h-16 rounded-lg object-cover" />
-                  <div className="flex-1">
-                    <h3 className="font-semibold text-gray-900">{product.name}</h3>
-                    <div className="flex items-center gap-2">
-                      <span className="text-xs bg-yellow-100 text-yellow-700 px-2 py-1 rounded-full">
-                        {getCategoryLabel(product.category)}
-                      </span>
-                      <span className={`text-xs px-2 py-1 rounded-full ${product.inStock ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'}`}>
-                        {product.inStock ? 'In Stock' : 'Out of Stock'}
-                      </span>
+                <div className="mb-4">
+                  <div className="flex items-center gap-3 mb-3">
+                    <div className="flex -space-x-2">
+                      <img
+                        src={product.image}
+                        alt={product.name}
+                        className="w-12 h-12 rounded-lg object-cover border-2 border-white shadow-sm"
+                      />
+                    </div>
+                    <div className="flex-1">
+                      <h3 className="font-semibold text-gray-900">{product.name}</h3>
+                      <div className="flex items-center gap-2 mt-1">
+                        <span className="text-xs bg-yellow-100 text-yellow-700 px-2 py-1 rounded-full">
+                          {getCategoryLabel(product.category)}
+                        </span>
+                        <span className={`text-xs px-2 py-1 rounded-full ${product.inStock ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'}`}>
+                          {product.inStock ? 'In Stock' : 'Out of Stock'}
+                        </span>
+                      </div>
                     </div>
                   </div>
                 </div>

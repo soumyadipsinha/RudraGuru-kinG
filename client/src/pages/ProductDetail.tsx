@@ -1,7 +1,6 @@
-import { useState } from "react";
+import { useState, type JSXElementConstructor, type Key, type ReactElement, type ReactNode, type ReactPortal } from "react";
 import { Link, useParams } from "react-router-dom";
 import { 
-  ArrowLeft, 
   Heart, 
   Star, 
   Plus, 
@@ -15,10 +14,104 @@ import {
 } from "lucide-react";
 import { Button } from "../components/ui/button";
 import { Badge } from "../components/ui/badge";
-import { products as catalog } from "../lib/products";
+import { products as catalog, productReviews } from "../lib/products";
+import ProductReviews from "../components/ProductReviews";
 
 // Build detail data from catalog entry
 function buildDetailFromCatalog(base: any) {
+  // Enhanced long description based on product type
+  const getLongDescription = (product: any) => {
+    const baseDesc = product.description;
+    let additionalInfo = "";
+    
+    if (product.category === "gemstones") {
+      additionalInfo = ` This authentic gemstone is carefully selected for its quality and spiritual properties. It comes with proper certification and is suitable for both astrological and ornamental purposes.`;
+    } else if (product.category === "rudraksha") {
+      additionalInfo = ` This sacred Rudraksha bead is sourced from authentic locations and blessed for spiritual use. It carries the divine energy and is perfect for meditation and spiritual practices.`;
+    } else if (product.category === "bracelets") {
+      additionalInfo = ` This beautifully crafted bracelet combines natural stones with spiritual significance. It's designed for daily wear and provides continuous energy benefits.`;
+    } else if (product.category === "mala") {
+      additionalInfo = ` This traditional mala is perfect for meditation, prayer, and spiritual practices. Each bead is carefully selected and strung for optimal spiritual benefits.`;
+    }
+    
+    return baseDesc + additionalInfo;
+  };
+
+  // Enhanced specifications based on product type
+  const getSpecifications = (product: any) => {
+    const specs: any = {
+      weight: product.weight || "—",
+      origin: product.origin || "—",
+      certification: product.certification || "—",
+    };
+
+    if (product.category === "gemstones") {
+      specs.color = "Natural";
+      specs.clarity = "Eye Clean";
+      specs.cut = "Traditional";
+      specs.treatment = "None";
+    } else if (product.category === "rudraksha") {
+      specs.mukhi = product.mukhi || "—";
+      specs.size = product.size || "—";
+      specs.material = "Natural Rudraksha";
+    } else if (product.category === "bracelets") {
+      specs.material = product.material || "—";
+      specs.size = product.size || "—";
+      specs.finish = "Polished";
+    } else if (product.category === "mala") {
+      specs.beads = product.beads || "—";
+      specs.material = product.material || "—";
+      specs.length = "Adjustable";
+    }
+
+    return specs;
+  };
+
+  // Enhanced how to wear based on product type
+  const getHowToWear = (product: any) => {
+    if (product.category === "gemstones") {
+      return {
+        finger: "Ring finger of right hand",
+        day: "Wear on auspicious days",
+        time: "Morning after sunrise",
+        metal: "Gold or Silver",
+        mantra: "Om Namah Shivaya"
+      };
+    } else if (product.category === "rudraksha") {
+      return {
+        finger: "Around neck as pendant",
+        day: "Any day",
+        time: "Morning or evening",
+        metal: "Gold or Silver chain",
+        mantra: "Om Namah Shivaya"
+      };
+    } else if (product.category === "bracelets") {
+      return {
+        finger: "Left wrist",
+        day: "Any day",
+        time: "Morning",
+        metal: "Natural string",
+        mantra: "Om Shanti"
+      };
+    } else if (product.category === "mala") {
+      return {
+        finger: "Around neck",
+        day: "Any day",
+        time: "During meditation",
+        metal: "Natural string",
+        mantra: "Om Namah Shivaya"
+      };
+    }
+    
+    return {
+      finger: "—",
+      day: "—",
+      time: "—",
+      metal: "—",
+      mantra: "—"
+    };
+  };
+
   return {
     id: base.id,
     name: base.name,
@@ -32,28 +125,15 @@ function buildDetailFromCatalog(base: any) {
     reviews: base.reviews,
     inStock: base.inStock,
     description: base.description,
-    longDescription: base.description,
+    longDescription: getLongDescription(base),
     benefits: base.benefits || [],
-    specifications: {
-      weight: base.weight || "—",
-      origin: base.origin || "—",
-      certification: base.certification || "—",
-      color: "—",
-      clarity: "—",
-      cut: "—",
-      treatment: "—",
-    },
-    howToWear: {
-      finger: "—",
-      day: "—",
-      time: "—",
-      metal: "—",
-      mantra: "—",
-    },
+    specifications: getSpecifications(base),
+    howToWear: getHowToWear(base),
     careInstructions: [
       "Clean with mild soap and water",
       "Avoid harsh chemicals and perfumes",
       "Store separately to prevent scratches",
+      "Handle with care to maintain spiritual energy"
     ],
     shipping: {
       freeShipping: true,
@@ -196,7 +276,7 @@ export default function ProductDetail() {
             <div>
               <h3 className="text-lg font-semibold text-gray-900 mb-3">Key Benefits</h3>
               <ul className="space-y-2">
-                {product.benefits.map((benefit, index) => (
+                {product.benefits.map((benefit: string | number | bigint | boolean | ReactElement<unknown, string | JSXElementConstructor<any>> | Iterable<ReactNode> | ReactPortal | Promise<string | number | bigint | boolean | ReactPortal | ReactElement<unknown, string | JSXElementConstructor<any>> | Iterable<ReactNode> | null | undefined> | null | undefined, index: Key | null | undefined) => (
                   <li key={index} className="flex items-start gap-2">
                     <CheckCircle className="w-5 h-5 text-yellow-500 mt-0.5 flex-shrink-0" />
                     <span className="text-gray-700">{benefit}</span>
@@ -369,7 +449,7 @@ export default function ProductDetail() {
                       <span className="font-medium text-gray-900 capitalize">
                         {key.replace(/([A-Z])/g, ' $1').trim()}:
                       </span>
-                      <span className="text-gray-700">{value}</span>
+                      <span className="text-gray-700">{value && typeof value === 'string' ? value : "—"}</span>
                     </div>
                   ))}
                 </div>
@@ -377,6 +457,11 @@ export default function ProductDetail() {
             )}
           </div>
         </div>
+      </div>
+
+      {/* Product Reviews Section */}
+      <div className="mt-12">
+        <ProductReviews productId={product.id} reviews={productReviews} />
       </div>
     </div>
   );

@@ -52,13 +52,6 @@ export default function Kundli() {
   const [girl, setGirl] = useState<Person>({ name: "", dateOfBirth: "", timeOfBirth: "", placeOfBirth: "" });
   const [score, setScore] = useState<number | null>(null);
 
-  const meridiem = (t: string) => {
-    if (!t) return "";
-    const [hh] = t.split(":");
-    const h = parseInt(hh, 10);
-    if (isNaN(h)) return "";
-    return h >= 12 ? "PM" : "AM";
-  };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
@@ -186,28 +179,126 @@ export default function Kundli() {
   // Build consistent positions and houses from inputs
   const sun = getSunSign(formData.dateOfBirth) || kundliData.zodiacSign;
   const computedHouses = [
-    { house: "1st House", sign: kundliData.risingSign, meaning: "Personality, Appearance" },
-    { house: "2nd House", sign: "Taurus", meaning: "Wealth, Family" },
-    { house: "3rd House", sign: "Gemini", meaning: "Communication, Siblings" },
-    { house: "4th House", sign: "Cancer", meaning: "Home, Mother" },
-    { house: "5th House", sign: "Leo", meaning: "Children, Creativity" },
-    { house: "6th House", sign: "Virgo", meaning: "Health, Service" },
-    { house: "7th House", sign: "Libra", meaning: "Marriage, Partnership" },
-    { house: "8th House", sign: "Scorpio", meaning: "Transformation, Occult" },
-    { house: "9th House", sign: "Sagittarius", meaning: "Higher Learning, Philosophy" },
-    { house: "10th House", sign: "Capricorn", meaning: "Career, Father" },
-    { house: "11th House", sign: "Aquarius", meaning: "Friends, Gains" },
-    { house: "12th House", sign: "Pisces", meaning: "Spirituality, Losses" }
+    { 
+      house: "1st House", 
+      sign: kundliData.risingSign, 
+      meaning: "Personality, Appearance, Self",
+      description: "Represents your physical appearance, personality, and how others perceive you. This is the house of self-identity and first impressions.",
+      planets: ["Sun", "Mercury"],
+      element: "Fire",
+      quality: "Cardinal"
+    },
+    { 
+      house: "2nd House", 
+      sign: "Taurus", 
+      meaning: "Wealth, Family, Resources",
+      description: "Governs your material possessions, family wealth, speech, and values. This house shows your earning potential and relationship with money.",
+      planets: ["Venus"],
+      element: "Earth",
+      quality: "Fixed"
+    },
+    { 
+      house: "3rd House", 
+      sign: "Gemini", 
+      meaning: "Communication, Siblings, Short Travel",
+      description: "Rules communication, siblings, short journeys, and mental abilities. This house shows your learning style and relationship with siblings.",
+      planets: ["Mercury"],
+      element: "Air",
+      quality: "Mutable"
+    },
+    { 
+      house: "4th House", 
+      sign: "Cancer", 
+      meaning: "Home, Mother, Roots",
+      description: "Represents your home, mother, emotional foundation, and ancestral roots. This house shows your private life and emotional security.",
+      planets: ["Moon"],
+      element: "Water",
+      quality: "Cardinal"
+    },
+    { 
+      house: "5th House", 
+      sign: "Leo", 
+      meaning: "Children, Creativity, Romance",
+      description: "Governs children, creativity, romance, and entertainment. This house shows your creative expression and relationship with children.",
+      planets: ["Sun"],
+      element: "Fire",
+      quality: "Fixed"
+    },
+    { 
+      house: "6th House", 
+      sign: "Virgo", 
+      meaning: "Health, Service, Daily Work",
+      description: "Rules health, daily work, service to others, and pets. This house shows your work habits and approach to health and wellness.",
+      planets: ["Mercury"],
+      element: "Earth",
+      quality: "Mutable"
+    },
+    { 
+      house: "7th House", 
+      sign: "Libra", 
+      meaning: "Marriage, Partnership, Relationships",
+      description: "Represents marriage, partnerships, and one-on-one relationships. This house shows your approach to committed relationships.",
+      planets: ["Venus"],
+      element: "Air",
+      quality: "Cardinal"
+    },
+    { 
+      house: "8th House", 
+      sign: "Scorpio", 
+      meaning: "Transformation, Occult, Shared Resources",
+      description: "Governs transformation, shared resources, occult matters, and regeneration. This house shows your approach to deep psychological matters.",
+      planets: ["Mars", "Pluto"],
+      element: "Water",
+      quality: "Fixed"
+    },
+    { 
+      house: "9th House", 
+      sign: "Sagittarius", 
+      meaning: "Higher Learning, Philosophy, Long Travel",
+      description: "Rules higher education, philosophy, long-distance travel, and spiritual beliefs. This house shows your quest for meaning and wisdom.",
+      planets: ["Jupiter"],
+      element: "Fire",
+      quality: "Mutable"
+    },
+    { 
+      house: "10th House", 
+      sign: "Capricorn", 
+      meaning: "Career, Father, Public Image",
+      description: "Represents career, public reputation, authority figures, and life direction. This house shows your professional ambitions and public image.",
+      planets: ["Saturn"],
+      element: "Earth",
+      quality: "Cardinal"
+    },
+    { 
+      house: "11th House", 
+      sign: "Aquarius", 
+      meaning: "Friends, Gains, Hopes",
+      description: "Governs friendships, groups, hopes, dreams, and gains. This house shows your social circle and what you hope to achieve.",
+      planets: ["Uranus"],
+      element: "Air",
+      quality: "Fixed"
+    },
+    { 
+      house: "12th House", 
+      sign: "Pisces", 
+      meaning: "Spirituality, Losses, Subconscious",
+      description: "Rules spirituality, subconscious mind, losses, and hidden enemies. This house shows your spiritual journey and inner world.",
+      planets: ["Neptune"],
+      element: "Water",
+      quality: "Mutable"
+    }
   ];
 
   const computedPositions = [
-    { planet: "Sun", sign: sun, house: "—", degree: "" },
-    { planet: "Moon", sign: kundliData.moonSign, house: "—", degree: "" },
-    { planet: "Mars", sign: "Leo", house: "—", degree: "" },
-    { planet: "Mercury", sign: sun, house: "—", degree: "" },
-    { planet: "Jupiter", sign: "Sagittarius", house: "—", degree: "" },
-    { planet: "Venus", sign: "Capricorn", house: "—", degree: "" },
-    { planet: "Saturn", sign: "Aquarius", house: "—", degree: "" }
+    { planet: "Sun", sign: sun, house: "1st House", degree: "15°", symbol: "☉", color: "text-yellow-600", bgColor: "bg-yellow-50" },
+    { planet: "Moon", sign: kundliData.moonSign, house: "4th House", degree: "22°", symbol: "☽", color: "text-blue-600", bgColor: "bg-blue-50" },
+    { planet: "Mars", sign: "Leo", house: "5th House", degree: "8°", symbol: "♂", color: "text-red-600", bgColor: "bg-red-50" },
+    { planet: "Mercury", sign: sun, house: "1st House", degree: "18°", symbol: "☿", color: "text-green-600", bgColor: "bg-green-50" },
+    { planet: "Jupiter", sign: "Sagittarius", house: "9th House", degree: "12°", symbol: "♃", color: "text-purple-600", bgColor: "bg-purple-50" },
+    { planet: "Venus", sign: "Capricorn", house: "10th House", degree: "25°", symbol: "♀", color: "text-pink-600", bgColor: "bg-pink-50" },
+    { planet: "Saturn", sign: "Aquarius", house: "11th House", degree: "6°", symbol: "♄", color: "text-gray-600", bgColor: "bg-gray-50" },
+    { planet: "Rahu", sign: "Gemini", house: "3rd House", degree: "14°", symbol: "☊", color: "text-orange-600", bgColor: "bg-orange-50" },
+    { planet: "Ketu", sign: "Sagittarius", house: "9th House", degree: "14°", symbol: "☋", color: "text-indigo-600", bgColor: "bg-indigo-50" }
   ];
 
   return (
@@ -578,33 +669,237 @@ export default function Kundli() {
 
             {/* Planetary Positions */}
             <div className="rounded-2xl bg-white p-8 mb-8 shadow-deep">
-              <h3 className={`text-2xl font-bold mb-6 ${gradHead}`}>Planetary Positions</h3>
+              <h3 className={`text-2xl font-bold mb-6 ${gradHead}`}>Planetary Positions in Houses</h3>
+              <p className="text-brown-600 mb-6 text-center">See where each planet is positioned in your birth chart</p>
+              
               <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
                 {(computedPositions.length ? computedPositions : kundliData.planetaryPositions).map((planet, index) => (
-                  <div key={index} className="p-4 bg-yellow-50 rounded-xl">
-                    <div className="flex justify-between items-center">
-                      <div>
-                        <h4 className="font-semibold text-brown-900">{planet.planet}</h4>
-                        <p className="text-brown-600">{planet.sign} • {planet.house}</p>
+                  <div key={index} className={`p-6 rounded-xl border-2 hover:shadow-lg transition-all duration-300 ${planet.bgColor} border-current`}>
+                    <div className="flex items-center justify-between mb-4">
+                      <div className="flex items-center gap-3">
+                        <div className={`text-2xl ${planet.color}`}>{planet.symbol}</div>
+                        <div>
+                          <h4 className={`font-bold text-lg ${planet.color}`}>{planet.planet}</h4>
+                          <p className="text-brown-600 text-sm">In {planet.house}</p>
+                        </div>
                       </div>
-                      <div className="text-yellow-600 font-bold">{planet.degree}</div>
+                      <div className={`text-right ${planet.color}`}>
+                        <div className="font-bold text-lg">{planet.degree}</div>
+                        <div className="text-xs text-brown-600">degrees</div>
+                      </div>
+                    </div>
+                    
+                    <div className="space-y-2">
+                      <div className="flex justify-between items-center">
+                        <span className="text-brown-700 font-medium">Zodiac Sign:</span>
+                        <div className="flex items-center gap-2">
+                          <img 
+                            src={getZodiacAsset(planet.sign)} 
+                            alt={planet.sign} 
+                            className="w-5 h-5 object-contain" 
+                          />
+                          <span className="font-semibold text-brown-800">{planet.sign}</span>
+                        </div>
+                      </div>
+                      
+                      <div className="flex justify-between items-center">
+                        <span className="text-brown-700 font-medium">House:</span>
+                        <span className="font-semibold text-brown-800">{planet.house}</span>
+                      </div>
+                      
+                      <div className="pt-2 border-t border-brown-200">
+                        <div className="text-xs text-brown-600">
+                          {planet.planet === 'Sun' && 'Represents your core identity and life purpose'}
+                          {planet.planet === 'Moon' && 'Shows your emotional nature and instincts'}
+                          {planet.planet === 'Mars' && 'Indicates your energy, drive, and assertiveness'}
+                          {planet.planet === 'Mercury' && 'Rules communication, thinking, and learning'}
+                          {planet.planet === 'Jupiter' && 'Brings wisdom, growth, and opportunities'}
+                          {planet.planet === 'Venus' && 'Governs love, beauty, and relationships'}
+                          {planet.planet === 'Saturn' && 'Teaches lessons through challenges and discipline'}
+                          {planet.planet === 'Rahu' && 'Shows your desires and material ambitions'}
+                          {planet.planet === 'Ketu' && 'Represents spiritual detachment and past life karma'}
+                        </div>
+                      </div>
                     </div>
                   </div>
                 ))}
+              </div>
+              
+              {/* Planetary Summary */}
+              <div className="mt-8 p-6 bg-gradient-to-r from-blue-100 to-indigo-100 rounded-xl border border-blue-200">
+                <h4 className="font-bold text-brown-900 mb-4 text-center">Planetary Influences in Your Life</h4>
+                <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3 text-sm">
+                  <div className="text-center">
+                    <div className="font-semibold text-brown-800 mb-1">Personal Planets</div>
+                    <p className="text-brown-600 text-xs">Sun, Moon, Mercury, Venus, Mars - Your core personality and daily life</p>
+                  </div>
+                  <div className="text-center">
+                    <div className="font-semibold text-brown-800 mb-1">Social Planets</div>
+                    <p className="text-brown-600 text-xs">Jupiter, Saturn - Your growth, wisdom, and life lessons</p>
+                  </div>
+                  <div className="text-center">
+                    <div className="font-semibold text-brown-800 mb-1">Lunar Nodes</div>
+                    <p className="text-brown-600 text-xs">Rahu & Ketu - Your karmic path and spiritual evolution</p>
+                  </div>
+                </div>
               </div>
             </div>
 
             {/* Houses */}
             <div className="rounded-2xl bg-white p-8 mb-8 shadow-deep">
-              <h3 className={`text-2xl font-bold mb-6 ${gradHead}`}>Houses Analysis</h3>
-              <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+              <h3 className={`text-2xl font-bold mb-6 ${gradHead}`}>The 12 Houses of Your Kundli</h3>
+              <p className="text-brown-600 mb-8 text-center">Each house represents different aspects of your life and personality</p>
+              
+              {/* Visual House Chart */}
+              <div className="mb-8">
+                <div className="relative w-full max-w-4xl mx-auto">
+                  {/* Outer Circle - 12 Houses */}
+                  <div className="relative w-80 h-80 mx-auto mb-8">
+                    {/* House 1 - Top */}
+                    <div className="absolute top-0 left-1/2 transform -translate-x-1/2 w-20 h-20 bg-gradient-to-br from-yellow-100 to-yellow-200 rounded-lg border-2 border-yellow-300 flex items-center justify-center">
+                      <div className="text-center">
+                        <div className="text-xs font-bold text-brown-800">1</div>
+                        <div className="text-xs text-brown-600">ASC</div>
+                      </div>
+                    </div>
+                    
+                    {/* House 2 - Top Right */}
+                    <div className="absolute top-8 right-8 w-16 h-16 bg-gradient-to-br from-green-100 to-green-200 rounded-lg border-2 border-green-300 flex items-center justify-center">
+                      <div className="text-center">
+                        <div className="text-xs font-bold text-brown-800">2</div>
+                        <div className="text-xs text-brown-600">Wealth</div>
+                      </div>
+                    </div>
+                    
+                    {/* House 3 - Right */}
+                    <div className="absolute top-1/2 right-0 transform -translate-y-1/2 w-16 h-16 bg-gradient-to-br from-blue-100 to-blue-200 rounded-lg border-2 border-blue-300 flex items-center justify-center">
+                      <div className="text-center">
+                        <div className="text-xs font-bold text-brown-800">3</div>
+                        <div className="text-xs text-brown-600">Comm</div>
+                      </div>
+                    </div>
+                    
+                    {/* House 4 - Bottom Right */}
+                    <div className="absolute bottom-8 right-8 w-16 h-16 bg-gradient-to-br from-purple-100 to-purple-200 rounded-lg border-2 border-purple-300 flex items-center justify-center">
+                      <div className="text-center">
+                        <div className="text-xs font-bold text-brown-800">4</div>
+                        <div className="text-xs text-brown-600">Home</div>
+                      </div>
+                    </div>
+                    
+                    {/* House 5 - Bottom */}
+                    <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-20 h-20 bg-gradient-to-br from-orange-100 to-orange-200 rounded-lg border-2 border-orange-300 flex items-center justify-center">
+                      <div className="text-center">
+                        <div className="text-xs font-bold text-brown-800">5</div>
+                        <div className="text-xs text-brown-600">Children</div>
+                      </div>
+                    </div>
+                    
+                    {/* House 6 - Bottom Left */}
+                    <div className="absolute bottom-8 left-8 w-16 h-16 bg-gradient-to-br from-red-100 to-red-200 rounded-lg border-2 border-red-300 flex items-center justify-center">
+                      <div className="text-center">
+                        <div className="text-xs font-bold text-brown-800">6</div>
+                        <div className="text-xs text-brown-600">Health</div>
+                      </div>
+                    </div>
+                    
+                    {/* House 7 - Left */}
+                    <div className="absolute top-1/2 left-0 transform -translate-y-1/2 w-16 h-16 bg-gradient-to-br from-pink-100 to-pink-200 rounded-lg border-2 border-pink-300 flex items-center justify-center">
+                      <div className="text-center">
+                        <div className="text-xs font-bold text-brown-800">7</div>
+                        <div className="text-xs text-brown-600">Marriage</div>
+                      </div>
+                    </div>
+                    
+                    {/* House 8 - Top Left */}
+                    <div className="absolute top-8 left-8 w-16 h-16 bg-gradient-to-br from-indigo-100 to-indigo-200 rounded-lg border-2 border-indigo-300 flex items-center justify-center">
+                      <div className="text-center">
+                        <div className="text-xs font-bold text-brown-800">8</div>
+                        <div className="text-xs text-brown-600">Transform</div>
+                      </div>
+                    </div>
+                    
+                    {/* Center Circle */}
+                    <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-24 h-24 bg-gradient-to-br from-yellow-200 to-amber-300 rounded-full border-4 border-yellow-400 flex items-center justify-center">
+                      <div className="text-center">
+                        <div className="text-sm font-bold text-brown-800">Kundli</div>
+                        <div className="text-xs text-brown-600">Chart</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Detailed House Information */}
+              <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
                 {(computedHouses.length ? computedHouses : kundliData.houses).map((house, index) => (
-                  <div key={index} className="p-4 bg-yellow-50 rounded-xl">
-                    <h4 className="font-semibold text-brown-900 mb-1">{house.house}</h4>
-                    <p className="text-brown-600 text-sm mb-2">{house.sign}</p>
-                    <p className="text-brown-700 text-xs">{house.meaning}</p>
+                  <div key={index} className="p-6 bg-gradient-to-br from-yellow-50 to-amber-50 rounded-xl border border-yellow-200 hover:shadow-lg transition-all duration-300">
+                    <div className="flex items-center justify-between mb-3">
+                      <h4 className="font-bold text-brown-900 text-lg">{house.house}</h4>
+                      <div className="flex gap-1">
+                        <span className={`px-2 py-1 rounded-full text-xs font-medium ${
+                          house.element === 'Fire' ? 'bg-red-100 text-red-700' :
+                          house.element === 'Earth' ? 'bg-green-100 text-green-700' :
+                          house.element === 'Air' ? 'bg-blue-100 text-blue-700' :
+                          'bg-purple-100 text-purple-700'
+                        }`}>
+                          {house.element}
+                        </span>
+                        <span className="px-2 py-1 rounded-full text-xs font-medium bg-gray-100 text-gray-700">
+                          {house.quality}
+                        </span>
+                      </div>
+                    </div>
+                    
+                    <div className="mb-3">
+                      <div className="flex items-center gap-2 mb-2">
+                        <img 
+                          src={getZodiacAsset(house.sign)} 
+                          alt={house.sign} 
+                          className="w-6 h-6 object-contain" 
+                        />
+                        <span className="font-semibold text-brown-800">{house.sign}</span>
+                      </div>
+                      <p className="text-brown-700 text-sm font-medium">{house.meaning}</p>
+                    </div>
+                    
+                    <p className="text-brown-600 text-xs mb-3 leading-relaxed">{house.description}</p>
+                    
+                    <div className="border-t border-yellow-200 pt-3">
+                      <div className="text-xs text-brown-600 mb-1">Ruling Planets:</div>
+                      <div className="flex flex-wrap gap-1">
+                        {house.planets.map((planet, pIndex) => (
+                          <span key={pIndex} className="px-2 py-1 bg-yellow-100 text-yellow-700 rounded text-xs font-medium">
+                            {planet}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
                   </div>
                 ))}
+              </div>
+              
+              {/* House Summary */}
+              <div className="mt-8 p-6 bg-gradient-to-r from-yellow-100 to-amber-100 rounded-xl border border-yellow-200">
+                <h4 className="font-bold text-brown-900 mb-3 text-center">Understanding Your Houses</h4>
+                <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4 text-sm">
+                  <div className="text-center">
+                    <div className="font-semibold text-brown-800 mb-1">Angular Houses (1, 4, 7, 10)</div>
+                    <p className="text-brown-600 text-xs">Most powerful houses representing self, home, relationships, and career</p>
+                  </div>
+                  <div className="text-center">
+                    <div className="font-semibold text-brown-800 mb-1">Succedent Houses (2, 5, 8, 11)</div>
+                    <p className="text-brown-600 text-xs">Support the angular houses with resources and stability</p>
+                  </div>
+                  <div className="text-center">
+                    <div className="font-semibold text-brown-800 mb-1">Cadent Houses (3, 6, 9, 12)</div>
+                    <p className="text-brown-600 text-xs">Adaptive houses focused on learning, service, and spirituality</p>
+                  </div>
+                  <div className="text-center">
+                    <div className="font-semibold text-brown-800 mb-1">Elements & Qualities</div>
+                    <p className="text-brown-600 text-xs">Each house has an element (Fire/Earth/Air/Water) and quality (Cardinal/Fixed/Mutable)</p>
+                  </div>
+                </div>
               </div>
             </div>
 
@@ -675,6 +970,168 @@ export default function Kundli() {
             <Circle className="w-8 h-8 text-indigo-500 mx-auto mb-4" />
             <h3 className="font-bold text-brown-900 mb-2">Remedies</h3>
             <p className="text-brown-600">Vedic remedies and mantras to enhance positive planetary influences</p>
+          </div>
+        </div>
+      </Section>
+
+      {/* Gemstone Suggestions Section */}
+      <Section className="pb-16">
+        <div className="rounded-2xl bg-white p-8 shadow-deep">
+          <div className="text-center mb-8">
+            <h3 className={`text-2xl font-bold mb-4 ${gradHead}`}>Recommended Gemstones</h3>
+            <p className="text-brown-600 mb-6">
+              Based on your Kundli analysis, these gemstones can help enhance your planetary energies and bring positive changes to your life.
+            </p>
+          </div>
+
+          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+            {/* Ruby for Sun */}
+            <Link 
+              to="/product/1" 
+              className="group rounded-2xl bg-gradient-to-br from-red-50 to-pink-50 p-6 border-2 border-red-100 hover:border-red-300 transition-all duration-300 hover:shadow-lg hover:scale-105"
+            >
+              <div className="flex items-center gap-4 mb-4">
+                <div className="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center">
+                  <Gem className="w-8 h-8 text-red-600" />
+                </div>
+                <div>
+                  <h4 className="font-bold text-red-800 text-lg">Ruby</h4>
+                  <p className="text-red-600 text-sm">Sun Stone</p>
+                </div>
+              </div>
+              <p className="text-brown-700 text-sm mb-4">
+                Enhances leadership qualities, confidence, and vitality. Perfect for strengthening your Sun energy.
+              </p>
+              <div className="flex items-center justify-between">
+                <span className="text-red-600 font-bold">₹15,000</span>
+                <span className="text-sm text-brown-600 group-hover:text-red-600 transition-colors">View Details →</span>
+              </div>
+            </Link>
+
+            {/* Emerald for Mercury */}
+            <Link 
+              to="/product/2" 
+              className="group rounded-2xl bg-gradient-to-br from-green-50 to-emerald-50 p-6 border-2 border-green-100 hover:border-green-300 transition-all duration-300 hover:shadow-lg hover:scale-105"
+            >
+              <div className="flex items-center gap-4 mb-4">
+                <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center">
+                  <Gem className="w-8 h-8 text-green-600" />
+                </div>
+                <div>
+                  <h4 className="font-bold text-green-800 text-lg">Emerald</h4>
+                  <p className="text-green-600 text-sm">Mercury Stone</p>
+                </div>
+              </div>
+              <p className="text-brown-700 text-sm mb-4">
+                Improves communication, intelligence, and business success. Excellent for Mercury-related benefits.
+              </p>
+              <div className="flex items-center justify-between">
+                <span className="text-green-600 font-bold">₹25,000</span>
+                <span className="text-sm text-brown-600 group-hover:text-green-600 transition-colors">View Details →</span>
+              </div>
+            </Link>
+
+            {/* Blue Sapphire for Saturn */}
+            <Link 
+              to="/product/3" 
+              className="group rounded-2xl bg-gradient-to-br from-blue-50 to-indigo-50 p-6 border-2 border-blue-100 hover:border-blue-300 transition-all duration-300 hover:shadow-lg hover:scale-105"
+            >
+              <div className="flex items-center gap-4 mb-4">
+                <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center">
+                  <Gem className="w-8 h-8 text-blue-600" />
+                </div>
+                <div>
+                  <h4 className="font-bold text-blue-800 text-lg">Blue Sapphire</h4>
+                  <p className="text-blue-600 text-sm">Saturn Stone</p>
+                </div>
+              </div>
+              <p className="text-brown-700 text-sm mb-4">
+                Brings discipline, wisdom, and spiritual growth. Helps in career advancement and stability.
+              </p>
+              <div className="flex items-center justify-between">
+                <span className="text-blue-600 font-bold">₹35,000</span>
+                <span className="text-sm text-brown-600 group-hover:text-blue-600 transition-colors">View Details →</span>
+              </div>
+            </Link>
+
+            {/* Yellow Sapphire for Jupiter */}
+            <Link 
+              to="/product/5" 
+              className="group rounded-2xl bg-gradient-to-br from-yellow-50 to-amber-50 p-6 border-2 border-yellow-100 hover:border-yellow-300 transition-all duration-300 hover:shadow-lg hover:scale-105"
+            >
+              <div className="flex items-center gap-4 mb-4">
+                <div className="w-16 h-16 bg-yellow-100 rounded-full flex items-center justify-center">
+                  <Gem className="w-8 h-8 text-yellow-600" />
+                </div>
+                <div>
+                  <h4 className="font-bold text-yellow-800 text-lg">Yellow Sapphire</h4>
+                  <p className="text-yellow-600 text-sm">Jupiter Stone</p>
+                </div>
+              </div>
+              <p className="text-brown-700 text-sm mb-4">
+                Attracts wealth, wisdom, and good fortune. Enhances Jupiter's positive influence in your life.
+              </p>
+              <div className="flex items-center justify-between">
+                <span className="text-yellow-600 font-bold">₹28,000</span>
+                <span className="text-sm text-brown-600 group-hover:text-yellow-600 transition-colors">View Details →</span>
+              </div>
+            </Link>
+
+            {/* Pearl for Moon */}
+            <Link 
+              to="/product/6" 
+              className="group rounded-2xl bg-gradient-to-br from-gray-50 to-slate-50 p-6 border-2 border-gray-100 hover:border-gray-300 transition-all duration-300 hover:shadow-lg hover:scale-105"
+            >
+              <div className="flex items-center gap-4 mb-4">
+                <div className="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center">
+                  <Gem className="w-8 h-8 text-gray-600" />
+                </div>
+                <div>
+                  <h4 className="font-bold text-gray-800 text-lg">Pearl</h4>
+                  <p className="text-gray-600 text-sm">Moon Stone</p>
+                </div>
+              </div>
+              <p className="text-brown-700 text-sm mb-4">
+                Calms the mind, improves emotional stability, and enhances intuition. Perfect for Moon energy.
+              </p>
+              <div className="flex items-center justify-between">
+                <span className="text-gray-600 font-bold">₹12,000</span>
+                <span className="text-sm text-brown-600 group-hover:text-gray-600 transition-colors">View Details →</span>
+              </div>
+            </Link>
+
+            {/* Red Coral for Mars */}
+            <Link 
+              to="/product/7" 
+              className="group rounded-2xl bg-gradient-to-br from-orange-50 to-red-50 p-6 border-2 border-orange-100 hover:border-orange-300 transition-all duration-300 hover:shadow-lg hover:scale-105"
+            >
+              <div className="flex items-center gap-4 mb-4">
+                <div className="w-16 h-16 bg-orange-100 rounded-full flex items-center justify-center">
+                  <Gem className="w-8 h-8 text-orange-600" />
+                </div>
+                <div>
+                  <h4 className="font-bold text-orange-800 text-lg">Red Coral</h4>
+                  <p className="text-orange-600 text-sm">Mars Stone</p>
+                </div>
+              </div>
+              <p className="text-brown-700 text-sm mb-4">
+                Boosts courage, energy, and determination. Helps overcome obstacles and achieve goals.
+              </p>
+              <div className="flex items-center justify-between">
+                <span className="text-orange-600 font-bold">₹8,000</span>
+                <span className="text-sm text-brown-600 group-hover:text-orange-600 transition-colors">View Details →</span>
+              </div>
+            </Link>
+          </div>
+
+          <div className="text-center mt-8">
+            <Link
+              to="/store"
+              className="inline-flex items-center gap-2 rounded-xl bg-gradient-to-r from-yellow-500 to-amber-500 px-8 py-4 text-white font-bold shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105"
+            >
+              <Gem className="w-5 h-5" />
+              Explore All Gemstones
+            </Link>
           </div>
         </div>
       </Section>

@@ -7,7 +7,8 @@ import {
   BookOpen,
   LogOut,
   Menu,
-  X
+  X,
+  MessageSquare
 } from "lucide-react";
 import { useState } from "react";
 
@@ -27,6 +28,7 @@ export default function AdminLayout() {
     { path: "/admin/astrologers", label: "Astrologers", icon: <Users className="w-5 h-5" /> },
     { path: "/admin/products", label: "Products", icon: <Package className="w-5 h-5" /> },
     { path: "/admin/notifications", label: "Notifications", icon: <Bell className="w-5 h-5" /> },
+    { path: "/admin/reviews", label: "Reviews", icon: <MessageSquare className="w-5 h-5" /> },
     { path: "/admin/poojas", label: "Pooja Add", icon: <BookOpen className="w-5 h-5" /> },
   ];
 
