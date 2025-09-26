@@ -61,7 +61,10 @@ const subcategories = {
     { id: "wedding-rings", name: "Wedding Rings" },
     { id: "designer-rings", name: "Designer Rings" },
     { id: "spiritual-rings", name: "Spiritual Rings" },
-    { id: "premium-rings", name: "Premium Rings" }
+    { id: "premium-rings", name: "Premium Rings" },
+    { id: "turquoise-rings", name: "Turquoise Rings" },
+    { id: "islamic-rings", name: "Islamic Rings" },
+    { id: "natural-stone-rings", name: "Natural Stone Rings" }
   ]
 };
 
