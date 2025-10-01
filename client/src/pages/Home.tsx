@@ -4,8 +4,6 @@ import { useEffect, useRef, useState } from "react";
 import { MessageSquare, PhoneCall, ShoppingBag, Sparkles, Gem, ShieldCheck, Stars, ArrowRight, ArrowLeft, Video, Clock3, FileText, Star } from "lucide-react";
 import { ASTROLOGERS } from "../data/astrologers";
 // Images are served from Vite public folder
-import { Swiper, SwiperSlide } from 'swiper/react';
-import { Autoplay, Pagination, Navigation } from 'swiper/modules';
 
 // Shared gradient heading classes
 const gradHead =
@@ -43,6 +41,117 @@ const ZODIAC_SVG_MAP: Record<string, string> = {
 };
 
 const getZodiacAsset = (sign: string) => ZODIAC_SVG_MAP[sign] || `/assets/${sign.toLowerCase()}.svg`;
+
+// Perfect Banner Carousel Component
+const BannerCarousel = () => {
+  const [currentBanner, setCurrentBanner] = useState(0);
+  const [isTransitioning, setIsTransitioning] = useState(false);
+  const [isHovered, setIsHovered] = useState(false);
+  
+  const banners = [
+    { src: "/assets/banner1.jpg", alt: "Banner 1" },
+    { src: "/assets/banner2.jpg", alt: "Banner 2" }
+  ];
+
+  const nextBanner = () => {
+    if (isTransitioning) return;
+    setIsTransitioning(true);
+    setCurrentBanner((prev) => (prev + 1) % banners.length);
+    setTimeout(() => setIsTransitioning(false), 500);
+  };
+
+  const prevBanner = () => {
+    if (isTransitioning) return;
+    setIsTransitioning(true);
+    setCurrentBanner((prev) => (prev - 1 + banners.length) % banners.length);
+    setTimeout(() => setIsTransitioning(false), 500);
+  };
+
+  const goToBanner = (index: number) => {
+    if (isTransitioning || index === currentBanner) return;
+    setIsTransitioning(true);
+    setCurrentBanner(index);
+    setTimeout(() => setIsTransitioning(false), 500);
+  };
+
+  // Auto-advance banners every 4 seconds (only when not hovered)
+  useEffect(() => {
+    if (isHovered) return;
+    
+    const interval = setInterval(() => {
+      nextBanner();
+    }, 4000);
+    
+    return () => clearInterval(interval);
+  }, [isHovered, isTransitioning]);
+
+  return (
+    <div 
+      className="relative w-full overflow-hidden shadow-2xl group"
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+    >
+      {/* Banner Container */}
+      <div className="relative w-full h-96 md:h-[30rem] lg:h-[34rem]">
+        {banners.map((banner, index) => (
+          <div
+            key={index}
+            className={`absolute inset-0 w-full h-full transition-all duration-500 ease-in-out ${
+              index === currentBanner 
+                ? 'opacity-100 scale-100' 
+                : 'opacity-0 scale-105'
+            }`}
+          >
+            <img 
+              src={banner.src} 
+              alt={banner.alt} 
+              className="w-full h-full object-cover object-center"
+            />
+            {/* Overlay for better text readability */}
+            <div className="absolute inset-0 bg-black/20"></div>
+          </div>
+        ))}
+      </div>
+      
+      {/* Manual Controls */}
+      <button
+        aria-label="Previous banner"
+        onClick={prevBanner}
+        disabled={isTransitioning}
+        className="absolute left-4 top-1/2 -translate-y-1/2 z-20 h-12 w-12 bg-white/90 hover:bg-white rounded-full flex items-center justify-center shadow-lg transition-all duration-300 hover:scale-110 opacity-0 group-hover:opacity-100 disabled:opacity-50 disabled:cursor-not-allowed"
+      >
+        <ArrowLeft className="w-6 h-6 text-gray-700" />
+      </button>
+      
+      <button
+        aria-label="Next banner"
+        onClick={nextBanner}
+        disabled={isTransitioning}
+        className="absolute right-4 top-1/2 -translate-y-1/2 z-20 h-12 w-12 bg-white/90 hover:bg-white rounded-full flex items-center justify-center shadow-lg transition-all duration-300 hover:scale-110 opacity-0 group-hover:opacity-100 disabled:opacity-50 disabled:cursor-not-allowed"
+      >
+        <ArrowRight className="w-6 h-6 text-gray-700" />
+      </button>
+
+      {/* Banner Indicators */}
+      <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-3 z-20">
+        {banners.map((_, index) => (
+          <button
+            key={index}
+            onClick={() => goToBanner(index)}
+            disabled={isTransitioning}
+            className={`w-3 h-3 rounded-full transition-all duration-300 hover:scale-125 disabled:cursor-not-allowed ${
+              index === currentBanner 
+                ? 'bg-white shadow-lg scale-125' 
+                : 'bg-white/60 hover:bg-white/80'
+            }`}
+            aria-label={`Go to banner ${index + 1}`}
+          />
+        ))}
+      </div>
+
+    </div>
+  );
+};
 
 export default function Home() {
   const location = useLocation();
@@ -306,27 +415,6 @@ export default function Home() {
   return (
     <main className="bg-transparent">
       <style>{`
-        .banner-swiper {
-          padding: 0 0 50px 0;
-        }
-        .banner-swiper .swiper-pagination {
-          bottom: 10px;
-        }
-        .banner-swiper .swiper-pagination-bullet {
-          background: rgba(255, 255, 255, 0.5);
-          opacity: 1;
-        }
-        .banner-swiper .swiper-pagination-bullet-active {
-          background: #f59e0b;
-        }
-        .banner-swiper .swiper-button-next,
-        .banner-swiper .swiper-button-prev {
-          color: #f59e0b;
-        }
-        .banner-swiper .swiper-button-next:after,
-        .banner-swiper .swiper-button-prev:after {
-          font-size: 24px;
-        }
         .scrollbar-hide {
           -ms-overflow-style: none;
           scrollbar-width: none;
@@ -350,78 +438,15 @@ export default function Home() {
         .scroll-container {
           scroll-behavior: smooth;
         }
+        @keyframes progress {
+          0% { width: 0%; }
+          100% { width: 100%; }
+        }
       `}</style>
-      {/* Swiper Banner Section */}
-      <Section className="pt-20 pb-8">
-        <Swiper
-          modules={[Autoplay, Pagination, Navigation]}
-          spaceBetween={30}
-          slidesPerView={1}
-          autoplay={{
-            delay: 2000,
-            disableOnInteraction: false,
-          }}
-          pagination={{
-            clickable: true,
-            dynamicBullets: true,
-          }}
-          navigation={true}
-          loop={true}
-          className="banner-swiper"
-        >
-          {/* First Banner - Male Astrologer */}
-          <SwiperSlide>
-            <div className="rounded-2xl md:rounded-3xl bg-gradient-to-r from-yellow-500 via-yellow-300 to-amber-500 p-4 sm:p-6 md:p-8 shadow-xl">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-10 items-center">
-                {/* Text */}
-                <div className="text-center md:text-left">
-                  <p className="text-sm sm:text-base font-semibold text-brown-800/90 tracking-wide">200+ Celebs recommend RudraGuru</p>
-                  <h1 className="mt-2 text-3xl sm:text-4xl md:text-5xl font-extrabold text-brown-900">
-                    Chat With Expert Astrologer
-                  </h1>
-                  <Link
-                    to="/chat"
-                    className="mt-5 inline-flex items-center justify-center gap-2 rounded-full bg-black px-6 py-3 text-white font-semibold shadow-md hover:bg-gray-800 transition"
-                  >
-                    Chat Now 
-                    <ArrowRight className="w-4 h-4" />
-                  </Link>
-                </div>
-                {/* Image */}
-                <div className="flex justify-center md:justify-end">
-                  <img src="/assets/astrologer.png" alt="Expert Astrologer" className="w-full max-w-[260px] md:max-w-[320px] h-auto object-contain drop-shadow-deep" />
-                </div>
-              </div>
-            </div>
-          </SwiperSlide>
-
-          {/* Second Banner - Female Astrologer */}
-          <SwiperSlide>
-            <div className="rounded-2xl md:rounded-3xl bg-gradient-to-r from-yellow-500 via-pink-300 to-rose-500 p-4 sm:p-6 md:p-8 shadow-xl">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-10 items-center">
-                {/* Text */}
-                <div className="text-center md:text-left">
-                  <p className="text-sm sm:text-base font-semibold text-white/90 tracking-wide">Expert Female Astrologer Available</p>
-                  <h1 className="mt-2 text-3xl sm:text-4xl md:text-5xl font-extrabold text-white">
-                    Connect with Lady Astrologer
-                  </h1>
-                  <Link
-                    to="/chat"
-                    className="mt-5 inline-flex items-center justify-center gap-2 rounded-full bg-white px-6 py-3 text-purple-600 font-semibold shadow-md hover:bg-gray-100 transition"
-                  >
-                    Start Consultation 
-                    <ArrowRight className="w-4 h-4" />
-                  </Link>
-                </div>
-                {/* Image */}
-                <div className="flex justify-center md:justify-end">
-                  <img src="/assets/ladyastro.png" alt="Lady Astrologer" className="w-full max-w-[260px] md:max-w-[320px] h-auto object-contain drop-shadow-deep" />
-                </div>
-              </div>
-            </div>
-          </SwiperSlide>
-        </Swiper>
-      </Section>
+      {/* Banner Carousel Section - Full Width */}
+      <div className="w-full pt-4 pb-8">
+        <BannerCarousel />
+      </div>
 
       {/* Why Astrology - Long Form Content */}
       
@@ -725,20 +750,26 @@ export default function Home() {
             <button
               aria-label="Scroll left"
               type="button"
-              onMouseDown={(e) => e.preventDefault()}
-              onClick={() => gemstonesRef.current && gemstonesRef.current.scrollBy({ left: -300, behavior: 'smooth' })}
-              className="hidden sm:flex absolute left-2 top-1/2 -translate-y-1/2 z-20 h-8 w-8 items-center justify-center rounded-full bg-white/95 shadow-lg hover:bg-white active:scale-95"
+              onClick={() => {
+                if (gemstonesRef.current) {
+                  gemstonesRef.current.scrollBy({ left: -300, behavior: 'smooth' });
+                }
+              }}
+              className="absolute left-2 top-1/2 -translate-y-1/2 z-20 h-10 w-10 flex items-center justify-center rounded-full bg-white/90 hover:bg-white shadow-lg hover:shadow-xl transition-all duration-200 hover:scale-110"
             >
-              <ArrowLeft className="w-4 h-4" />
+              <ArrowLeft className="w-5 h-5 text-gray-700" />
             </button>
             <button
               aria-label="Scroll right"
               type="button"
-              onMouseDown={(e) => e.preventDefault()}
-              onClick={() => gemstonesRef.current && gemstonesRef.current.scrollBy({ left: 300, behavior: 'smooth' })}
-              className="hidden sm:flex absolute right-2 top-1/2 -translate-y-1/2 z-20 h-8 w-8 items-center justify-center rounded-full bg-white/95 shadow-lg hover:bg-white active:scale-95"
+              onClick={() => {
+                if (gemstonesRef.current) {
+                  gemstonesRef.current.scrollBy({ left: 300, behavior: 'smooth' });
+                }
+              }}
+              className="absolute right-2 top-1/2 -translate-y-1/2 z-20 h-10 w-10 flex items-center justify-center rounded-full bg-white/90 hover:bg-white shadow-lg hover:shadow-xl transition-all duration-200 hover:scale-110"
             >
-              <ArrowRight className="w-4 h-4" />
+              <ArrowRight className="w-5 h-5 text-gray-700" />
             </button>
           </div>
         </div>
@@ -787,25 +818,31 @@ export default function Home() {
                 </div>
               ))}
             </div>
-            {/* Scroll Controls */}
-            <button
-              aria-label="Scroll left"
-              type="button"
-              onMouseDown={(e) => e.preventDefault()}
-              onClick={() => rudrakshaRef.current && rudrakshaRef.current.scrollBy({ left: -300, behavior: 'smooth' })}
-              className="hidden sm:flex absolute left-2 top-1/2 -translate-y-1/2 z-20 h-8 w-8 items-center justify-center rounded-full bg-white/95 shadow-lg hover:bg-white active:scale-95"
-            >
-              <ArrowLeft className="w-4 h-4" />
-            </button>
-            <button
-              aria-label="Scroll right"
-              type="button"
-              onMouseDown={(e) => e.preventDefault()}
-              onClick={() => rudrakshaRef.current && rudrakshaRef.current.scrollBy({ left: 300, behavior: 'smooth' })}
-              className="hidden sm:flex absolute right-2 top-1/2 -translate-y-1/2 z-20 h-8 w-8 items-center justify-center rounded-full bg-white/95 shadow-lg hover:bg-white active:scale-95"
-            >
-              <ArrowRight className="w-4 h-4" />
-            </button>
+             {/* Scroll Controls */}
+             <button
+               aria-label="Scroll left"
+               type="button"
+               onClick={() => {
+                 if (rudrakshaRef.current) {
+                   rudrakshaRef.current.scrollBy({ left: -300, behavior: 'smooth' });
+                 }
+               }}
+               className="absolute left-2 top-1/2 -translate-y-1/2 z-20 h-10 w-10 flex items-center justify-center rounded-full bg-white/90 hover:bg-white shadow-lg hover:shadow-xl transition-all duration-200 hover:scale-110"
+             >
+               <ArrowLeft className="w-5 h-5 text-gray-700" />
+             </button>
+             <button
+               aria-label="Scroll right"
+               type="button"
+               onClick={() => {
+                 if (rudrakshaRef.current) {
+                   rudrakshaRef.current.scrollBy({ left: 300, behavior: 'smooth' });
+                 }
+               }}
+               className="absolute right-2 top-1/2 -translate-y-1/2 z-20 h-10 w-10 flex items-center justify-center rounded-full bg-white/90 hover:bg-white shadow-lg hover:shadow-xl transition-all duration-200 hover:scale-110"
+             >
+               <ArrowRight className="w-5 h-5 text-gray-700" />
+             </button>
           </div>
         </div>
 
@@ -849,25 +886,31 @@ export default function Home() {
                 </div>
               ))}
             </div>
-            {/* Scroll Controls */}
-            <button
-              aria-label="Scroll left"
-              type="button"
-              onMouseDown={(e) => e.preventDefault()}
-              onClick={() => braceletsRef.current && braceletsRef.current.scrollBy({ left: -300, behavior: 'smooth' })}
-              className="hidden sm:flex absolute left-2 top-1/2 -translate-y-1/2 z-20 h-8 w-8 items-center justify-center rounded-full bg-white/95 shadow-lg hover:bg-white active:scale-95"
-            >
-              <ArrowLeft className="w-4 h-4" />
-            </button>
-            <button
-              aria-label="Scroll right"
-              type="button"
-              onMouseDown={(e) => e.preventDefault()}
-              onClick={() => braceletsRef.current && braceletsRef.current.scrollBy({ left: 300, behavior: 'smooth' })}
-              className="hidden sm:flex absolute right-2 top-1/2 -translate-y-1/2 z-20 h-8 w-8 items-center justify-center rounded-full bg-white/95 shadow-lg hover:bg-white active:scale-95"
-            >
-              <ArrowRight className="w-4 h-4" />
-            </button>
+             {/* Scroll Controls */}
+             <button
+               aria-label="Scroll left"
+               type="button"
+               onClick={() => {
+                 if (braceletsRef.current) {
+                   braceletsRef.current.scrollBy({ left: -300, behavior: 'smooth' });
+                 }
+               }}
+               className="absolute left-2 top-1/2 -translate-y-1/2 z-20 h-10 w-10 flex items-center justify-center rounded-full bg-white/90 hover:bg-white shadow-lg hover:shadow-xl transition-all duration-200 hover:scale-110"
+             >
+               <ArrowLeft className="w-5 h-5 text-gray-700" />
+             </button>
+             <button
+               aria-label="Scroll right"
+               type="button"
+               onClick={() => {
+                 if (braceletsRef.current) {
+                   braceletsRef.current.scrollBy({ left: 300, behavior: 'smooth' });
+                 }
+               }}
+               className="absolute right-2 top-1/2 -translate-y-1/2 z-20 h-10 w-10 flex items-center justify-center rounded-full bg-white/90 hover:bg-white shadow-lg hover:shadow-xl transition-all duration-200 hover:scale-110"
+             >
+               <ArrowRight className="w-5 h-5 text-gray-700" />
+             </button>
           </div>
         </div>
       </Section>
