@@ -47,6 +47,8 @@ const BannerCarousel = () => {
   const [currentBanner, setCurrentBanner] = useState(0);
   const [isTransitioning, setIsTransitioning] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
+  const touchStartXRef = useRef<number | null>(null);
+  const touchEndXRef = useRef<number | null>(null);
   
   const banners = [
     { src: "/assets/banner1.jpg", alt: "Banner 1" },
@@ -80,19 +82,43 @@ const BannerCarousel = () => {
     
     const interval = setInterval(() => {
       nextBanner();
-    }, 4000);
+    }, 2000);
     
     return () => clearInterval(interval);
   }, [isHovered, isTransitioning]);
+
+  const onTouchStart: React.TouchEventHandler<HTMLDivElement> = (e) => {
+    touchEndXRef.current = null;
+    touchStartXRef.current = e.targetTouches[0].clientX;
+  };
+
+  const onTouchMove: React.TouchEventHandler<HTMLDivElement> = (e) => {
+    touchEndXRef.current = e.targetTouches[0].clientX;
+  };
+
+  const onTouchEnd = () => {
+    if (touchStartXRef.current === null || touchEndXRef.current === null) return;
+    const distance = touchStartXRef.current - touchEndXRef.current;
+    const threshold = 50; // px
+    if (Math.abs(distance) < threshold) return;
+    if (distance > 0) {
+      nextBanner();
+    } else {
+      prevBanner();
+    }
+  };
 
   return (
     <div 
       className="relative w-full overflow-hidden shadow-2xl group"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
+      onTouchStart={onTouchStart}
+      onTouchMove={onTouchMove}
+      onTouchEnd={onTouchEnd}
     >
       {/* Banner Container */}
-      <div className="relative w-full h-96 md:h-[30rem] lg:h-[34rem]">
+      <div className="relative w-full h-56 sm:h-72 md:h-[30rem] lg:h-[34rem]">
         {banners.map((banner, index) => (
           <div
             key={index}
@@ -106,6 +132,7 @@ const BannerCarousel = () => {
               src={banner.src} 
               alt={banner.alt} 
               className="w-full h-full object-cover object-center"
+              loading="eager"
             />
             {/* Overlay for better text readability */}
             <div className="absolute inset-0 bg-black/20"></div>
@@ -118,7 +145,7 @@ const BannerCarousel = () => {
         aria-label="Previous banner"
         onClick={prevBanner}
         disabled={isTransitioning}
-        className="absolute left-4 top-1/2 -translate-y-1/2 z-20 h-12 w-12 bg-white/90 hover:bg-white rounded-full flex items-center justify-center shadow-lg transition-all duration-300 hover:scale-110 opacity-0 group-hover:opacity-100 disabled:opacity-50 disabled:cursor-not-allowed"
+        className="absolute left-3 sm:left-4 top-1/2 -translate-y-1/2 z-20 h-10 w-10 sm:h-12 sm:w-12 bg-white/90 hover:bg-white rounded-full flex items-center justify-center shadow-lg transition-all duration-300 hover:scale-110 opacity-100 md:opacity-0 md:group-hover:opacity-100 disabled:opacity-50 disabled:cursor-not-allowed"
       >
         <ArrowLeft className="w-6 h-6 text-gray-700" />
       </button>
@@ -127,7 +154,7 @@ const BannerCarousel = () => {
         aria-label="Next banner"
         onClick={nextBanner}
         disabled={isTransitioning}
-        className="absolute right-4 top-1/2 -translate-y-1/2 z-20 h-12 w-12 bg-white/90 hover:bg-white rounded-full flex items-center justify-center shadow-lg transition-all duration-300 hover:scale-110 opacity-0 group-hover:opacity-100 disabled:opacity-50 disabled:cursor-not-allowed"
+        className="absolute right-3 sm:right-4 top-1/2 -translate-y-1/2 z-20 h-10 w-10 sm:h-12 sm:w-12 bg-white/90 hover:bg-white rounded-full flex items-center justify-center shadow-lg transition-all duration-300 hover:scale-110 opacity-100 md:opacity-0 md:group-hover:opacity-100 disabled:opacity-50 disabled:cursor-not-allowed"
       >
         <ArrowRight className="w-6 h-6 text-gray-700" />
       </button>
@@ -139,7 +166,7 @@ const BannerCarousel = () => {
             key={index}
             onClick={() => goToBanner(index)}
             disabled={isTransitioning}
-            className={`w-3 h-3 rounded-full transition-all duration-300 hover:scale-125 disabled:cursor-not-allowed ${
+            className={`w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full transition-all duration-300 hover:scale-125 disabled:cursor-not-allowed ${
               index === currentBanner 
                 ? 'bg-white shadow-lg scale-125' 
                 : 'bg-white/60 hover:bg-white/80'
@@ -453,7 +480,7 @@ export default function Home() {
       {/* Quick Actions under banner */}
       <Section className="pb-8">
         <div className="max-w-6xl mx-auto">
-          <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-2 sm:gap-4">
             {[
               { 
                 label: "Chat with Astrologer", 
@@ -487,14 +514,14 @@ export default function Home() {
               <Link
                 key={x.label}
                 to={x.to}
-                className="group relative overflow-hidden rounded-xl bg-white p-4 shadow hover:shadow-md transition-all duration-300 border border-gray-100"
+                className="group relative overflow-hidden rounded-xl bg-white p-3 sm:p-4 shadow hover:shadow-md transition-all duration-300 border border-gray-100 flex"
               >
-                <div className="flex items-center gap-3">
-                  <div className={`h-10 w-10 flex items-center justify-center rounded-lg bg-gradient-to-r ${x.color} text-white shadow-sm group-hover:scale-105 transition-transform duration-200`}>
+                <div className="flex items-center gap-3 w-full">
+                  <div className={`h-9 w-9 sm:h-10 sm:w-10 flex items-center justify-center rounded-lg bg-gradient-to-r ${x.color} text-white shadow-sm group-hover:scale-105 transition-transform duration-200`}>
                     {x.icon}
                   </div>
                   <div className="flex-1 min-w-0">
-                    <h3 className="text-sm font-semibold text-brown-900 truncate group-hover:text-brown-700 transition-colors">
+                    <h3 className="text-xs sm:text-sm font-semibold text-brown-900 truncate group-hover:text-brown-700 transition-colors">
                       {x.label}
                     </h3>
                     <p className="hidden lg:block text-xs text-brown-600 mt-0.5 group-hover:text-brown-500 transition-colors line-clamp-2">
